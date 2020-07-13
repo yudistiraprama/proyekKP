@@ -8,24 +8,34 @@
                 <div class="card-body">
                     <form action="" method="post">
                         <div class="form-group">
+
                             <label for="nim">NIM Mahasiswa</label>
-                            <input type="text" name="nim" class="form-control" id="nim" value="<?=$mahasiswa['nim'];?>" readonly>
-                            <small class="form-text text-danger"><?= form_error('nim'); ?></small>
+                            <input type="text" name="nim" class="form-control" id="nim" value="<?= $mahasiswa['nim'] ?>" readonly>
+                            
                         </div>
                         <div class="form-group">
                             <label for="nama">Nama Mahasiswa</label>
-                            <input type="text" name="nama" class="form-control" id="nama" value="<?=$mahasiswa['nama'];?>" readonly>
-                            <small class="form-text text-danger"><?= form_error('nama'); ?></small>
+                            <input type="text" name="nama" class="form-control" id="nama" value="<?= $mahasiswa['nama'] ?>" readonly>
+                            
                         </div>
                         <div class="form-group">
-                            <label for="dosen1">Dosen Pembimbing 1</label>
-                            <input type="text" name="dosen1" class="form-control" id="dosen1">
+                            <label for="judul">Dosen Pembimbing 1</label>
+                            <select class="form-control" id="dosen1" name="dosen1">
+                                <?php foreach ($dosen as $ds): ?>
+                                    <option value="<?= $ds['nama']; ?>"><?= $ds['nama']; ?></option>
+                                <?php endforeach; ?>
+                            </select>
                             <small class="form-text text-danger"><?= form_error('dosen1'); ?></small>
                         </div>
                         <div class="form-group">
-                            <label for="dosen2">Dosen Pembimbing 2</label>
-                            <input type="text" name="dosen2" class="form-control" id="dosen2">
-                            <small class="form-text text-danger"><?= form_error('dosen2'); ?></small>
+                            <label for="judul">Dosen Pembimbing 2</label>
+                            <select class="form-control" id="dosen2" name="dosen2">
+                                <option value="kosong">-</option>
+                                <?php foreach ($dosen as $ds): ?>
+                                    <option value="<?= $ds['nama']; ?>"><?= $ds['nama']; ?></option>
+                                <?php endforeach; ?>
+                            </select>
+                            <small class="form-text text-danger"><?= form_error('dosen1'); ?></small>
                         </div>
                         <div class="form-group">
                             <label for="judul">Judul Tugas Akhir</label>

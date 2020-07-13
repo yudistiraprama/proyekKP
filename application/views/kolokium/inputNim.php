@@ -12,7 +12,7 @@
                             <input type="text" name="nim" class="form-control" id="nim">
                             <small class="form-text text-danger"><?= form_error('nim'); ?></small>
                         </div>
-                        <button type="submit" name="inputNim" class="btn btn-primary float-right">Search</button>
+                        <button type="submit" name="inputNim" value="inputNim" class="btn btn-primary float-right">Search</button>
                     </form>
                 </div>   
             </div>
