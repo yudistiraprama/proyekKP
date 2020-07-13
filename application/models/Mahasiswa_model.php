@@ -50,7 +50,7 @@ class Mahasiswa_model extends CI_model{
             $this->db->like('nama', $keyword);
             $this->db->or_like('nim', $keyword);
         }
-
+        $this->db->order_by('nim','ASC');
         return $this->db->get('mahasiswa', $limit, $start)->result_array();
     }
 

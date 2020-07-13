@@ -51,7 +51,7 @@ class Pendadaran extends CI_Controller{
         $this->form_validation->set_rules('nama', 'Nama Mahasiswa', 'required');
         $this->form_validation->set_rules('nim', 'NIM Mahasiswa', 'required|numeric');
         $this->form_validation->set_rules('dosen1', 'Dosen Pembimbing 1', 'required');
-        $this->form_validation->set_rules('dosen2', 'osen Pembimbing 1');
+        $this->form_validation->set_rules('dosen2', 'Dosen Pembimbing 2');
         $this->form_validation->set_rules('judul', 'Judul Tugas Akhir', 'required');
         $this->form_validation->set_rules('reviewer', 'Reviewer', 'required');
         $this->form_validation->set_rules('ketuaPenguji', 'Ketua Penguji', 'required');

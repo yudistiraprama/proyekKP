@@ -1,32 +1,32 @@
 <?php
 
-class Kolokium extends CI_Controller{
-    public function __construct()
-    {
+class Kolokium extends CI_Controller {
+
+    public function __construct() {
         parent::__construct();
         $this->load->model('Kolokium_model');
+        $this->load->model('Mahasiswa_model');
         $this->load->library('form_validation');
     }
 
-    public function index()
-    {
+    public function index() {
         $data['judul'] = "Jadwal Kolokium";
 
         $this->load->model('Kolokium_model', 'kolokium');
-        
+
         $this->load->library('pagination');
 
-        if($this->input->post('submit')){
+        if ($this->input->post('submit')) {
             $data['keyword'] = $this->input->post('keyword');
             $this->session->set_userdata('keyword', $data['keyword']);
-        }else{
+        } else {
             $data['keyword'] = $this->session->userdata('keyword');
         }
-        
+
         $this->db->like('nama', $data['keyword']);
         $this->db->or_like('nim', $data['keyword']);
         $this->db->from('kolokium');
-        
+
         $config['base_url'] = 'http://localhost/proyekKP/kolokium/index';
         $config['total_rows'] = $this->db->count_all_results();
         $data['total_rows'] = $config['total_rows'];
@@ -42,8 +42,7 @@ class Kolokium extends CI_Controller{
         $this->load->view('templates/footer');
     }
 
-    public function tambah()
-    {
+    public function tambah($nim) {
         $data['judul'] = "Tambah Jadwal Kolokium";
         $data['jam'] = ['07.00', '08.00', '09.00', '10.00', '11.00', '12.00', '13.00', '14.00', '15.00', '16.00', '17.00'];
         $data['ruang'] = ['Ruang Penelitian', 'Lab. Komputer Dasar', 'Lab. Basis Data', 'Lab. Jaringan Komputer'];
@@ -51,32 +50,42 @@ class Kolokium extends CI_Controller{
         $this->form_validation->set_rules('nama', 'Nama Mahasiswa', 'required');
         $this->form_validation->set_rules('nim', 'NIM Mahasiswa', 'required|numeric');
         $this->form_validation->set_rules('dosen1', 'Dosen Pembimbing 1', 'required');
-        $this->form_validation->set_rules('dosen2', 'osen Pembimbing 1');
+        $this->form_validation->set_rules('dosen2', 'Dosen Pembimbing 2');
         $this->form_validation->set_rules('judul', 'Judul Tugas Akhir', 'required');
         $this->form_validation->set_rules('reviewer', 'Reviewer', 'required');
         $this->form_validation->set_rules('tanggal', 'Tanggal', 'required');
-        
-        if( $this->form_validation->run() == FALSE ){
+
+        if ($this->form_validation->run() == FALSE) {
             $this->load->view('templates/header', $data);
             $this->load->view('kolokium/tambah', $data);
             $this->load->view('templates/footer');
-        }else{
+        } else {
             $this->Kolokium_model->tambahJadwalKolokium();
             $this->session->set_flashdata('flash', 'Ditambahkan');
             redirect('kolokium');
         }
-        
     }
 
-    public function hapus($id)
-    {
+    public function inputNim() {
+        $data['judul'] = "Tambah Jadwal Kolokium";
+        $this->form_validation->set_rules('nim', 'NIM Mahasiswa', 'required|numeric');
+        if ($this->form_validation->run() == FALSE) {
+            $this->load->view('templates/header', $data);
+            $this->load->view('kolokium/inputNim', $data);
+            $this->load->view('templates/footer');
+        }else{
+            $nim=$this->input->post('inputNim');
+            $this->tambah($nim);
+        }
+    }
+
+    public function hapus($id) {
         $this->Kolokium_model->hapusJadwalKolokium($id);
         $this->session->set_flashdata('flash', 'Dihapus');
         redirect('kolokium');
     }
 
-    public function detail($id)
-    {
+    public function detail($id) {
         $data['judul'] = 'Detail  Jadwal Kolokium';
         $data['kolokium'] = $this->Kolokium_model->getKolokiumByID($id);
         $this->load->view('templates/header', $data);
@@ -84,8 +93,7 @@ class Kolokium extends CI_Controller{
         $this->load->view('templates/footer');
     }
 
-    public function edit($id)
-    {
+    public function edit($id) {
         $data['judul'] = "Edit Jadwal Kolokium";
         $data['jam'] = ['07.00', '08.00', '09.00', '10.00', '11.00', '12.00', '13.00', '14.00', '15.00', '16.00', '17.00'];
         $data['ruang'] = ['Ruang Penelitian', 'Lab. Komputer Dasar', 'Lab. Basis Data', 'Lab. Jaringan Komputer'];
@@ -98,15 +106,16 @@ class Kolokium extends CI_Controller{
         $this->form_validation->set_rules('judul', 'Judul Tugas Akhir', 'required');
         $this->form_validation->set_rules('reviewer', 'Reviewer', 'required');
         $this->form_validation->set_rules('tanggal', 'Tanggal', 'required');
-        
-        if( $this->form_validation->run() == FALSE ){
+
+        if ($this->form_validation->run() == FALSE) {
             $this->load->view('templates/header', $data);
             $this->load->view('kolokium/edit', $data);
             $this->load->view('templates/footer');
-        }else{
+        } else {
             $this->Kolokium_model->editJadwalKolokium();
             $this->session->set_flashdata('flash', 'Diubah');
             redirect('kolokium');
         }
     }
+
 }

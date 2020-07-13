@@ -1,7 +1,7 @@
 <div class="container">
     <?php if( $this->session->flashdata('flash') ): ?>
     <div class="row mt-3">
-        <div class="col-md-6">
+        <div class="col-md-10">
             <div class="alert alert-success alert-dismissible fade show" role="alert">
                 Data Jadwal Kolokium <strong>berhasil</strong> <?= $this->session->flashdata('flash'); ?>.
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -15,8 +15,8 @@
     <h3 class="mt-3">Jadwal Kolokium</h3>
 
     <div class="row mt-3">
-        <div class="col-md-6">
-            <a href="<?= base_url(); ?>kolokium/tambah" class="btn btn-primary">Tambah Jadwal Kolokium</a>
+        <div class="col-md-10">
+            <a href="<?= base_url(); ?>kolokium/inputNim" class="btn btn-primary">Tambah Jadwal Kolokium</a>
         </div>
     </div>
 
@@ -34,24 +34,20 @@
     </div>
     
     <div class="row">
-        <div class="col">
+        <div class="col-md-16">
             <h7>Jumlah Data : <?= $total_rows; ?></h7>
 
             <table class="table">
-                <thead>
+                <thead class="thead-dark">
                     <tr>
-                        <th>No.</th>
-                        <th>NIM</th>
-                        <th>Nama</th>
-                        <th>Dosen Pembimbing 1</th>
-                        <th>Dosen Pembimbing 2</th>
-                        <th>Judul Tugas Akhir</th>
-                        <th>Reviewer</th>
-                        <th>Tanggal</th>
-                        <th>Jam Mulai</th>
-                        <th>Jam Selesai</th>
-                        <th>Ruangan</th>
-                        <th></th>
+                        <th scope="col">No.</th>
+                        <th scope="col">NIM</th>
+                        <th scope="col">Nama</th>
+                        <th scope="col">Tanggal</th>
+                        <th scope="col">Jam Mulai</th>
+                        <th scope="col">Jam Selesai</th>
+                        <th scope="col">Ruangan</th>
+                        <th scope="col">Opsi</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -70,10 +66,6 @@
                         <th><?= ++$start;?></th>
                         <td><?= $kol['nim'];?></td>
                         <td><?= $kol['nama'];?></td>
-                        <td><?= $kol['dosen1'];?></td>
-                        <td><?= $kol['dosen2'];?></td>
-                        <td><?= $kol['judul'];?></td>
-                        <td><?= $kol['reviewer'];?></td>
                         <td><?= $kol['tanggal'];?></td>
                         <td><?= $kol['jamMulai'];?></td>
                         <td><?= $kol['jamSelesai'];?></td>

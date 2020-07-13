@@ -1,7 +1,7 @@
 <div class="container">
     <?php if( $this->session->flashdata('flash') ): ?>
     <div class="row mt-3">
-        <div class="col-md-6">
+        <div class="col-md-10">
             <div class="alert alert-success alert-dismissible fade show" role="alert">
                 Data Jadwal Pendadaran <strong>berhasil</strong> <?= $this->session->flashdata('flash'); ?>.
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -15,7 +15,7 @@
     <h3 class="mt-3">Jadwal Pendadaran</h3>
 
     <div class="row mt-3">
-        <div class="col-md-6">
+        <div class="col-md-10">
             <a href="<?= base_url(); ?>pendadaran/tambah" class="btn btn-primary">Tambah Jadwal Pendadaran</a>
         </div>
     </div>
@@ -38,22 +38,16 @@
             <h7>Jumlah Data : <?= $total_rows; ?></h7>
 
             <table class="table">
-                <thead>
+                <thead class="thead-dark">
                     <tr>
-                        <th>No.</th>
-                        <th>NIM</th>
-                        <th>Nama</th>
-                        <th>Dosen Pembimbing 1</th>
-                        <th>Dosen Pembimbing 2</th>
-                        <th>Judul Tugas Akhir</th>
-                        <th>Reviewer Kolokium</th>
-                        <th>Ketua Penguji</th>
-                        <th>Sekretaris Penguji</th>
-                        <th>Tanggal</th>
-                        <th>Jam Mulai</th>
-                        <th>Jam Selesai</th>
-                        <th>Ruangan</th>
-                        <th></th>
+                        <th scope="col">No.</th>
+                        <th scope="col">NIM</th>
+                        <th scope="col">Nama</th>
+                        <th scope="col">Tanggal</th>
+                        <th scope="col">Jam Mulai</th>
+                        <th scope="col">Jam Selesai</th>
+                        <th scope="col">Ruangan</th>
+                        <th scope="col">Opsi</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -72,12 +66,6 @@
                         <th><?= ++$start;?></th>
                         <td><?= $pen['nim'];?></td>
                         <td><?= $pen['nama'];?></td>
-                        <td><?= $pen['dosen1'];?></td>
-                        <td><?= $pen['dosen2'];?></td>
-                        <td><?= $pen['judul'];?></td>
-                        <td><?= $pen['reviewer'];?></td>
-                        <td><?= $pen['ketuaPenguji'];?></td>
-                        <td><?= $pen['sekretarisPenguji'];?></td>
                         <td><?= $pen['tanggal'];?></td>
                         <td><?= $pen['jamMulai'];?></td>
                         <td><?= $pen['jamSelesai'];?></td>
