@@ -46,7 +46,9 @@ class Kolokium extends CI_Controller {
         $data['judul'] = "Tambah Jadwal Kolokium";
         $data['jam'] = ['07.00', '08.00', '09.00', '10.00', '11.00', '12.00', '13.00', '14.00', '15.00', '16.00', '17.00'];
         $data['ruang'] = ['Ruang Penelitian', 'Lab. Komputer Dasar', 'Lab. Basis Data', 'Lab. Jaringan Komputer'];
-
+        $data['mahasiswa'] = $this->Mahasiswa_model->getMahasiswaByNIM($nim);
+        
+        
         $this->form_validation->set_rules('nama', 'Nama Mahasiswa', 'required');
         $this->form_validation->set_rules('nim', 'NIM Mahasiswa', 'required|numeric');
         $this->form_validation->set_rules('dosen1', 'Dosen Pembimbing 1', 'required');
@@ -73,8 +75,8 @@ class Kolokium extends CI_Controller {
             $this->load->view('templates/header', $data);
             $this->load->view('kolokium/inputNim', $data);
             $this->load->view('templates/footer');
-        }else{
-            $nim=$this->input->post('inputNim');
+        } else {
+            $nim = $this->input->post('inputNim');
             $this->tambah($nim);
         }
     }

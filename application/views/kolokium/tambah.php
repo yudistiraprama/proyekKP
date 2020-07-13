@@ -9,12 +9,12 @@
                     <form action="" method="post">
                         <div class="form-group">
                             <label for="nim">NIM Mahasiswa</label>
-                            <input type="text" name="nim" class="form-control" id="nim">
+                            <input type="text" name="nim" class="form-control" id="nim" value="<?=$mahasiswa['nim'];?>" readonly>
                             <small class="form-text text-danger"><?= form_error('nim'); ?></small>
                         </div>
                         <div class="form-group">
                             <label for="nama">Nama Mahasiswa</label>
-                            <input type="text" name="nama" class="form-control" id="nama">
+                            <input type="text" name="nama" class="form-control" id="nama" value="<?=$mahasiswa['nama'];?>" readonly>
                             <small class="form-text text-danger"><?= form_error('nama'); ?></small>
                         </div>
                         <div class="form-group">
