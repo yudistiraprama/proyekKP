@@ -30,6 +30,10 @@ class Mahasiswa_model extends CI_model{
     {
         return $this->db->get_where('mahasiswa', ['id' => $id])->row_array();
     }
+    
+    public function getMahasiswaByNIM($nim){
+        return $this->db->get_where('mahasiswa',['nim'=>$nim])->row_array();
+    }
 
     public function editDataMahasiswa()
     {
