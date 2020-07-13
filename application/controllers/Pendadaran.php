@@ -49,8 +49,8 @@ class Pendadaran extends CI_Controller {
             $data['jam'] = ['07.00', '08.00', '09.00', '10.00', '11.00', '12.00', '13.00', '14.00', '15.00', '16.00', '17.00'];
             $data['ruang'] = ['Ruang Penelitian', 'Lab. Komputer Dasar', 'Lab. Basis Data', 'Lab. Jaringan Komputer'];
             $data['dosen'] = $this->Dosen_model->getAllDosen();
-            $data['mahasiswa']=$this->Kolokium_model->getKolokiumByNIM($nim);
-            
+            $data['mahasiswa'] = $this->Kolokium_model->getKolokiumByNIM($nim);
+
             $this->form_validation->set_rules('nama', 'Nama Mahasiswa', 'required');
             $this->form_validation->set_rules('nim', 'NIM Mahasiswa', 'required|numeric');
             $this->form_validation->set_rules('dosen1', 'Dosen Pembimbing 1', 'required');

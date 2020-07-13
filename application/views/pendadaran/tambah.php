@@ -39,36 +39,36 @@
                         <?php $hasil = rand(0, 1); ?>
                         <?php if ($hasil == 1): ?>
                             <div class="form-group">
-                                <label for="ketua">Ketua Penguji</label>
-                                <input type="text" name="ketua" class="form-control" id="ketua" value="<?= $mahasiswa['reviewer']; ?>" readonly>
+                                <label for="ketuaPenguji">Ketua Penguji</label>
+                                <input type="text" name="ketuaPenguji" class="form-control" id="ketuaPenguji" value="<?= $mahasiswa['reviewer']; ?>" readonly>
 
                             </div>
                             <div class="form-group">
-                                <label for="sekretaris">Sekretaris Penguji</label>
-                                <select class="form-control" id="sekretaris" name="sekretaris">
+                                <label for="sekretarisPenguji">Sekretaris Penguji</label>
+                                <select class="form-control" id="sekretarisPenguji" name="sekretarisPenguji">
                                     <?php foreach ($dosen as $ds): ?>
                                         <?php if ($ds['nama'] != $mahasiswa['reviewer'] && $ds['nama'] != $mahasiswa['dosen1'] && $ds['nama'] != $mahaiswa['dosen2']): ?>
                                             <option value="<?= $ds['nama']; ?>"><?= $ds['nama']; ?></option>
                                         <?php endif; ?>
                                     <?php endforeach; ?>
                                 </select>
-                                <small class="form-text text-danger"><?= form_error('sekretaris'); ?></small>
+                                <small class="form-text text-danger"><?= form_error('sekretarisPenguji'); ?></small>
                             </div>
                         <?php else: ?>
                             <div class="form-group">
-                                <label for="ketua">Ketua Penguji</label>
-                                <select class="form-control" id="ketua" name="ketua">
+                                <label for="ketuaPenguji">Ketua Penguji</label>
+                                <select class="form-control" id="ketua" name="ketuaPenguji">
                                     <?php foreach ($dosen as $ds): ?>
                                         <?php if ($ds['nama'] != $mahasiswa['reviewer'] && $ds['nama'] != $mahasiswa['dosen1'] && $ds['nama'] != $mahaiswa['dosen2']): ?>
                                             <option value="<?= $ds['nama']; ?>"><?= $ds['nama']; ?></option>
                                         <?php endif; ?>
                                     <?php endforeach; ?>
                                 </select>
-                                <small class="form-text text-danger"><?= form_error('ketua'); ?></small>
+                                <small class="form-text text-danger"><?= form_error('ketuaPenguji'); ?></small>
                             </div>
                             <div class="form-group">
-                                <label for="sekretaris">Sekretaris Penguji</label>
-                                <input type="text" name="sekretaris" class="form-control" id="sekretaris" value="<?= $mahasiswa['reviewer']; ?>" readonly>
+                                <label for="sekretarisPenguji">Sekretaris Penguji</label>
+                                <input type="text" name="sekretarisPenguji" class="form-control" id="sekretarisPenguji" value="<?= $mahasiswa['reviewer']; ?>" readonly>
                             </div>
                         <?php endif; ?>
                         <div class="form-group">

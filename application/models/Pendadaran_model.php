@@ -74,6 +74,7 @@ class Pendadaran_model extends CI_model{
     {
         return $this->db->get('pendadaran')->num_rows();
     }
+    
     public function cekStatusPendadaran($nim){
         return $this->db->get_where('pendadaran',['nim'=>$nim])->row_array();
     }

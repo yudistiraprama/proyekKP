@@ -17,10 +17,11 @@
                             </td>
                         </tr>
                     </table>
+                    <br>
                     <table class="table table-bordered">
                         <tbody>
                             <tr>
-                                <td>
+                                <td width="200">
                                     <p class="card-text">Dosen Pembimbing 1:</p>
                                 </td>
                                 <td>
