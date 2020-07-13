@@ -14,9 +14,9 @@
                         <small class="form-text text-danger"><?= form_error('nama'); ?></small>
                     </div>
                     <div class="form-group">
-                        <label for="nip">NIP</label>
-                        <input type="text" name="nip" class="form-control" id="nip" value="<?= $dosen['nip']; ?>">
-                        <small class="form-text text-danger"><?= form_error('nip'); ?></small>
+                        <label for="npp">NPP</label>
+                        <input type="text" name="npp" class="form-control" id="npp" value="<?= $dosen['npp']; ?>">
+                        <small class="form-text text-danger"><?= form_error('npp'); ?></small>
                     </div>
                     <a href="<?= base_url() ?>dosen" class="btn btn-danger " role="button" >Kembali</a>
                     <button type="submit" name="tambah" class="btn btn-primary">Edit Data</button>    

@@ -7,7 +7,7 @@
                 </div>
                 <div class="card-body">
                 <h5 class="card-title"><?= $dosen['nama']; ?></h5>
-                <p class="card-text"><?= $dosen['nip']; ?></p>
+                <p class="card-text"><?= $dosen['npp']; ?></p>
                 <a href="<?= base_url() ?>dosen" class="btn btn-primary float-right">Kembali</a>
                 </div>
             </div>

@@ -47,7 +47,7 @@ class Dosen extends CI_Controller{
         $data['judul'] = "Tambah Data Dosen";
 
         $this->form_validation->set_rules('nama', 'Nama', 'required');
-        $this->form_validation->set_rules('nip', 'NIP', 'required|numeric');
+        $this->form_validation->set_rules('npp', 'NPP', 'required');
         
         if( $this->form_validation->run() == FALSE ){
             $this->load->view('templates/header', $data);
@@ -83,7 +83,7 @@ class Dosen extends CI_Controller{
         $data['dosen'] = $this->Dosen_model->getDosenByID($id);
 
         $this->form_validation->set_rules('nama', 'Nama', 'required');
-        $this->form_validation->set_rules('nip', 'NIP', 'required|numeric');
+        $this->form_validation->set_rules('nip', 'NIP', 'required');
         
         if( $this->form_validation->run() == FALSE ){
             $this->load->view('templates/header', $data);

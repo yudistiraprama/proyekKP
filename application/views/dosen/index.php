@@ -41,7 +41,7 @@
                 <thead>
                     <tr>
                         <th>No.</th>
-                        <th>NIP</th>
+                        <th>NPP</th>
                         <th>Nama</th>
                         <th></th>
                     </tr>
@@ -60,7 +60,7 @@
                 <?php foreach($dosen as $d) : ?>
                     <tr>
                         <th><?= ++$start;?></th>
-                        <td><?= $d['nip'];?></td>
+                        <td><?= $d['npp'];?></td>
                         <td><?= $d['nama'];?></td>
                         <td>
                         <a href="<?= base_url(); ?>dosen/hapus/<?= $d['id']; ?>" class="badge badge-danger float-right" onclick="return confirm('Apakah anda yakin menghapus data ini?');">Hapus</a>

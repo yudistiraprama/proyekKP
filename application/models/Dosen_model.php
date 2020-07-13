@@ -12,7 +12,7 @@ class Dosen_model extends CI_model{
     {
         $data = array(
             'nama' => $this->input->post('nama', true),
-            'nip' => $this->input->post('nip', true)
+            'npp' => $this->input->post('npp', true)
         );
 
         $this->db->insert('dosen', $data);
@@ -33,7 +33,7 @@ class Dosen_model extends CI_model{
     {
         $data = array(
             'nama' => $this->input->post('nama', true),
-            'nip' => $this->input->post('nip', true)
+            'npp' => $this->input->post('npp', true)
         );
         
         $this->db->where('id', $this->input->post('id'));
@@ -44,7 +44,7 @@ class Dosen_model extends CI_model{
     {
         if($keyword){
             $this->db->like('nama', $keyword);
-            $this->db->or_like('nip', $keyword);
+            $this->db->or_like('npp', $keyword);
         }
 
         return $this->db->get('dosen', $limit, $start)->result_array();

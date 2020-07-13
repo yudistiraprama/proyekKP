@@ -13,9 +13,9 @@
                         <small class="form-text text-danger"><?= form_error('nama'); ?></small>
                     </div>
                     <div class="form-group">
-                        <label for="nip">NIP</label>
-                        <input type="text" name="nip" class="form-control" id="nip">
-                        <small class="form-text text-danger"><?= form_error('nip'); ?></small>
+                        <label for="npp">NPP</label>
+                        <input type="text" name="npp" class="form-control" id="npp">
+                        <small class="form-text text-danger"><?= form_error('npp'); ?></small>
                     </div>
                     <button type="submit" name="tambah" class="btn btn-primary float-right">Tambah Data</button>
                 </form>
