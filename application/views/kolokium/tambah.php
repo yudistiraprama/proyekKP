@@ -34,7 +34,6 @@
                                     <option value="<?= $ds['nama']; ?>"><?= $ds['nama']; ?></option>
                                 <?php endforeach; ?>
                             </select>
-                            <small class="form-text text-danger"><?= form_error('dosen1'); ?></small>
                         </div>
                         <div class="form-group">
                             <label for="judul">Judul Tugas Akhir</label>

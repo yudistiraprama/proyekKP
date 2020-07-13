@@ -87,7 +87,7 @@
                         </tbody>
                     </table>
                     <br>
-                    <a href="<?= base_url() ?>kolokium" class="btn btn-primary">Kembali</a>
+                    <a href="<?= base_url() ?>kolokium" class="btn btn-primary float-right">Kembali</a>
                 </div>
             </div>
         </div>
