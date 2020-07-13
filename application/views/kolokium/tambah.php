@@ -8,7 +8,6 @@
                 <div class="card-body">
                     <form action="" method="post">
                         <div class="form-group">
-
                             <label for="nim">NIM Mahasiswa</label>
                             <input type="text" name="nim" class="form-control" id="nim" value="<?= $mahasiswa['nim'] ?>" readonly>
                             
@@ -30,7 +29,7 @@
                         <div class="form-group">
                             <label for="judul">Dosen Pembimbing 2</label>
                             <select class="form-control" id="dosen2" name="dosen2">
-                                <option value="kosong">-</option>
+                                <option value=NULL>-</option>
                                 <?php foreach ($dosen as $ds): ?>
                                     <option value="<?= $ds['nama']; ?>"><?= $ds['nama']; ?></option>
                                 <?php endforeach; ?>
@@ -44,7 +43,11 @@
                         </div>
                         <div class="form-group">
                             <label for="reviewer">Reviewer</label>
-                            <input type="text" name="reviewer" class="form-control" id="reviewer">
+                             <select class="form-control" id="reviewer" name="reviewer">
+                                <?php foreach ($dosen as $ds): ?>
+                                    <option value="<?= $ds['nama']; ?>"><?= $ds['nama']; ?></option>
+                                <?php endforeach; ?>
+                            </select>
                             <small class="form-text text-danger"><?= form_error('reviewer'); ?></small>
                         </div>
                         <div class="form-group">

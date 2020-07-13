@@ -37,6 +37,10 @@ class Kolokium_model extends CI_model{
         return $this->db->get_where('kolokium', ['id' => $id])->row_array();
     }
 
+    public function getKolokiumByNIM($nim){
+        return $this->db->get_where('kolokium',['nim'=>$nim])->row_array();
+    }
+    
     public function editJadwalKolokium()
     {
         $data = array(
@@ -69,5 +73,9 @@ class Kolokium_model extends CI_model{
     public function countAllKolokium()
     {
         return $this->db->get('kolokium')->num_rows();
+    }
+    public function cekStatusKolokium($nim){
+       return $this->db->get_where('kolokium',['nim'=>$nim])->row_array();
+        
     }
 }
