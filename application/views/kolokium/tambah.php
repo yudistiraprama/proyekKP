@@ -29,7 +29,7 @@
                         <div class="form-group">
                             <label for="judul">Dosen Pembimbing 2</label>
                             <select class="form-control" id="dosen2" name="dosen2">
-                                <option value=NULL>-</option>
+                                <option value="">-</option>
                                 <?php foreach ($dosen as $ds): ?>
                                     <option value="<?= $ds['nama']; ?>"><?= $ds['nama']; ?></option>
                                 <?php endforeach; ?>
