@@ -62,18 +62,10 @@
                             </tr>
                             <tr>
                                 <td>
-                                    <p class="card-text">Jam Mulai:</p>
+                                    <p class="card-text">Durasi:</p>
                                 </td>
                                 <td>
-                                    <p class="card-text"><?= $kolokium['jamMulai']; ?></p>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <p class="card-text">Jam Selesai:</p>
-                                </td>
-                                <td>
-                                    <p class="card-text"><?= $kolokium['jamSelesai']; ?></p>
+                                    <p class="card-text"><?= $kolokium['durasi']; ?></p>
                                 </td>
                             </tr>
                             <tr>

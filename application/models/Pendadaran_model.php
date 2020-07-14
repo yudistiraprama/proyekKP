@@ -20,8 +20,7 @@ class Pendadaran_model extends CI_model{
             'ketuaPenguji' => $this->input->post('ketuaPenguji', true),
             'sekretarisPenguji' => $this->input->post('sekretarisPenguji', true),
             'tanggal' => $this->input->post('tanggal', true),
-            'jamMulai' => $this->input->post('jamMulai', true),
-            'jamSelesai' => $this->input->post('jamSelesai', true),
+            'durasi' => $this->input->post('durasi', true),
             'ruang' => $this->input->post('ruang', true)
         );
 

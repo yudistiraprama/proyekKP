@@ -66,8 +66,7 @@
                         <th scope="col">NIM</th>
                         <th scope="col">Nama</th>
                         <th scope="col">Tanggal</th>
-                        <th scope="col">Jam Mulai</th>
-                        <th scope="col">Jam Selesai</th>
+                        <th scope="col">Durasi</th>
                         <th scope="col">Ruangan</th>
                         <th scope="col">Opsi</th>
                     </tr>
@@ -89,8 +88,7 @@
                             <td><?= $pen['nim']; ?></td>
                             <td><?= $pen['nama']; ?></td>
                             <td><?= $pen['tanggal']; ?></td>
-                            <td><?= $pen['jamMulai']; ?></td>
-                            <td><?= $pen['jamSelesai']; ?></td>
+                            <td><?= $pen['durasi']; ?></td>
                             <td><?= $pen['ruang']; ?></td>
                             <td>
                                 <a href="<?= base_url(); ?>pendadaran/hapus/<?= $pen['id']; ?>" class="badge badge-danger float-right" onclick="return confirm('Apakah anda yakin menghapus data ini?');">Hapus</a>

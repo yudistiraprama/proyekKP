@@ -47,8 +47,10 @@
                                 <label for="sekretarisPenguji">Sekretaris Penguji</label>
                                 <select class="form-control" id="sekretarisPenguji" name="sekretarisPenguji">
                                     <?php foreach ($dosen as $ds): ?>
-                                        <?php if ($ds['nama'] != $mahasiswa['reviewer'] && $ds['nama'] != $mahasiswa['dosen1'] && $ds['nama'] != $mahaiswa['dosen2']): ?>
-                                            <option value="<?= $ds['nama']; ?>"><?= $ds['nama']; ?></option>
+                                        <?php if ($ds['nama'] != $mahasiswa['reviewer'] && $ds['nama'] != $mahasiswa['dosen1']): ?>
+                                            <?php if ($ds['nama'] != $mahasiswa['dosen2']) : ?>
+                                                <option value="<?= $ds['nama']; ?>"><?= $ds['nama']; ?></option>
+                                            <?php endif; ?>
                                         <?php endif; ?>
                                     <?php endforeach; ?>
                                 </select>
@@ -59,8 +61,10 @@
                                 <label for="ketuaPenguji">Ketua Penguji</label>
                                 <select class="form-control" id="ketua" name="ketuaPenguji">
                                     <?php foreach ($dosen as $ds): ?>
-                                        <?php if ($ds['nama'] != $mahasiswa['reviewer'] && $ds['nama'] != $mahasiswa['dosen1'] && $ds['nama'] != $mahaiswa['dosen2']): ?>
-                                            <option value="<?= $ds['nama']; ?>"><?= $ds['nama']; ?></option>
+                                        <?php if ($ds['nama'] != $mahasiswa['reviewer'] && $ds['nama'] != $mahasiswa['dosen1']): ?>
+                                            <?php if ($ds['nama'] != $mahasiswa['dosen2']) : ?>
+                                                <option value="<?= $ds['nama']; ?>"><?= $ds['nama']; ?></option>
+                                            <?php endif; ?>
                                         <?php endif; ?>
                                     <?php endforeach; ?>
                                 </select>
@@ -77,16 +81,8 @@
                             <small class="form-text text-danger"><?= form_error('tanggal'); ?></small>
                         </div>
                         <div class="form-group">
-                            <label for="jamMulai">Jam Mulai</label>
-                            <select class="form-control" id="jamMulai" name="jamMulai">
-                                <?php foreach ($jam as $j): ?>
-                                    <option value="<?= $j; ?>"><?= $j; ?></option>
-                                <?php endforeach; ?>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="jamSelesai">Jam Selesai</label>
-                            <select class="form-control" id="jamSelesai" name="jamSelesai">
+                            <label for="jamMulai">Durasi</label>
+                            <select class="form-control" id="durasi" name="durasi">
                                 <?php foreach ($jam as $j): ?>
                                     <option value="<?= $j; ?>"><?= $j; ?></option>
                                 <?php endforeach; ?>

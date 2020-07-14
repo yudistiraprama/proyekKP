@@ -1,15 +1,13 @@
 <?php
 
-class Dosen_model extends CI_model{
+class Dosen_model extends CI_model {
 
-    public function getAllDosen()
-    {
+    public function getAllDosen() {
+        $this->db->order_by('nama', 'ASC');
         return $this->db->get('dosen')->result_array();
-        
     }
 
-    public function tambahDataDosen()
-    {
+    public function tambahDataDosen() {
         $data = array(
             'nama' => $this->input->post('nama', true),
             'npp' => $this->input->post('npp', true)
@@ -18,31 +16,27 @@ class Dosen_model extends CI_model{
         $this->db->insert('dosen', $data);
     }
 
-    public function hapusDataDosen($id)
-    {
+    public function hapusDataDosen($id) {
         $this->db->where('id', $id);
         $this->db->delete('dosen');
     }
 
-    public function getDosenByID($id)
-    {
+    public function getDosenByID($id) {
         return $this->db->get_where('dosen', ['id' => $id])->row_array();
     }
 
-    public function editDataDosen()
-    {
+    public function editDataDosen() {
         $data = array(
             'nama' => $this->input->post('nama', true),
             'npp' => $this->input->post('npp', true)
         );
-        
+
         $this->db->where('id', $this->input->post('id'));
         $this->db->update('dosen', $data);
     }
 
-    public function getDosen($limit, $start, $keyword = null)
-    {
-        if($keyword){
+    public function getDosen($limit, $start, $keyword = null) {
+        if ($keyword) {
             $this->db->like('nama', $keyword);
             $this->db->or_like('npp', $keyword);
         }
@@ -50,8 +44,8 @@ class Dosen_model extends CI_model{
         return $this->db->get('dosen', $limit, $start)->result_array();
     }
 
-    public function countAllDosen()
-    {
+    public function countAllDosen() {
         return $this->db->get('dosen')->num_rows();
     }
+
 }

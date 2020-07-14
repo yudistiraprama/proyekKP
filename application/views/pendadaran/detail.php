@@ -78,18 +78,10 @@
                             </tr>
                             <tr>
                                 <td>
-                                    <p class="card-text">Jam Mulai:</p>
+                                    <p class="card-text">Durasi:</p>
                                 </td>
                                 <td>
-                                    <p class="card-text"><?= $pendadaran['jamMulai']; ?></p>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <p class="card-text">Jam Selesai:</p>
-                                </td>
-                                <td>
-                                    <p class="card-text"><?= $pendadaran['jamSelesai']; ?></p>
+                                    <p class="card-text"><?= $pendadaran['durasi']; ?></p>
                                 </td>
                             </tr>
                             <tr>

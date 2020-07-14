@@ -46,7 +46,7 @@ class Pendadaran extends CI_Controller {
     public function tambah($nim) {
         if ($this->Pendadaran_model->cekStatusPendadaran($nim) == NULL) {
             $data['judul'] = "Tambah Jadwal Pendadaran";
-            $data['jam'] = ['07.00', '08.00', '09.00', '10.00', '11.00', '12.00', '13.00', '14.00', '15.00', '16.00', '17.00'];
+            $data['jam'] = ['07.00-09.00', '08.00-10.00', '09.00-11.00', '10.00-12.00', '11.00-13.00', '12.00-14.00', '13.00-15.00', '14.00-16.00', '15.00-17.00'];
             $data['ruang'] = ['Ruang Penelitian', 'Lab. Komputer Dasar', 'Lab. Basis Data', 'Lab. Jaringan Komputer'];
             $data['dosen'] = $this->Dosen_model->getAllDosen();
             $data['mahasiswa'] = $this->Kolokium_model->getKolokiumByNIM($nim);
