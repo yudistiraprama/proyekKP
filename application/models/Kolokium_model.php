@@ -50,8 +50,7 @@ class Kolokium_model extends CI_model{
             'judul' => $this->input->post('judul', true),
             'reviewer' => $this->input->post('reviewer', true),
             'tanggal' => $this->input->post('tanggal', true),
-            'jamMulai' => $this->input->post('jamMulai', true),
-            'jamSelesai' => $this->input->post('jamSelesai', true),
+            'durasi' => $this->input->post('durasi', true),
             'ruang' => $this->input->post('ruang', true)
         );
         

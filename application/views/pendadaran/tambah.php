@@ -81,7 +81,7 @@
                             <small class="form-text text-danger"><?= form_error('tanggal'); ?></small>
                         </div>
                         <div class="form-group">
-                            <label for="jamMulai">Durasi</label>
+                            <label for="durasi">Jam</label>
                             <select class="form-control" id="durasi" name="durasi">
                                 <?php foreach ($jam as $j): ?>
                                     <option value="<?= $j; ?>"><?= $j; ?></option>

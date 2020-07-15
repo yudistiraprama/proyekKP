@@ -54,22 +54,10 @@
                         <small class="form-text text-danger"><?= form_error('tanggal'); ?></small>
                     </div>
                     <div class="form-group">
-                        <label for="jamMulai">Jam Mulai</label>
-                        <select class="form-control" id="jamMulai" name="jamMulai">
+                        <label for="durasi">Jam</label>
+                        <select class="form-control" id="durasi" name="durasi">
                             <?php foreach($jam as $j): ?>
-                                <?php if($j == $pendadaran['jamMulai']): ?>
-                                    <option value="<?= $j; ?>" selected><?= $j; ?></option>
-                                <?php else: ?>
-                                    <option value="<?= $j; ?>"><?= $j; ?></option>
-                                <?php endif; ?>
-                            <?php endforeach; ?>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="jamSelesai">Jam Selesai</label>
-                        <select class="form-control" id="jamSelesai" name="jamSelesai">
-                            <?php foreach($jam as $j): ?>
-                                <?php if($j == $pendadaran['jamSelesai']): ?>
+                                <?php if($j == $pendadaran['durasi']): ?>
                                     <option value="<?= $j; ?>" selected><?= $j; ?></option>
                                 <?php else: ?>
                                     <option value="<?= $j; ?>"><?= $j; ?></option>

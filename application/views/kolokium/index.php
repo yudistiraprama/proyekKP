@@ -21,17 +21,6 @@
                 </div>
             </div>
         </div>  
-    <?php elseif($this->session->flashdata('tidakAda')):?>
-    <div class="row mt-3">
-            <div class="col-md-10">
-                <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                    <?= $this->session->flashdata('tidakAda'); ?>.
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-            </div>
-        </div>
     <?php endif; ?>
 
     <h3 class="mt-3">Jadwal Kolokium</h3>
@@ -59,14 +48,14 @@
         <div class="col-md-16">
             <h7>Jumlah Data : <?= $total_rows; ?></h7>
 
-            <table class="table">
+            <table class="table" border="1">
                 <thead class="thead-dark">
-                    <tr>
+                    <tr style="text-align:center">
                         <th scope="col">No.</th>
                         <th scope="col">NIM</th>
                         <th scope="col">Nama</th>
                         <th scope="col">Tanggal</th>
-                        <th scope="col">Durasi</th>
+                        <th scope="col">Jam</th>
                         <th scope="col">Ruangan</th>
                         <th scope="col">Opsi</th>
                     </tr>
@@ -83,17 +72,17 @@
                     <?php endif; ?>
 
                     <?php foreach ($kolokium as $kol) : ?>
-                        <tr>
+                        <tr style="text-align:center">
                             <th><?= ++$start; ?></th>
                             <td><?= $kol['nim']; ?></td>
-                            <td><?= $kol['nama']; ?></td>
+                            <td style="text-align:left"><?= $kol['nama']; ?></td>
                             <td><?= $kol['tanggal']; ?></td>
                             <td><?= $kol['durasi']; ?></td>
                             <td><?= $kol['ruang']; ?></td>
                             <td>
-                                <a href="<?= base_url(); ?>kolokium/hapus/<?= $kol['id']; ?>" class="badge badge-danger float-right" onclick="return confirm('Apakah anda yakin menghapus data ini?');">Hapus</a>
-                                <a href="<?= base_url(); ?>kolokium/edit/<?= $kol['id']; ?>" class="badge badge-success float-right" >Edit</a>
-                                <a href="<?= base_url(); ?>kolokium/detail/<?= $kol['id']; ?>" class="badge badge-primary float-right" >Detail</a>                    
+                                <a href="<?= base_url(); ?>kolokium/detail/<?= $kol['id']; ?>" class="badge badge-primary" >Detail</a> 
+                                <a href="<?= base_url(); ?>kolokium/edit/<?= $kol['id']; ?>" class="badge badge-success" >Edit</a> 
+                                <a href="<?= base_url(); ?>kolokium/hapus/<?= $kol['id']; ?>" class="badge badge-danger" onclick="return confirm('Apakah anda yakin menghapus data ini?');">Hapus</a>                                       
                             </td>
                         </tr>
                     <?php endforeach; ?>

@@ -78,7 +78,7 @@
                             </tr>
                             <tr>
                                 <td>
-                                    <p class="card-text">Durasi:</p>
+                                    <p class="card-text">Jam:</p>
                                 </td>
                                 <td>
                                     <p class="card-text"><?= $pendadaran['durasi']; ?></p>

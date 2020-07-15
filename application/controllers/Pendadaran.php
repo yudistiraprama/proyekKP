@@ -90,8 +90,8 @@ class Pendadaran extends CI_Controller {
             if ($this->Kolokium_model->getKolokiumByNIM($nim) != null) {
                 $this->tambah($nim);
             } else {
-                $this->session->set_flashdata('tidakAda', 'Mahasiswa belum melakukan Kolokium');
-                redirect('pendadaran');
+                $this->session->set_flashdata('PendadarantidakAda', 'Mahasiswa belum melakukan Kolokium');
+                redirect('pendadaran/inputNim');
             }
         }
     }
@@ -112,7 +112,7 @@ class Pendadaran extends CI_Controller {
 
     public function edit($id) {
         $data['judul'] = "Edit Jadwal Pendadaran";
-        $data['jam'] = ['07.00', '08.00', '09.00', '10.00', '11.00', '12.00', '13.00', '14.00', '15.00', '16.00', '17.00'];
+        $data['jam'] = ['07.00-08.00', '08.00-09.00', '09.00-10.00', '10.00-11.00', '11.00-12.00', '12.00-13.00', '13.00-14.00', '14.00-15.00', '15.00-16.00', '16.0-17.00'];
         $data['ruang'] = ['Ruang Penelitian', 'Lab. Komputer Dasar', 'Lab. Basis Data', 'Lab. Jaringan Komputer'];
         $data['pendadaran'] = $this->Pendadaran_model->getPendadaranByID($id);
 

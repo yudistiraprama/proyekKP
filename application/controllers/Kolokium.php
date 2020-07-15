@@ -89,8 +89,8 @@ class Kolokium extends CI_Controller {
             if ($this->Mahasiswa_model->getMahasiswaByNIM($nim) != null) {
                 $this->tambah($nim);
             }else{
-                $this->session->set_flashdata('tidakAda','Mahasiswa tidak ditemukan');
-                redirect('kolokium');
+                $this->session->set_flashdata('KolokiumtidakAda','Mahasiswa tidak ditemukan');
+                redirect('kolokium/inputNim');
             }
         }
     }
@@ -111,7 +111,7 @@ class Kolokium extends CI_Controller {
 
     public function edit($id) {
         $data['judul'] = "Edit Jadwal Kolokium";
-        $data['jam'] = ['07.00', '08.00', '09.00', '10.00', '11.00', '12.00', '13.00', '14.00', '15.00', '16.00', '17.00'];
+        $data['jam'] = ['07.00-08.00', '08.00-09.00', '09.00-10.00', '10.00-11.00', '11.00-12.00', '12.00-13.00', '13.00-14.00', '14.00-15.00', '15.00-16.00', '16.0-17.00'];
         $data['ruang'] = ['Ruang Penelitian', 'Lab. Komputer Dasar', 'Lab. Basis Data', 'Lab. Jaringan Komputer'];
         $data['kolokium'] = $this->Kolokium_model->getKolokiumByID($id);
 

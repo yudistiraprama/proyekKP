@@ -10,16 +10,17 @@
                         <div class="form-group">
                             <label for="nim">NIM Mahasiswa</label>
                             <input type="text" name="nim" class="form-control" id="nim" value="<?= $mahasiswa['nim'] ?>" readonly>
-                            
+
                         </div>
                         <div class="form-group">
                             <label for="nama">Nama Mahasiswa</label>
                             <input type="text" name="nama" class="form-control" id="nama" value="<?= $mahasiswa['nama'] ?>" readonly>
-                            
+
                         </div>
                         <div class="form-group">
                             <label for="judul">Dosen Pembimbing 1</label>
                             <select class="form-control" id="dosen1" name="dosen1">
+                                <option value="">-</option>
                                 <?php foreach ($dosen as $ds): ?>
                                     <option value="<?= $ds['nama']; ?>"><?= $ds['nama']; ?></option>
                                 <?php endforeach; ?>
@@ -42,7 +43,8 @@
                         </div>
                         <div class="form-group">
                             <label for="reviewer">Reviewer</label>
-                             <select class="form-control" id="reviewer" name="reviewer">
+                            <select class="form-control" id="reviewer" name="reviewer">
+                                <option value="">-</option>
                                 <?php foreach ($dosen as $ds): ?>
                                     <option value="<?= $ds['nama']; ?>"><?= $ds['nama']; ?></option>
                                 <?php endforeach; ?>
@@ -55,7 +57,7 @@
                             <small class="form-text text-danger"><?= form_error('tanggal'); ?></small>
                         </div>
                         <div class="form-group">
-                            <label for="jamMulai">Durasi</label>
+                            <label for="durasi">Jam</label>
                             <select class="form-control" id="durasi" name="durasi">
                                 <?php foreach ($jam as $j): ?>
                                     <option value="<?= $j; ?>"><?= $j; ?></option>
