@@ -69,6 +69,28 @@ class Pendadaran_model extends CI_model {
         return $this->db->get_where('pendadaran', ['nim' => $nim])->row_array();
     }
 
-
+//    public function cekBentrokPendadaranDosen1($dosen1) {
+//        return $this->db->where('pendadaran', ['dosen1' => $dosen1])->result_array();   
+//    }
+//
+//    public function cekBentrokPendadaranDosen2($dosen2) {
+//        return $this->db->where('pendadaran', ['dosen2' => $dosen2])->result_array();
+//    }
+//
+//    public function cekBentrokPendadaranKetua($ketuaPenguji) {
+//        return $this->db->where('pendadaran', ['ketuaPenguji' => $ketuaPenguji])->result_array();
+//    }
+//    
+//    public function cekBentrokPendadaranSekretaris($sekretarisPenguji){
+//        return $this->db->where('pendadaran', ['sekretarisPenguji' => $sekretarisPenguji])->result_array();
+//    }
+//    
+//    public function cekBentrokRuangan($ruangan){
+//        return $this->db->where('pendadaran', ['ruangan' => $ruangan])->result_array();
+//    }
+    
+    public function cekBentrokPendadaranBy($kolom,$data){
+        return $this->db->where('pendadaran',[$kolom=>$data])->result_array();
+    }
 
 }

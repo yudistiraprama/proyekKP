@@ -76,4 +76,7 @@ class Kolokium_model extends CI_model{
        return $this->db->get_where('kolokium',['nim'=>$nim])->row_array();
         
     }
+    public function cekBentrokKolokiumnBy($kolom,$data){
+        return $this->db->where('kolokium',[$kolom=>$data])->result_array();
+    }
 }

@@ -75,6 +75,14 @@ class Pendadaran extends CI_Controller {
             redirect('pendadaran');
         }
     }
+    public function cekBentrok($dosen1,$dosen2,$ketuaPenguji,$sekretarisPenguji,$ruangan){//jangan diotak-atik method ini masih dlm proses pencerahan
+       $data1=$this->Pendadaran_model->cekBentrokPendadaranBy('dosen1',$dosen1);
+       $data2=$this->Pendadaran_model->cekBentrokPendadaranBy('dosen2',$dosen2);
+       $data3=$this->Pendadaran_model->cekBentrokPendadaranBy('ketuaPenguji',$ketuaPenguji);
+       $data4=$this->Pendadaran_model->cekBentrokPendadaranBy('sekretarisPenguji',$sekretarisPenguji);
+       $data5=$this->Pendadaran_model->cekBentrokPendadaranBy('ruangan',$ruangan);     
+       
+    }
 
     public function inputNim() {
         $data['judul'] = "Tambah Jadwal Pendadaran";
