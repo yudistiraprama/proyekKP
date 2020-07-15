@@ -80,7 +80,7 @@
                     </table>
                     <br>
                     <a href="<?= base_url() ?>kolokium" class="btn btn-primary float-right">Kembali</a>
-                    <a href="" class="btn btn-danger float-right">Print Data</a>
+                    <a href="<?= base_url() ?>kolokium/pdf/<?= $kolokium['id']; ?>" class="btn btn-danger float-right">Simpan PDF</a>
                 </div>
             </div>
         </div>

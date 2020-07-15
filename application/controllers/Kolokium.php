@@ -133,5 +133,20 @@ class Kolokium extends CI_Controller {
             redirect('kolokium');
         }
     }
+    
+    public function pdf($id){
+        $this->load->library('dompdf_gen');
+        $data['kolokium'] = $this->Kolokium_model->getKolokiumByID($id);
+        $this->load->view('kolokium/detail_pdf', $data);
+        
+        $paper_size = 'A4';
+        $oreintation = 'potrait';
+        $html = $this->output->get_output();
+        $this->dompdf->set_paper($paper_size, $oreintation);
+        
+        $this->dompdf->load_html($html);
+        $this->dompdf->render();
+        $this->dompdf->stream('Detail_Mahasiswa.pdf', array('Attachment' =>0));
+    }
 
 }
