@@ -105,6 +105,8 @@ class Pendadaran extends CI_Controller {
     public function detail($id) {
         $data['judul'] = 'Detail Jadwal Pendadaran';
         $data['pendadaran'] = $this->Pendadaran_model->getPendadaranByID($id);
+        
+        
         $this->load->view('templates/header', $data);
         $this->load->view('pendadaran/detail', $data);
         $this->load->view('templates/footer');
@@ -136,20 +138,34 @@ class Pendadaran extends CI_Controller {
             redirect('pendadaran');
         }
     }
-    
-    public function pdf($id){
+
+    public function pdf($id) {
         $this->load->library('dompdf_gen');
         $data['pendadaran'] = $this->Pendadaran_model->getPendadaranById($id);
         $this->load->view('pendadaran/detail_pdf', $data);
-        
+
         $paper_size = 'A4';
         $oreintation = 'potrait';
         $html = $this->output->get_output();
         $this->dompdf->set_paper($paper_size, $oreintation);
-        
+
         $this->dompdf->load_html($html);
         $this->dompdf->render();
-        $this->dompdf->stream('Detail_Mahasiswa.pdf', array('Attachment' =>0));
+        $this->dompdf->stream('Detail_Mahasiswa.pdf', array('Attachment' => 0));
+    }
+
+    public function undangan($id) {
+        $this->load->library('dompdf_gen');
+        $data['pendadaran'] = $this->Pendadaran_model->getPendadaranById($id);
+        $this->load->view('pendadaran/undangan_pdf', $data);
+      
+        $paper_size = 'A4';
+        $oreintation = 'potrait';
+        $html = $this->output->get_output();
+        $this->dompdf->set_paper($paper_size, $oreintation);
+        $this->dompdf->load_html($html);
+        $this->dompdf->render();
+        $this->dompdf->stream('Undangan_Pendadaran.pdf', array('Attachment' => 0));
     }
 
 }

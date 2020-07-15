@@ -88,8 +88,8 @@ class Kolokium extends CI_Controller {
             $nim = $postData['nim'];
             if ($this->Mahasiswa_model->getMahasiswaByNIM($nim) != null) {
                 $this->tambah($nim);
-            }else{
-                $this->session->set_flashdata('KolokiumtidakAda','Mahasiswa tidak ditemukan');
+            } else {
+                $this->session->set_flashdata('KolokiumtidakAda', 'Mahasiswa tidak ditemukan');
                 redirect('kolokium/inputNim');
             }
         }
@@ -133,20 +133,36 @@ class Kolokium extends CI_Controller {
             redirect('kolokium');
         }
     }
-    
-    public function pdf($id){
+
+    public function pdf($id) {
         $this->load->library('dompdf_gen');
         $data['kolokium'] = $this->Kolokium_model->getKolokiumByID($id);
         $this->load->view('kolokium/detail_pdf', $data);
-        
+        $this->load->view('kolokium/undangan_pdf', $data);
+
         $paper_size = 'A4';
         $oreintation = 'potrait';
         $html = $this->output->get_output();
         $this->dompdf->set_paper($paper_size, $oreintation);
-        
+
         $this->dompdf->load_html($html);
         $this->dompdf->render();
-        $this->dompdf->stream('Detail_Mahasiswa.pdf', array('Attachment' =>0));
+        $this->dompdf->stream('Detail_Mahasiswa.pdf', array('Attachment' => 0));
+    }
+
+    public function undangan($id) {
+        $this->load->library('dompdf_gen');
+        $data['kolokium'] = $this->Kolokium_model->getKolokiumByID($id);
+        $this->load->view('kolokium/undangan_pdf', $data);
+
+        $paper_size = 'A4';
+        $oreintation = 'potrait';
+        $html = $this->output->get_output();
+        $this->dompdf->set_paper($paper_size, $oreintation);
+
+        $this->dompdf->load_html($html);
+        $this->dompdf->render();
+        $this->dompdf->stream('Undangan_Kolokium.pdf', array('Attachment' => 0));
     }
 
 }

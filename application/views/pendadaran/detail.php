@@ -5,6 +5,7 @@
                 <div class="card-header">
                     Detail Data Pendadaran
                 </div>
+
                 <div class="card-body">
                     <table>
                         <tr>
@@ -97,6 +98,7 @@
                     <br>
                     <a href="<?= base_url() ?>pendadaran" class="btn btn-primary float-right">Kembali</a>
                     <a href="<?= base_url() ?>pendadaran/pdf/<?= $pendadaran['id']; ?>" class="btn btn-danger">Simpan PDF</a>
+                    <a href="<?= base_url() ?>pendadaran/undangan/<?= $pendadaran['id']; ?>" class="btn btn-success">Undangan</a>
                 </div>
             </div>
         </div>
