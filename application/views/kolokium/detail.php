@@ -65,7 +65,7 @@
                                     <p class="card-text">Jam:</p>
                                 </td>
                                 <td>
-                                    <p class="card-text"><?= $kolokium['durasi']; ?></p>
+                                    <p class="card-text"><?= $kolokium['durasi']; ?> WIB</p>
                                 </td>
                             </tr>
                             <tr>
@@ -80,7 +80,7 @@
                     </table>
                     <br>
                     <a href="<?= base_url() ?>kolokium" class="btn btn-primary float-right">Kembali</a>
-                    <a href="<?= base_url() ?>kolokium/pdf/<?= $kolokium['id']; ?>" class="btn btn-danger float-right">Simpan PDF</a>
+                    <a href="<?= base_url() ?>kolokium/pdf/<?= $kolokium['id']; ?>" class="btn btn-danger">Simpan PDF</a>
                 </div>
             </div>
         </div>

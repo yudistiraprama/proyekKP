@@ -19,7 +19,7 @@
     <div class="container">
 
       <a class="navbar-brand" href="<?= base_url(); ?>">
-      <img src="https://www.usd.ac.id/logo/usd.png" width="30" height="30" alt="Malas Ngoding">
+      <img src="img/fst.png" width="30" height="30">
       INFORMATIKA
       </a>
 

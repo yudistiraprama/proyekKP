@@ -136,5 +136,20 @@ class Pendadaran extends CI_Controller {
             redirect('pendadaran');
         }
     }
+    
+    public function pdf($id){
+        $this->load->library('dompdf_gen');
+        $data['pendadaran'] = $this->Pendadaran_model->getPendadaranById($id);
+        $this->load->view('pendadaran/detail_pdf', $data);
+        
+        $paper_size = 'A4';
+        $oreintation = 'potrait';
+        $html = $this->output->get_output();
+        $this->dompdf->set_paper($paper_size, $oreintation);
+        
+        $this->dompdf->load_html($html);
+        $this->dompdf->render();
+        $this->dompdf->stream('Detail_Mahasiswa.pdf', array('Attachment' =>0));
+    }
 
 }

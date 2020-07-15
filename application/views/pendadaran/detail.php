@@ -81,7 +81,7 @@
                                     <p class="card-text">Jam:</p>
                                 </td>
                                 <td>
-                                    <p class="card-text"><?= $pendadaran['durasi']; ?></p>
+                                    <p class="card-text"><?= $pendadaran['durasi']; ?>< WIB/p>
                                 </td>
                             </tr>
                             <tr>
@@ -96,6 +96,7 @@
                     </table>
                     <br>
                     <a href="<?= base_url() ?>pendadaran" class="btn btn-primary float-right">Kembali</a>
+                    <a href="<?= base_url() ?>pendadaran/pdf/<?= $pendadaran['id']; ?>" class="btn btn-danger">Simpan PDF</a>
                 </div>
             </div>
         </div>
