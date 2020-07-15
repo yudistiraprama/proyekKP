@@ -76,7 +76,20 @@ class Kolokium_model extends CI_model{
        return $this->db->get_where('kolokium',['nim'=>$nim])->row_array();
         
     }
-    public function cekBentrokKolokiumnBy($kolom,$data){
-        return $this->db->where('kolokium',[$kolom=>$data])->result_array();
+    
+    public function cekBentrokKolokiumAll($dosen1,$dosen2,$reviewer){
+        $this->db->where('dosen1',$dosen1);
+        $this->db->where('dosen2',$dosen2);
+        $this->db->where('revier',$reviewer);
+//        $this->db->where('ruang',$ruang);
+        return $this->db->get('kolokium')->result_array();  
+    }
+    
+    public function cekBentrokKolokiumAll2($dosen1,$reviewer){
+        $this->db->where('dosen1',$dosen1);
+        $this->db->where('reviewer',$reviewer);
+
+//        $this->db->where('ruang',$ruang);
+        return $this->db->get('kolokium')->result_array(); 
     }
 }

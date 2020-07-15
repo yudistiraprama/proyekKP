@@ -69,28 +69,20 @@ class Pendadaran_model extends CI_model {
         return $this->db->get_where('pendadaran', ['nim' => $nim])->row_array();
     }
 
-//    public function cekBentrokPendadaranDosen1($dosen1) {
-//        return $this->db->where('pendadaran', ['dosen1' => $dosen1])->result_array();   
-//    }
-//
-//    public function cekBentrokPendadaranDosen2($dosen2) {
-//        return $this->db->where('pendadaran', ['dosen2' => $dosen2])->result_array();
-//    }
-//
-//    public function cekBentrokPendadaranKetua($ketuaPenguji) {
-//        return $this->db->where('pendadaran', ['ketuaPenguji' => $ketuaPenguji])->result_array();
-//    }
-//    
-//    public function cekBentrokPendadaranSekretaris($sekretarisPenguji){
-//        return $this->db->where('pendadaran', ['sekretarisPenguji' => $sekretarisPenguji])->result_array();
-//    }
-//    
-//    public function cekBentrokRuangan($ruangan){
-//        return $this->db->where('pendadaran', ['ruangan' => $ruangan])->result_array();
-//    }
-    
-    public function cekBentrokPendadaranBy($kolom,$data){
-        return $this->db->where('pendadaran',[$kolom=>$data])->result_array();
+    public function cekBentrokPendadaranAll($dosen1,$dosen2,$ketuaPenguji,$sekretarisPenguji){
+        $this->db->where('dosen1',$dosen1);
+        $this->db->where('dosen2',$dosen2);
+        $this->db->where('ketuaPenguji',$ketuaPenguji);
+        $this->db->where('sekretarisPenguji',$sekretarisPenguji);
+//        $this->db->where('ruang',$ruang);
+        return $this->db->get('pendadaran')->result_array();  
     }
-
+    
+    public function cekBentrokPendadaranAll2($dosen1,$ketuaPenguji,$sekretarisPenguji){
+        $this->db->where('dosen1',$dosen1);
+        $this->db->where('ketuaPenguji',$ketuaPenguji);
+        $this->db->where('sekretarisPenguji',$sekretarisPenguji);
+//        $this->db->where('ruang',$ruang);
+        return $this->db->get('pendadaran')->result_array(); 
+    }
 }

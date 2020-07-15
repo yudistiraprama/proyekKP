@@ -65,13 +65,58 @@ class Kolokium extends CI_Controller {
                 $this->load->view('kolokium/tambah', $data);
                 $this->load->view('templates/footer');
             } else {
-                $this->Kolokium_model->tambahJadwalKolokium();
-                $this->session->set_flashdata('flash', 'Ditambahkan');
-                redirect('kolokium');
+                $postData = $this->input->post();
+                $dosen1 = $postData['dosen1'];
+                $dosen2 = $postData['dosen2'];
+                $reviewer = $postData['reviewer'];
+                $ruang = $postData['ruang'];
+                $tanggal = $postData['tanggal'];
+                $durasi = $postData['durasi'];
+                if ($dosen2 == '') {
+                    $hasil = $this->cekBentrok($dosen1, $reviewer, $ruang, $tanggal, $durasi);
+                } else {
+                    $hasil = $this->cekBentrok2($dosen1, $dosen2, $reviewer, $ruang, $tanggal, $durasi);
+                }
+
+                if ($hasil == 0) {
+                    $this->session->set_flashdata('bentrok', 'Ada Bentrok Jadwal');
+                    redirect('kolokium');
+                } else {
+                    $this->Kolokium_model->tambahJadwalKolokium();
+                    $this->session->set_flashdata('flash', 'Ditambahkan');
+                    redirect('kolokium');
+                }
+                
             }
         } else {
             $this->session->set_flashdata('terdaftar', 'Mahasiswa Telah terdaftar Kolokium');
             redirect('kolokium');
+        }
+    }
+
+    public function cekBentrok($dosen1, $dosen2, $reviewer, $ruang, $tanggal, $durasi) {//ruang masih belum bisa dipakai dan masih error lgi
+        $data1 = $this->Kolokium_model->cekBentrokKolokiumAll($dosen1, $dosen2, $reviewer);
+        foreach ($data1 as $dt) {
+            if ($dt['tanggal'] == $tanggal) {
+                if ($dt['durasi'] == $durasi) {
+                    return 0;
+                } else {
+                    return 1;
+                }
+            }
+        }
+    }
+
+    public function cekBentrok2($dosen1, $reviewer, $ruang, $tanggal, $durasi) {//ruang masih belum bisa dipakai dan masih error lgi
+        $data1 = $this->Pendadaran_model->cekBentrokKolokiumAll2($dosen1, $reviewer);
+        foreach ($data1 as $dt) {
+            if ($dt['tanggal'] == $tanggal) {
+                if ($dt['durasi'] == $durasi) {
+                    return 0;
+                } else {
+                    return 1;
+                }
+            }
         }
     }
 
