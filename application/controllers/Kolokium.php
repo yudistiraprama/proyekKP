@@ -31,7 +31,7 @@ class Kolokium extends CI_Controller {
         $config['base_url'] = 'http://localhost/proyekKP/kolokium/index';
         $config['total_rows'] = $this->db->count_all_results();
         $data['total_rows'] = $config['total_rows'];
-        $config['per_page'] = 20;
+        $config['per_page'] = 10;
 
         $this->pagination->initialize($config);
 
@@ -50,11 +50,6 @@ class Kolokium extends CI_Controller {
             $data['ruang'] = ['Ruang Penelitian', 'Lab. Komputer Dasar', 'Lab. Basis Data', 'Lab. Jaringan Komputer'];
             $data['dosen'] = $this->Dosen_model->getAllDosen();
             $data['mahasiswa'] = $this->Mahasiswa_model->getMahasiswaByNIM($nim);
-            $nama = $this->Mahasiswa_model->getMahasiswaNama($nim);
-            $data['nama']= implode("", $nama);
-            $data['nim']=$nim;
-            $namaSession=implode("", $nama);
-
 
             $this->form_validation->set_rules('nama', 'Nama Mahasiswa', 'required');
             $this->form_validation->set_rules('nim', 'NIM Mahasiswa', 'required|numeric');
@@ -83,9 +78,7 @@ class Kolokium extends CI_Controller {
                 }
 
                 if ($hasil == 0) {
-                    $this->session->set_flashdata('bentrok', 'Tanggal atau jam ujian sudah digunakan');
-                    $this->session->set_userdata('nimUser', $nim);
-                    $this->session->set_userdata('namaUser', $namaSession);
+                    $this->session->set_flashdata('bentrok', 'Jadwal Dosen Bertabrakan');
                     redirect('kolokium/tambah');
                 } else {
                     $this->Kolokium_model->tambahJadwalKolokium();

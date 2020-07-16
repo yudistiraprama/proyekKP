@@ -31,7 +31,7 @@ class Pendadaran extends CI_Controller {
         $config['base_url'] = 'http://localhost/proyekKP/pendadaran/index';
         $config['total_rows'] = $this->db->count_all_results();
         $data['total_rows'] = $config['total_rows'];
-        $config['per_page'] = 20;
+        $config['per_page'] = 10;
 
         $this->pagination->initialize($config);
 

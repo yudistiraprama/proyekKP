@@ -1,18 +1,16 @@
 <div class="container">
     <?php if ($this->session->flashdata('bentrok')): ?>
-    <div class="row mt-3">
-        <div class="col-md-10">
-            <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                <?= $this->session->flashdata('bentrok'); ?>.
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
+        <div class="row mt-3">
+            <div class="col-md-10">
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <?= $this->session->flashdata('bentrok'); ?>.
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
             </div>
         </div>
-    </div>
     <?php endif; ?>
-    <?php var_dump($nama); ?>
-    <?php var_dump($nim); ?>
     <div class="row mt-3">
         <div class="col">
             <div class="card">
@@ -24,25 +22,25 @@
                         <div class="form-group">
                             <label for="nim">NIM Mahasiswa</label>
                             <?php if ($this->session->userdata('nimUser')): ?>
-                            <input type="text" name="nim" class="form-control" id="nim" value="<?= $this->session->userdata('namaUser') ?>" readonly>
+                                <input type="text" name="nim" class="form-control" id="nim" value="<?= $this->session->userdata('namaUser') ?>" readonly>
                             <?php else: ?>
-                            <input type="text" name="nim" class="form-control" id="nim" value="<?= $mahasiswa['nim'] ?>" readonly>
+                                <input type="text" name="nim" class="form-control" id="nim" value="<?= $mahasiswa['nim'] ?>" readonly>
                             <?php endif; ?>
                         </div>
                         <div class="form-group">
                             <label for="nama">Nama Mahasiswa</label>
-                            <?php if($this->session->userdata('namaUser')): ?>
-                            <input type="text" name="nama" class="form-control" id="nama" value="<?= $this->session->userdata('nimUser') ?>" readonly>
+                            <?php if ($this->session->userdata('namaUser')): ?>
+                                <input type="text" name="nama" class="form-control" id="nama" value="<?= $this->session->userdata('nimUser') ?>" readonly>
                             <?php else: ?>
-                            <input type="text" name="nama" class="form-control" id="nama" value="<?= $mahasiswa['nama'] ?>" readonly>
-                            <?php endif;?>
+                                <input type="text" name="nama" class="form-control" id="nama" value="<?= $mahasiswa['nama'] ?>" readonly>
+                            <?php endif; ?>
                         </div>
                         <div class="form-group">
                             <label for="judul">Dosen Pembimbing 1</label>
                             <select class="form-control" id="dosen1" name="dosen1">
                                 <option value="">-</option>
                                 <?php foreach ($dosen as $ds): ?>
-                                <option value="<?= $ds['nama']; ?>"><?= $ds['nama']; ?></option>
+                                    <option value="<?= $ds['nama']; ?>"><?= $ds['nama']; ?></option>
                                 <?php endforeach; ?>
                             </select>
                             <small class="form-text text-danger"><?= form_error('dosen1'); ?></small>
@@ -52,7 +50,7 @@
                             <select class="form-control" id="dosen2" name="dosen2">
                                 <option value="">-</option>
                                 <?php foreach ($dosen as $ds): ?>
-                                <option value="<?= $ds['nama']; ?>"><?= $ds['nama']; ?></option>
+                                    <option value="<?= $ds['nama']; ?>"><?= $ds['nama']; ?></option>
                                 <?php endforeach; ?>
                             </select>
                         </div>
@@ -66,7 +64,7 @@
                             <select class="form-control" id="reviewer" name="reviewer">
                                 <option value="">-</option>
                                 <?php foreach ($dosen as $ds): ?>
-                                <option value="<?= $ds['nama']; ?>"><?= $ds['nama']; ?></option>
+                                    <option value="<?= $ds['nama']; ?>"><?= $ds['nama']; ?></option>
                                 <?php endforeach; ?>
                             </select>
                             <small class="form-text text-danger"><?= form_error('reviewer'); ?></small>
@@ -80,7 +78,7 @@
                             <label for="durasi">Jam</label>
                             <select class="form-control" id="durasi" name="durasi">
                                 <?php foreach ($jam as $j): ?>
-                                <option value="<?= $j; ?>"><?= $j; ?></option>
+                                    <option value="<?= $j; ?>"><?= $j; ?></option>
                                 <?php endforeach; ?>
                             </select>
                         </div>
@@ -88,7 +86,7 @@
                             <label for="ruang">Ruang</label>
                             <select class="form-control" id="ruang" name="ruang">
                                 <?php foreach ($ruang as $r): ?>
-                                <option value="<?= $r; ?>"><?= $r; ?></option>
+                                    <option value="<?= $r; ?>"><?= $r; ?></option>
                                 <?php endforeach; ?>
                             </select>
                         </div>
