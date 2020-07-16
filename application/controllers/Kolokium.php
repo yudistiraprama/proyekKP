@@ -79,8 +79,8 @@ class Kolokium extends CI_Controller {
                 }
 
                 if ($hasil == 0) {
-                    $this->session->set_flashdata('bentrok', 'Ada Bentrok Jadwal');
-                    redirect('kolokium');
+                    $this->session->set_flashdata('bentrok', 'Tanggal atau jam ujian sudah digunakan');
+                    redirect('kolokium/tambah');
                 } else {
                     $this->Kolokium_model->tambahJadwalKolokium();
                     $this->session->set_flashdata('flash', 'Ditambahkan');
