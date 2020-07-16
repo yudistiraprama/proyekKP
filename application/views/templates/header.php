@@ -19,7 +19,7 @@
     <div class="container">
 
       <a class="navbar-brand" href="<?= base_url(); ?>">
-      <img src="img/fst.png" width="30" height="30">
+          <img src="fst.png" width="30" height="30">
       INFORMATIKA
       </a>
 
@@ -54,7 +54,7 @@
             <a class="nav-link" href="<?= base_url() ?>import">Import Data</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="">Tentang</a>
+            <a class="nav-link" href="<?= base_url() ?>tentang">Tentang</a>
           </li>
         </ul>
 
