@@ -1,45 +1,153 @@
-<html>
-    <head>
+<html><head>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
         <title></title>
-    </head>
-    <body>
-
+    </head><body>
     <center>
         <h3>
             UNDANGAN UJIAN PENDADARAN SKRIPSI
         </h3>
     </center>
-    <br>
-    <?php if ($pendadaran['dosen2'] != NULL): ?>
-        <p>Yth. <?= $pendadaran['dosen1']; ?>,<?= $pendadaran['dosen2']; ?>, dan <?= $pendadaran['reviewer']; ?><br>
-            Terkait penetapan jadwal ujian Pendadaran, atas nama mahasiswa :<br>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NIM&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:<?= $pendadaran['nim']; ?><br>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Nama&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:<?= $pendadaran['nama']; ?><br>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Judul&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:<?= $pendadaran['judul']; ?><br>
-            Jadwal ujian pendadaran skripsi akan dilaksanakan pada:<br>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Tanggal&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: <?= $pendadaran['tanggal']; ?><br>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Waktu&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: <?= $pendadaran['durasi']; ?><br>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Dosen Pembimbing 1 : <?= $pendadaran['dosen1']; ?><br>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Dosen Pembimbing 2 : <?= $pendadaran['dosen2']; ?><br>  
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Dosen Penguji&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: <?= $pendadaran['ketuaPenguji']; ?><br>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: <?= $pendadaran['sekretarisPenguji']; ?><br>
-            Saya ingin meminta konfirmasi Bapak, apakah bisa dilaksanakan sesuai jadwal diatas?<br>
-            Atas perhatian dan kerjasama Bapak saya ucapkan terima kasih.
+    <?php if ($kolokium['dosen2'] != NULL): ?>
+        <table>
+            <tr>
+                <td>Yth.</td>
+                <td><?= $kolokium['dosen1']; ?></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td><?= $kolokium['dosen2']; ?></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td><?= $kolokium['reviewer']; ?></td>
+            </tr>
+        </table>
+    <br><br>
+        Terkait penetapan jadwal ujian pendadaran skripsi, atas nama mahasiswa :<br>
+        <table>
+            <tr>
+                <td style="color: white">Yth.</td>                
+                <td>NIM</td>
+                <td>:</td>
+                <td><?= $kolokium['nim']; ?></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>Nama</td>
+                <td>:</td>
+                <td><?= $kolokium['judul']; ?></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>Judul</td>
+                <td>:</td>
+                <td><?= $kolokium['nim']; ?></td>
+            </tr>
+        </table>
+        <br><br>
+        Jadwal ujian pendadaran skripsi akan dilaksanakan pada:<br>
+        <table>
+            <tr>
+                <td style="color: white">Yth.</td>  
+                <td>Tanggal</td>
+                <td>:</td>
+                <td><?= $kolokium['tanggal']; ?></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>Jam</td>
+                <td>:</td>
+                <td><?= $kolokium['durasi']; ?> WIB</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>Dosen Pembimbing 1</td>
+                <td>:</td>
+                <td><?= $kolokium['dosen1']; ?></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>Dosen Pembimbing 2</td>
+                <td>:</td>
+                <td><?= $kolokium['dosen2']; ?></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>Dosen Penguji</td>
+                <td>:</td>
+                <td><?= $kolokium['reviewer']; ?></td>
+            </tr>
+        </table>
+        <br><br>
+
+        <p>Saya ingin meminta konfirmasi Bapak/Ibu, apakah bisa dilaksanakan sesuai jadwal diatas?<br>
+            Atas perhatian dan kerjasama Bapak/Ibu saya ucapkan terima kasih.
         </p>
     <?php else: ?>
-        <p>Yth. <?= $pendadaran['dosen1']; ?>,<?= $pendadaran['dosen2']; ?>, dan <?= $pendadaran['reviewer']; ?><br>
-            Terkait penetapan jadwal ujian Pendadaran, atas nama mahasiswa :<br>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NIM&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:<?= $pendadaran['nim']; ?><br>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Nama&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:<?= $pendadaran['nama']; ?><br>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Judul&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:<?= $pendadaran['judul']; ?><br>
-            Jadwal ujian pendadaran skripsi akan dilaksanakan pada:<br>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Tanggal&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: <?= $pendadaran['tanggal']; ?><br>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Waktu&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: <?= $pendadaran['durasi']; ?><br>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Dosen Pembimbing 1 : <?= $pendadaran['dosen1']; ?><br> 
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Dosen Penguji&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: <?= $pendadaran['ketuaPenguji']; ?><br>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: <?= $pendadaran['sekretarisPenguji']; ?><br>
-            Saya ingin meminta konfirmasi Bapak, apakah bisa dilaksanakan sesuai jadwal diatas?<br>
-            Atas perhatian dan kerjasama Bapak saya ucapkan terima kasih.
+        <table>
+            <tr>
+                <td>Yth.</td>
+                <td><?= $kolokium['dosen1']; ?></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td><?= $kolokium['reviewer']; ?></td>
+            </tr>
+        </table>
+    <br><br>
+        Terkait penetapan jadwal ujian pendadaran skripsi, atas nama mahasiswa :<br>
+        <table>
+            <tr>
+                <td style="color: white">Yth.</td>                
+                <td>NIM</td>
+                <td>:</td>
+                <td><?= $kolokium['nim']; ?></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>Nama</td>
+                <td>:</td>
+                <td><?= $kolokium['judul']; ?></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>Judul</td>
+                <td>:</td>
+                <td><?= $kolokium['nim']; ?></td>
+            </tr>
+        </table>
+        <br><br>
+        Jadwal ujian pendadaran skripsi akan dilaksanakan pada:<br>
+        <table>
+            <tr>
+                <td style="color: white">Yth.</td>  
+                <td>Tanggal</td>
+                <td>:</td>
+                <td><?= $kolokium['tanggal']; ?></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>Jam</td>
+                <td>:</td>
+                <td><?= $kolokium['durasi']; ?> WIB</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>Dosen Pembimbing 1</td>
+                <td>:</td>
+                <td><?= $kolokium['dosen1']; ?></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>Dosen Penguji</td>
+                <td>:</td>
+                <td><?= $kolokium['reviewer']; ?></td>
+            </tr>
+        </table>
+        <br><br>
+
+        <p>Saya ingin meminta konfirmasi Bapak/Ibu, apakah bisa dilaksanakan sesuai jadwal diatas?<br>
+            Atas perhatian dan kerjasama Bapak/Ibu saya ucapkan terima kasih.
         </p>
     <?php endif; ?>
 

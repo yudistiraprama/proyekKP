@@ -179,7 +179,6 @@ class Kolokium extends CI_Controller {
         $this->load->library('dompdf_gen');
         $data['kolokium'] = $this->Kolokium_model->getKolokiumByID($id);
         $this->load->view('kolokium/detail_pdf', $data);
-        $this->load->view('kolokium/undangan_pdf', $data);
 
         $paper_size = 'A4';
         $oreintation = 'potrait';

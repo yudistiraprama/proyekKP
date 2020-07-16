@@ -1,6 +1,22 @@
 <html><head>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
         <title></title>
     </head><body>
+        <table>
+            <tr>
+                <td width="60">
+                    <img src="img/fst.png" width="70">
+                </td>
+                <td align="left">
+                    <span>
+                        PROGRAM STUDI INFORMATIKA
+                        <br>FAKULTAS SAINS DAN TEKNOLOGI
+                        <br>UNIVERSITAS SANATA DHARMA YOGYAKARTA
+                    </span>
+                </td>
+            </tr>
+        </table>
+        <hr class="line-title">
     <center>
         <h3>JADWAL PENDADARAN MAHASISWA</h3>
     </center>
