@@ -60,7 +60,7 @@ class Mahasiswa_model extends CI_model{
     public function getMahasiswaNama($nim){
         $this->db->select('nama');
         $this->db->where('nim',$nim);
-        return $this->db->get('mahasiswa')->row_array();
+        return $this->db->get('mahasiswa')->row();
       
         
     }
