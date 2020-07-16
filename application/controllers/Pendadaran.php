@@ -186,7 +186,7 @@ class Pendadaran extends CI_Controller {
         $this->load->library('dompdf_gen');
         $data['pendadaran'] = $this->Pendadaran_model->getPendadaranById($id);
         $this->load->view('pendadaran/detail_pdf', $data);
-
+        $this->load->view('pendadaran/undangan_pdf', $data);
         $paper_size = 'A4';
         $oreintation = 'potrait';
         $html = $this->output->get_output();
@@ -195,6 +195,7 @@ class Pendadaran extends CI_Controller {
         $this->dompdf->load_html($html);
         $this->dompdf->render();
         $this->dompdf->stream('Detail_Mahasiswa.pdf', array('Attachment' => 0));
+
     }
 
     public function undangan($id) {
