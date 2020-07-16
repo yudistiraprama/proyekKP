@@ -57,6 +57,13 @@ class Mahasiswa_model extends CI_model{
         $this->db->order_by('nim','ASC');
         return $this->db->get('mahasiswa', $limit, $start)->result_array();
     }
+    public function getMahasiswaNama($nim){
+        $this->db->select('nama');
+        $this->db->where('nim',$nim);
+        return $this->db->get('mahasiswa')->row_array();
+      
+        
+    }
 
     public function countAllMahasiswa()
     {

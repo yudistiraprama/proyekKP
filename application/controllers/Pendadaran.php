@@ -75,9 +75,9 @@ class Pendadaran extends CI_Controller {
                 $tanggal = $postData['tanggal'];
                 $durasi = $postData['durasi'];
                 if ($dosen2 == '') {
-                    $hasil = $this->cekBentrok($dosen1, $dosen2, $ketuaPenguji, $sekretarisPenguji, $ruang, $tanggal, $durasi);
+                    $hasil = $this->cekBentrok2($dosen1, $ketuaPenguji, $sekretarisPenguji, $ruang, $tanggal, $durasi);
                 } else {
-                    $hasil = $this->cekBentrok2($dosen1, $dosen2, $ketuaPenguji, $sekretarisPenguji, $ruang, $tanggal, $durasi);
+                    $hasil = $this->cekBentrok($dosen1,$dosen2, $ketuaPenguji, $sekretarisPenguji, $ruang, $tanggal, $durasi);
                 }
 
                 if ($hasil == 0) {

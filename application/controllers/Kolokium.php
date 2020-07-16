@@ -50,6 +50,10 @@ class Kolokium extends CI_Controller {
             $data['ruang'] = ['Ruang Penelitian', 'Lab. Komputer Dasar', 'Lab. Basis Data', 'Lab. Jaringan Komputer'];
             $data['dosen'] = $this->Dosen_model->getAllDosen();
             $data['mahasiswa'] = $this->Mahasiswa_model->getMahasiswaByNIM($nim);
+            $nama = $this->Mahasiswa_model->getMahasiswaNama($nim);
+            $data['nama']= implode("", $nama);
+            $data['nim']=$nim;
+            $namaSession=implode("", $nama);
 
 
             $this->form_validation->set_rules('nama', 'Nama Mahasiswa', 'required');
@@ -73,20 +77,21 @@ class Kolokium extends CI_Controller {
                 $tanggal = $postData['tanggal'];
                 $durasi = $postData['durasi'];
                 if ($dosen2 == '') {
-                    $hasil = $this->cekBentrok($dosen1, $reviewer, $ruang, $tanggal, $durasi);
+                    $hasil = $this->cekBentrok2($dosen1, $reviewer, $ruang, $tanggal, $durasi);
                 } else {
-                    $hasil = $this->cekBentrok2($dosen1, $dosen2, $reviewer, $ruang, $tanggal, $durasi);
+                    $hasil = $this->cekBentrok($dosen1, $dosen2, $reviewer, $ruang, $tanggal, $durasi);
                 }
 
                 if ($hasil == 0) {
                     $this->session->set_flashdata('bentrok', 'Tanggal atau jam ujian sudah digunakan');
+                    $this->session->set_userdata('nimUser', $nim);
+                    $this->session->set_userdata('namaUser', $namaSession);
                     redirect('kolokium/tambah');
                 } else {
                     $this->Kolokium_model->tambahJadwalKolokium();
                     $this->session->set_flashdata('flash', 'Ditambahkan');
                     redirect('kolokium');
                 }
-                
             }
         } else {
             $this->session->set_flashdata('terdaftar', 'Mahasiswa Telah terdaftar Kolokium');
@@ -106,12 +111,12 @@ class Kolokium extends CI_Controller {
     }
 
     public function cekBentrok2($dosen1, $reviewer, $ruang, $tanggal, $durasi) {//ruang masih belum bisa dipakai
-        $data1 = $this->Pendadaran_model->cekBentrokKolokiumAll2($dosen1, $reviewer);
+        $data1 = $this->Kolokium_model->cekBentrokKolokiumAll2($dosen1, $reviewer);
         foreach ($data1 as $dt) {
             if ($dt['tanggal'] == $tanggal) {
                 if ($dt['durasi'] == $durasi) {
                     return 0;
-                } 
+                }
             }
         }return 1;
     }
