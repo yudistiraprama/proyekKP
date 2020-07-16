@@ -83,10 +83,12 @@ class Pendadaran extends CI_Controller {
                 if ($hasil == 0) {
                     $this->session->set_flashdata('bentrok', 'Ada Bentrok Jadwal');
                     redirect('pendadaran');
+//                    var_dump($hasil);
                 } else {
                     $this->Pendadaran_model->tambahJadwalPendadaran();
                     $this->session->set_flashdata('flash', 'Ditambahkan');
                     redirect('pendadaran');
+//                    var_dump($hasil);
                 }
             }
         } else {
@@ -95,29 +97,26 @@ class Pendadaran extends CI_Controller {
         }
     }
 
-    public function cekBentrok($dosen1, $dosen2, $ketuaPenguji, $sekretarisPenguji, $ruang, $tanggal, $durasi) {//ruang masih belum bisa dipakai dan masih error lgi
+    public function cekBentrok($dosen1, $dosen2, $ketuaPenguji, $sekretarisPenguji, $ruang, $tanggal, $durasi) {//ruang masih belum bisa dipakai
         $data1 = $this->Pendadaran_model->cekBentrokPendadaranAll($dosen1, $dosen2, $ketuaPenguji, $sekretarisPenguji);
         foreach ($data1 as $dt) {
             if ($dt['tanggal'] == $tanggal) {
                 if ($dt['durasi'] == $durasi) {
                     return 0;
-                } else {
-                    return 1;
                 }
             }
-        }
+        }return 1;
     }
-    public function cekBentrok2($dosen1, $ketuaPenguji, $sekretarisPenguji, $ruang, $tanggal, $durasi){//ruang masih belum bisa dipakai dan masih error lgi
-       $data1 = $this->Pendadaran_model->cekBentrokPendadaranAll2($dosen1, $ketuaPenguji, $sekretarisPenguji);
+
+    public function cekBentrok2($dosen1, $ketuaPenguji, $sekretarisPenguji, $ruang, $tanggal, $durasi) {//ruang masih belum bisa dipakai
+        $data1 = $this->Pendadaran_model->cekBentrokPendadaranAll2($dosen1, $ketuaPenguji, $sekretarisPenguji);
         foreach ($data1 as $dt) {
             if ($dt['tanggal'] == $tanggal) {
                 if ($dt['durasi'] == $durasi) {
                     return 0;
-                } else {
-                    return 1;
                 }
             }
-        } 
+        } return 1;
     }
 
     public function inputNim() {
