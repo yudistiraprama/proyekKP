@@ -94,30 +94,26 @@ class Kolokium extends CI_Controller {
         }
     }
 
-    public function cekBentrok($dosen1, $dosen2, $reviewer, $ruang, $tanggal, $durasi) {//ruang masih belum bisa dipakai dan masih error lgi
+    public function cekBentrok($dosen1, $dosen2, $reviewer, $ruang, $tanggal, $durasi) {//ruang masih belum bisa dipakai
         $data1 = $this->Kolokium_model->cekBentrokKolokiumAll($dosen1, $dosen2, $reviewer);
         foreach ($data1 as $dt) {
             if ($dt['tanggal'] == $tanggal) {
                 if ($dt['durasi'] == $durasi) {
                     return 0;
-                } else {
-                    return 1;
                 }
             }
-        }
+        }return 1;
     }
 
-    public function cekBentrok2($dosen1, $reviewer, $ruang, $tanggal, $durasi) {//ruang masih belum bisa dipakai dan masih error lgi
+    public function cekBentrok2($dosen1, $reviewer, $ruang, $tanggal, $durasi) {//ruang masih belum bisa dipakai
         $data1 = $this->Pendadaran_model->cekBentrokKolokiumAll2($dosen1, $reviewer);
         foreach ($data1 as $dt) {
             if ($dt['tanggal'] == $tanggal) {
                 if ($dt['durasi'] == $durasi) {
                     return 0;
-                } else {
-                    return 1;
-                }
+                } 
             }
-        }
+        }return 1;
     }
 
     public function inputNim() {
