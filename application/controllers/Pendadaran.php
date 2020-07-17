@@ -59,6 +59,7 @@ class Pendadaran extends CI_Controller {
             $this->form_validation->set_rules('reviewer', 'Reviewer', 'required');
             $this->form_validation->set_rules('ketuaPenguji', 'Ketua Penguji', 'required');
             $this->form_validation->set_rules('sekretarisPenguji', 'Sekretaris Penguji', 'required');
+            $this->form_validation->set_rules('anggotaPenguji', 'Anggota Penguji');
             $this->form_validation->set_rules('tanggal', 'Tanggal', 'required');
 
             if ($this->form_validation->run() == FALSE) {
@@ -71,6 +72,7 @@ class Pendadaran extends CI_Controller {
                 $dosen2 = $postData['dosen2'];
                 $ketuaPenguji = $postData['ketuaPenguji'];
                 $sekretarisPenguji = $postData['sekretarisPenguji'];
+                $anggotaPenguji = $postData['anggotaPenguji'];
                 $ruang = $postData['ruang'];
                 $tanggal = $postData['tanggal'];
                 $durasi = $postData['durasi'];
@@ -114,6 +116,7 @@ class Pendadaran extends CI_Controller {
         $this->form_validation->set_rules('reviewer', 'Reviewer', 'required');
         $this->form_validation->set_rules('ketuaPenguji', 'Ketua Penguji', 'required');
         $this->form_validation->set_rules('sekretarisPenguji', 'Sekretaris Penguji', 'required');
+        $this->form_validation->set_rules('anggotaPenguji', 'Anggota Penguji');
         $this->form_validation->set_rules('tanggal', 'Tanggal', 'required');
 
         if ($this->form_validation->run() == FALSE) {
@@ -126,6 +129,7 @@ class Pendadaran extends CI_Controller {
             $dosen2 = $postData['dosen2'];
             $ketuaPenguji = $postData['ketuaPenguji'];
             $sekretarisPenguji = $postData['sekretarisPenguji'];
+            $anggotaPenguji = $postData['anggotaPenguji'];
             $ruang = $postData['ruang'];
             $tanggal = $postData['tanggal'];
             $durasi = $postData['durasi'];
@@ -221,6 +225,7 @@ class Pendadaran extends CI_Controller {
         $this->form_validation->set_rules('reviewer', 'Reviewer', 'required');
         $this->form_validation->set_rules('ketuaPenguji', 'Ketua Penguji', 'required');
         $this->form_validation->set_rules('sekretarisPenguji', 'Sekretaris Penguji', 'required');
+        $this->form_validation->set_rules('anggotaPenguji', 'Anggota Penguji');
         $this->form_validation->set_rules('tanggal', 'Tanggal', 'required');
 
         if ($this->form_validation->run() == FALSE) {

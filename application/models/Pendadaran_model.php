@@ -16,6 +16,7 @@ class Pendadaran_model extends CI_model {
             'reviewer' => $this->input->post('reviewer', true),
             'ketuaPenguji' => $this->input->post('ketuaPenguji', true),
             'sekretarisPenguji' => $this->input->post('sekretarisPenguji', true),
+            'anggotaPenguji' => $this->input->post('anggotaPenguji', true),
             'tanggal' => $this->input->post('tanggal', true),
             'durasi' => $this->input->post('durasi', true),
             'ruang' => $this->input->post('ruang', true)
@@ -43,6 +44,7 @@ class Pendadaran_model extends CI_model {
             'reviewer' => $this->input->post('reviewer', true),
             'ketuaPenguji' => $this->input->post('ketuaPenguji', true),
             'sekretarisPenguji' => $this->input->post('sekretarisPenguji', true),
+            'anggotaPenguji' => $this->input->post('anggotaPenguji', true),
             'tanggal' => $this->input->post('tanggal', true),
             'durasi' => $this->input->post('durasi', true),
             'ruang' => $this->input->post('ruang', true)

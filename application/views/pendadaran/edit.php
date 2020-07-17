@@ -33,7 +33,7 @@
                         <div class="form-group">
                             <label for="dosen2">Dosen Pembimbing 2</label>
                             <select class="form-control" id="dosen2" name="dosen2">
-                                 <?php foreach ($dosen as $ds): ?>
+                                <?php foreach ($dosen as $ds): ?>
                                     <?php if ($ds['nama'] == $pendadaran['dosen2']): ?>
                                         <option value="<?= $ds['nama']; ?>"selected><?= $ds['nama']; ?></option>
                                     <?php else: ?>
@@ -50,7 +50,7 @@
                         <div class="form-group">
                             <label for="reviewer">Reviewer</label>
                             <select class="form-control" id="reviewer" name="reviewer">
-                                 <?php foreach ($dosen as $ds): ?>
+                                <?php foreach ($dosen as $ds): ?>
                                     <?php if ($ds['nama'] == $pendadaran['reviewer']): ?>
                                         <option value="<?= $ds['nama']; ?>"selected><?= $ds['nama']; ?></option>
                                     <?php else: ?>
@@ -62,7 +62,7 @@
                         <div class="form-group">
                             <label for="ketuaPenguji">Ketua Penguji</label>
                             <select class="form-control" id="ketuaPenguji" name="ketuaPenguji">
-                                 <?php foreach ($dosen as $ds): ?>
+                                <?php foreach ($dosen as $ds): ?>
                                     <?php if ($ds['nama'] == $pendadaran['ketuaPenguji']): ?>
                                         <option value="<?= $ds['nama']; ?>"selected><?= $ds['nama']; ?></option>
                                     <?php else: ?>
@@ -74,8 +74,21 @@
                         <div class="form-group">
                             <label for="sekretarisPenguji">Sekretaris Penguji</label>
                             <select class="form-control" id="sekretarisPenguji" name="sekretarisPenguji">
-                                 <?php foreach ($dosen as $ds): ?>
+                                <?php foreach ($dosen as $ds): ?>
                                     <?php if ($ds['nama'] == $pendadaran['sekretarisPenguji']): ?>
+                                        <option value="<?= $ds['nama']; ?>"selected><?= $ds['nama']; ?></option>
+                                    <?php else: ?>
+                                        <option value="<?= $ds['nama']; ?>"><?= $ds['nama']; ?></option>
+                                    <?php endif; ?>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="sekretarisPenguji">Anggota Penguji</label>
+                            <select class="form-control" id="anggotaPenguji" name="anggotaPenguji">
+                                <option value="-">-</option>
+                                <?php foreach ($dosen as $ds): ?>
+                                    <?php if ($ds['nama'] == $pendadaran['anggotaPenguji']): ?>
                                         <option value="<?= $ds['nama']; ?>"selected><?= $ds['nama']; ?></option>
                                     <?php else: ?>
                                         <option value="<?= $ds['nama']; ?>"><?= $ds['nama']; ?></option>

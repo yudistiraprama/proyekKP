@@ -71,6 +71,14 @@
                             </tr>
                             <tr>
                                 <td>
+                                    <p class="card-text">Anggota Penguji:</p>
+                                </td>
+                                <td>
+                                    <p class="card-text"><?= $pendadaran['anggotaPenguji']; ?></p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
                                     <p class="card-text">Tanggal:</p>
                                 </td>
                                 <td>

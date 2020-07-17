@@ -40,6 +40,10 @@
                 <td></td>
                 <td><?= $pendadaran['sekretarisPenguji']; ?></td>
             </tr>
+            <tr>
+                <td></td>
+                <td><?= $pendadaran['anggotaPenguji']; ?></td>
+            </tr>
         </table>
         <br><br>
         Terkait penetapan jadwal ujian pendadaran skripsi, atas nama mahasiswa :<br>
@@ -102,6 +106,12 @@
                 <td>:</td>
                 <td><?= $pendadaran['sekretarisPenguji']; ?></td>
             </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td>:</td>
+                <td><?= $pendadaran['anggotaPenguji']; ?></td>
+            </tr>
         </table>
         <br><br>
 
@@ -121,6 +131,10 @@
             <tr>
                 <td></td>
                 <td><?= $pendadaran['sekretarisPenguji']; ?></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td><?= $pendadaran['anggotaPenguji']; ?></td>
             </tr>
         </table>
         <br><br>
@@ -177,6 +191,13 @@
                 <td></td>
                 <td>:</td>
                 <td><?= $pendadaran['sekretarisPenguji']; ?></td>
+            </tr>
+
+            <tr>
+                <td></td>
+                <td></td>
+                <td>:</td>
+                <td><?= $pendadaran['anggotaPenguji']; ?></td>
             </tr>
         </table>
         <br><br>

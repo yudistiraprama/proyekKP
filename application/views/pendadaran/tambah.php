@@ -52,7 +52,7 @@
                         <?php if ($hasil == 1): ?>
                             <div class="form-group">
                                 <label for="ketuaPenguji">Ketua Penguji</label>
-                                <input type="text" name="ketuaPenguji" class="form-control" id="ketuaPenguji" value="<?= $mahasiswa['reviewer']; ?>" readonly>
+                                <input type="text" name="ketuaPenguji" class="form-control" id="ketuaPenguji" value="<?= $mahasiswa['reviewer']; ?>">
 
                             </div>
                             <div class="form-group">
@@ -87,6 +87,16 @@
                                 <input type="text" name="sekretarisPenguji" class="form-control" id="sekretarisPenguji" value="<?= $mahasiswa['reviewer']; ?>" readonly>
                             </div>
                         <?php endif; ?>
+                        <div class="form-group">
+                            <label for="judul">Anggota Penguji</label>
+                            <select class="form-control" id="anggotaPenguji" name="anggotaPenguji">
+                                <option value="">-</option>
+                                <?php foreach ($dosen as $ds): ?>
+                                    <option value="<?= $ds['nama']; ?>"><?= $ds['nama']; ?></option>
+                                <?php endforeach; ?>
+                            </select>
+                            <small class="form-text text-danger"><?= form_error('anggotaPenguji'); ?></small>
+                        </div>
                         <div class="form-group">
                             <label for="tanggal">Tanggal</label>
                             <input type="date" name="tanggal" class="form-control" id="tanggal">

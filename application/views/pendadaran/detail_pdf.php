@@ -63,6 +63,11 @@
             <td><?= $pendadaran['sekretarisPenguji']; ?></td>
         </tr>
         <tr>
+            <td>Anggota Penguji</td>
+            <td>:</td>
+            <td><?= $pendadaran['anggotaPenguji']; ?></td>
+        </tr>
+        <tr>
             <td>Tanggal<</td>
             <td>:</td>
             <td><?= $pendadaran['tanggal']; ?></td>
