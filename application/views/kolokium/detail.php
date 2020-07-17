@@ -79,9 +79,9 @@
                         </tbody>
                     </table>
                     <br>
-                    <a href="<?= base_url() ?>kolokium" class="btn btn-primary float-right">Kembali</a>
-                    <a href="<?= base_url() ?>kolokium/pdf/<?= $kolokium['id']; ?>" class="btn btn-danger">Simpan PDF</a>
-                    <a href="<?= base_url() ?>kolokium/undangan/<?= $kolokium['id']; ?>" class="btn btn-success">Undangan</a>
+                    <a href="<?= base_url() ?>kolokium" class="btn btn-primary float-right"><i class="fas fa-arrow-left"></i> Kembali</a>
+                    <a href="<?= base_url() ?>kolokium/pdf/<?= $kolokium['id']; ?>" class="btn btn-danger"><i class="fas fa-file-pdf"></i> Detail</a>
+                    <a href="<?= base_url() ?>kolokium/undangan/<?= $kolokium['id']; ?>" class="btn btn-success"><i class="fas fa-file-pdf"></i> Undangan</a>
                 </div>
             </div>
         </div>

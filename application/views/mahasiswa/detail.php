@@ -20,7 +20,7 @@
 
                 </table>
                 <br>
-                <a href="<?= base_url() ?>mahasiswa" class="btn btn-primary float-right">Kembali</a>
+                <a href="<?= base_url() ?>mahasiswa" class="btn btn-primary float-right"><i class="fas fa-arrow-left"></i> Kembali</a>
                 </div>
             </div>
         </div>

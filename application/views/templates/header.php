@@ -7,7 +7,10 @@
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
-
+    
+    <!--Fontawesome-->
+    <script src="https://kit.fontawesome.com/b97fd1e223.js" crossorigin="anonymous"></script>
+    
     <!-- My CSS -->
     <link rel="stylesheet" href="<?= base_url(); ?>assets/css/style.css">
     

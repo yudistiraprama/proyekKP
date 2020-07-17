@@ -8,7 +8,7 @@
                 <div class="card-body">
                 <h5 class="card-title"><?= $dosen['nama']; ?></h5>
                 <p class="card-text"><?= $dosen['npp']; ?></p>
-                <a href="<?= base_url() ?>dosen" class="btn btn-primary float-right">Kembali</a>
+                <a href="<?= base_url() ?>dosen" class="btn btn-primary float-right"><i class="fas fa-arrow-left"></i> Kembali</a>
                 </div>
             </div>
         </div>
