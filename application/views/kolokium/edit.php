@@ -19,25 +19,46 @@
                         <small class="form-text text-danger"><?= form_error('nama'); ?></small>
                     </div>
                     <div class="form-group">
-                        <label for="dosen1">Dosen Pembimbing 1</label>
-                        <input type="text" name="dosen1" class="form-control" id="dosen1" value="<?= $kolokium['dosen1']; ?>">
-                        <small class="form-text text-danger"><?= form_error('dosen1'); ?></small>
-                    </div>
-                    <div class="form-group">
-                        <label for="dosen2">Dosen Pembimbing 2</label>
-                        <input type="text" name="dosen2" class="form-control" id="dosen2" value="<?= $kolokium['dosen2']; ?>">
-                        <small class="form-text text-danger"><?= form_error('dosen2'); ?></small>
-                    </div>
+                            <label for="dosen1">Dosen Pembimbing 1</label>
+                            <select class="form-control" id="dosen1" name="dosen1">
+                                <?php foreach ($dosen as $ds): ?>
+                                    <?php if ($ds['nama'] == $kolokium['dosen1']): ?>
+                                        <option value="<?= $ds['nama']; ?>"selected><?= $ds['nama']; ?></option>
+                                    <?php else: ?>
+                                        <option value="<?= $ds['nama']; ?>"><?= $ds['nama']; ?></option>
+                                    <?php endif; ?>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="dosen2">Dosen Pembimbing 2</label>
+                            <select class="form-control" id="dosen2" name="dosen2">
+                                 <?php foreach ($dosen as $ds): ?>
+                                    <?php if ($ds['nama'] == $kolokium['dosen2']): ?>
+                                        <option value="<?= $ds['nama']; ?>"selected><?= $ds['nama']; ?></option>
+                                    <?php else: ?>
+                                        <option value="<?= $ds['nama']; ?>"><?= $ds['nama']; ?></option>
+                                    <?php endif; ?>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
                     <div class="form-group">
                         <label for="judul">Judul Tugas Akhir</label>
                         <textarea class="form-control" name="judul" id="judul" rows="3"><?= $kolokium['judul']; ?></textarea>
                         <small class="form-text text-danger"><?= form_error('judul'); ?></small>
                     </div>
                     <div class="form-group">
-                        <label for="reviewer">Reviewer</label>
-                        <input type="text" name="reviewer" class="form-control" id="reviewer" value="<?= $kolokium['reviewer']; ?>">
-                        <small class="form-text text-danger"><?= form_error('reviewer'); ?></small>
-                    </div>
+                            <label for="reviewer">Reviewer</label>
+                            <select class="form-control" id="reviewer" name="reviewer">
+                                 <?php foreach ($dosen as $ds): ?>
+                                    <?php if ($ds['nama'] == $kolokium['reviewer']): ?>
+                                        <option value="<?= $ds['nama']; ?>"selected><?= $ds['nama']; ?></option>
+                                    <?php else: ?>
+                                        <option value="<?= $ds['nama']; ?>"><?= $ds['nama']; ?></option>
+                                    <?php endif; ?>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
                     <div class="form-group">
                         <label for="tanggal">Tanggal</label>
                         <input type="date" name="tanggal" class="form-control" id="tanggal" value="<?= $kolokium['tanggal']; ?>">
