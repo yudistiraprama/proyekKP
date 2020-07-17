@@ -71,17 +71,17 @@ class Kolokium extends CI_Controller {
                 $ruang = $postData['ruang'];
                 $tanggal = $postData['tanggal'];
                 $durasi = $postData['durasi'];
-                $cekDosen=$this->cekInputKolokium($dosen1, $dosen2, $reviewer);
-                if($cekDosen==0){
-                    $this->session->set_flashdata('dosen1Sama','Dosen pembimbing 1 tidak boleh sama dengan Dosen pembimbing 2');
+                $cekDosen = $this->cekInputKolokium($dosen1, $dosen2, $reviewer);
+                if ($cekDosen == 0) {
+                    $this->session->set_flashdata('dosen1Sama', 'Dosen pembimbing 1 tidak boleh sama dengan Dosen pembimbing 2');
                     redirect('kolokium');
-                }elseif($cekDosen==1){
-                    $this->session->set_flashdata('dosenReviewerSama','Dosen pembimbing tidak boleh sama dengan Dosen reviewer');
+                } elseif ($cekDosen == 1) {
+                    $this->session->set_flashdata('dosenReviewerSama', 'Dosen pembimbing tidak boleh sama dengan Dosen reviewer');
                     redirect('kolokium');
-                }elseif($cekDosen==2){
-                    $this->session->set_flashdata('dosen2Sama','Dosen pembimbing 2 tidak boleh sama dengan Dosen reviewer');
+                } elseif ($cekDosen == 2) {
+                    $this->session->set_flashdata('dosen2Sama', 'Dosen pembimbing 2 tidak boleh sama dengan Dosen reviewer');
                     redirect('kolokium');
-                }elseif($cekDosen==3){
+                } elseif ($cekDosen == 3) {
                     if ($dosen2 == '') {
                         $hasil = $this->cekBentrok2($dosen1, $reviewer, $ruang, $tanggal, $durasi);
                     } else {
@@ -89,8 +89,10 @@ class Kolokium extends CI_Controller {
                     }
                 }
                 if ($hasil == 0) {
+                    
+                    $this->session->set_userdata('nim',$nim);
                     $this->session->set_flashdata('bentrok', 'Jadwal Dosen Bertabrakan');
-                    redirect('kolokium');
+                    redirect('kolokium/tambahGagal');
                 } else {
                     $this->Kolokium_model->tambahJadwalKolokium();
                     $this->session->set_flashdata('flash', 'Ditambahkan');
@@ -100,6 +102,62 @@ class Kolokium extends CI_Controller {
         } else {
             $this->session->set_flashdata('terdaftar', 'Mahasiswa Telah terdaftar Kolokium');
             redirect('kolokium');
+        }
+    }
+
+    public function tambahGagal() {
+        $data['judul'] = "Tambah Jadwal Kolokium";
+        $data['jam'] = ['07.00-08.00', '08.00-09.00', '09.00-10.00', '10.00-11.00', '11.00-12.00', '12.00-13.00', '13.00-14.00', '14.00-15.00', '15.00-16.00', '16.00-17.00'];
+        $data['ruang'] = ['Ruang Penelitian', 'Lab. Komputer Dasar', 'Lab. Basis Data', 'Lab. Jaringan Komputer'];
+        $data['dosen'] = $this->Dosen_model->getAllDosen();
+        $nim=$this->session->userdata('nim');
+        $data['mahasiswa'] = $this->Mahasiswa_model->getMahasiswaByNIM($nim);
+
+        $this->form_validation->set_rules('nama', 'Nama Mahasiswa', 'required');
+        $this->form_validation->set_rules('nim', 'NIM Mahasiswa', 'required|numeric');
+        $this->form_validation->set_rules('dosen1', 'Dosen Pembimbing 1', 'required');
+        $this->form_validation->set_rules('dosen2', 'Dosen Pembimbing 2');
+        $this->form_validation->set_rules('judul', 'Judul Tugas Akhir', 'required');
+        $this->form_validation->set_rules('reviewer', 'Reviewer', 'required');
+        $this->form_validation->set_rules('tanggal', 'Tanggal', 'required');
+
+        if ($this->form_validation->run() == FALSE) {
+            $this->load->view('templates/header', $data);
+            $this->load->view('kolokium/tambah', $data);
+            $this->load->view('templates/footer');
+        } else {
+            $postData = $this->input->post();
+            $dosen1 = $postData['dosen1'];
+            $dosen2 = $postData['dosen2'];
+            $reviewer = $postData['reviewer'];
+            $ruang = $postData['ruang'];
+            $tanggal = $postData['tanggal'];
+            $durasi = $postData['durasi'];
+            $cekDosen = $this->cekInputKolokium($dosen1, $dosen2, $reviewer);
+            if ($cekDosen == 0) {
+                $this->session->set_flashdata('dosen1Sama', 'Dosen pembimbing 1 tidak boleh sama dengan Dosen pembimbing 2');
+                redirect('kolokium');
+            } elseif ($cekDosen == 1) {
+                $this->session->set_flashdata('dosenReviewerSama', 'Dosen pembimbing tidak boleh sama dengan Dosen reviewer');
+                redirect('kolokium');
+            } elseif ($cekDosen == 2) {
+                $this->session->set_flashdata('dosen2Sama', 'Dosen pembimbing 2 tidak boleh sama dengan Dosen reviewer');
+                redirect('kolokium');
+            } elseif ($cekDosen == 3) {
+                if ($dosen2 == '') {
+                    $hasil = $this->cekBentrok2($dosen1, $reviewer, $ruang, $tanggal, $durasi);
+                } else {
+                    $hasil = $this->cekBentrok($dosen1, $dosen2, $reviewer, $ruang, $tanggal, $durasi);
+                }
+            }
+            if ($hasil == 0) {
+                $this->session->set_flashdata('bentrok', 'Jadwal Dosen Bertabrakan');
+                redirect('kolokium/tambahGagal');
+            } else {
+                $this->Kolokium_model->tambahJadwalKolokium();
+                $this->session->set_flashdata('flash', 'Ditambahkan');
+                redirect('kolokium');
+            }
         }
     }
 
@@ -132,7 +190,7 @@ class Kolokium extends CI_Controller {
             return 1;
         } elseif ($dosen2 == $reviewer) {
             return 2;
-        }else{
+        } else {
             return 3;
         }
     }
@@ -176,7 +234,7 @@ class Kolokium extends CI_Controller {
         $data['jam'] = ['07.00-08.00', '08.00-09.00', '09.00-10.00', '10.00-11.00', '11.00-12.00', '12.00-13.00', '13.00-14.00', '14.00-15.00', '15.00-16.00', '16.0-17.00'];
         $data['ruang'] = ['Ruang Penelitian', 'Lab. Komputer Dasar', 'Lab. Basis Data', 'Lab. Jaringan Komputer'];
         $data['kolokium'] = $this->Kolokium_model->getKolokiumByID($id);
-        $data['dosen']=$this->Dosen_model->getAllDosen();
+        $data['dosen'] = $this->Dosen_model->getAllDosen();
 
         $this->form_validation->set_rules('nama', 'Nama Mahasiswa', 'required');
         $this->form_validation->set_rules('nim', 'NIM Mahasiswa', 'required|numeric');

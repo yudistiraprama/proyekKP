@@ -1,4 +1,4 @@
-<div class="container">
+    <div class="container">
     <?php if ($this->session->flashdata('bentrok')): ?>
         <div class="row mt-3">
             <div class="col-md-10">
@@ -21,19 +21,15 @@
                     <form action="" method="post">
                         <div class="form-group">
                             <label for="nim">NIM Mahasiswa</label>
-                            <?php if ($this->session->userdata('nimUser')): ?>
-                                <input type="text" name="nim" class="form-control" id="nim" value="<?= $this->session->userdata('namaUser') ?>" readonly>
-                            <?php else: ?>
+                            
                                 <input type="text" name="nim" class="form-control" id="nim" value="<?= $mahasiswa['nim'] ?>" readonly>
-                            <?php endif; ?>
+                            
                         </div>
                         <div class="form-group">
                             <label for="nama">Nama Mahasiswa</label>
-                            <?php if ($this->session->userdata('namaUser')): ?>
-                                <input type="text" name="nama" class="form-control" id="nama" value="<?= $this->session->userdata('nimUser') ?>" readonly>
-                            <?php else: ?>
+                            
                                 <input type="text" name="nama" class="form-control" id="nama" value="<?= $mahasiswa['nama'] ?>" readonly>
-                            <?php endif; ?>
+                            
                         </div>
                         <div class="form-group">
                             <label for="judul">Dosen Pembimbing 1</label>
