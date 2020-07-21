@@ -69,7 +69,7 @@ class Kolokium extends CI_Controller {
                 $dosen2 = $postData['dosen2'];
                 $reviewer = $postData['reviewer'];
                 $ruang = $postData['ruang'];
-                $tanggal = $postData['tanggal'];
+                $tanggal = format_indo($postData['tanggal']);
                 $durasi = $postData['durasi'];
                 $cekDosen = $this->cekInputKolokium($dosen1, $dosen2, $reviewer);
                 if ($cekDosen == 0) {
@@ -131,7 +131,7 @@ class Kolokium extends CI_Controller {
             $dosen2 = $postData['dosen2'];
             $reviewer = $postData['reviewer'];
             $ruang = $postData['ruang'];
-            $tanggal = date_indo($postData['tanggal']);
+            $tanggal = format_indo($postData['tanggal']);
             $durasi = $postData['durasi'];
             $cekDosen = $this->cekInputKolokium($dosen1, $dosen2, $reviewer);
             if ($cekDosen == 0) {

@@ -75,7 +75,7 @@ class Pendadaran extends CI_Controller {
                 $sekretarisPenguji = $postData['sekretarisPenguji'];
                 $anggotaPenguji = $postData['anggotaPenguji'];
                 $ruang = $postData['ruang'];
-                $tanggal = $postData['tanggal'];
+                $tanggal = format_indo($postData['tanggal']);
                 $durasi = $postData['durasi'];
                 $cekInputDosen = $this->cekInputDosen($reviewer, $ketuaPenguji, $sekretarisPenguji, $anggotaPenguji);
 
@@ -175,7 +175,7 @@ class Pendadaran extends CI_Controller {
             $sekretarisPenguji = $postData['sekretarisPenguji'];
             $anggotaPenguji = $postData['anggotaPenguji'];
             $ruang = $postData['ruang'];
-            $tanggal = $postData['tanggal'];
+            $tanggal = format_indo($postData['tanggal']);
             $durasi = $postData['durasi'];
             $cekInputDosen = $this->cekInputDosen($reviewer, $ketuaPenguji, $sekretarisPenguji, $anggotaPenguji);
 
