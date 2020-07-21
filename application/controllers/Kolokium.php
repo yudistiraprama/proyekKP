@@ -316,4 +316,56 @@ class Kolokium extends CI_Controller {
         $this->load->view('templates/footer');
     }
 
+    public function excel() {
+        $data['mahasiswa'] = $this->Kolokium_model->getAllKolokium();
+        require (APPPATH . 'PHPExcel-1.8/Classes/PHPExcel.php');
+        require (APPPATH . 'PHPExcel-1.8/Classes/PHPExcel/Writer/Excel2007.php');
+
+        $object = new PHPExcel;
+        $object->getProperties()->setCreator("Informatika");
+        $object->getProperties()->setLastModifiedBy("Informatika");
+        $object->getProperties()->setTitle("Jadwal Kolokium");
+
+        $object->setActiveSheetIndex(0);
+
+        $object->getActiveSheet()->setCellValue('A1', 'NO');
+        $object->getActiveSheet()->setCellValue('B1', 'NIM');
+        $object->getActiveSheet()->setCellValue('C1', 'NAMA');
+        $object->getActiveSheet()->setCellValue('D1', 'DOSEN PEMBIMBING 1');
+        $object->getActiveSheet()->setCellValue('E1', 'DOSEN PEMBIMBING 2');
+        $object->getActiveSheet()->setCellValue('F1', 'JUDUL TUGAS AKHIR');
+        $object->getActiveSheet()->setCellValue('G1', 'REVIEWER');
+        $object->getActiveSheet()->setCellValue('H1', 'TANGGAL');
+        $object->getActiveSheet()->setCellValue('I1', 'JAM');
+        $object->getActiveSheet()->setCellValue('J1', 'RUANGAN');
+
+        $baris = 2;
+        $no = 1;
+
+        foreach ($data['mahasiswa'] as $mhs) {
+            $object->getActiveSheet()->setCellValue('A' . $baris, $no++);
+            $object->getActiveSheet()->setCellValue('B' . $baris, $mhs['nim']);
+            $object->getActiveSheet()->setCellValue('C' . $baris, $mhs['nama']);
+            $object->getActiveSheet()->setCellValue('D' . $baris, $mhs['dosen1']);
+            $object->getActiveSheet()->setCellValue('E' . $baris, $mhs['dosen2']);
+            $object->getActiveSheet()->setCellValue('F' . $baris, $mhs['judul']);
+            $object->getActiveSheet()->setCellValue('G' . $baris, $mhs['reviewer']);
+            $object->getActiveSheet()->setCellValue('H' . $baris, $mhs['tanggal']);
+            $object->getActiveSheet()->setCellValue('I' . $baris, $mhs['durasi']);
+            $object->getActiveSheet()->setCellValue('J' . $baris, $mhs['ruang']);
+
+            $baris++;
+        }
+
+        $filename = 'Jadwal_Kolokium.xlsx';
+        $object->getActiveSheet()->setTitle("Jadwal Kolokium");
+
+        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        header('Content-Disposition: attachment;filename=' . $filename);
+        header('Cache-Control: max-age=0');
+
+        $writer = PHPExcel_IOFactory::createwriter($object, 'Excel2007');
+        $writer->save('php://output');
+    }
+
 }

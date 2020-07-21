@@ -21,7 +21,7 @@
                 </div>
             </div>
         </div>
-     <?php elseif ($this->session->flashdata('bentrok')): ?>
+    <?php elseif ($this->session->flashdata('bentrok')): ?>
         <div class="row mt-3">
             <div class="col-md-10">
                 <div class="alert alert-danger alert-dismissible fade show" role="alert">
@@ -65,7 +65,7 @@
                 </div>
             </div>
         </div>
-    
+
     <?php endif; ?>
 
     <h3 class="mt-3">Jadwal Kolokium</h3>
@@ -134,6 +134,7 @@
                     <?php endforeach; ?>
                 </tbody>
             </table>
+            <a href="<?= base_url(); ?>kolokium/excel" class="btn btn-success"><i class="fas fa-file-excel"></i> Cetak Exel</a>
 
             <?= $this->pagination->create_links(); ?>
 
