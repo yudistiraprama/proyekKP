@@ -47,7 +47,7 @@ class Pendadaran extends CI_Controller {
         if ($this->Pendadaran_model->cekStatusPendadaran($nim) == NULL) {
             $data['judul'] = "Tambah Jadwal Pendadaran";
             $data['jam'] = ['07.00-09.00', '08.00-10.00', '09.00-11.00', '10.00-12.00', '11.00-13.00', '12.00-14.00', '13.00-15.00', '14.00-16.00', '15.00-17.00'];
-            $data['ruang'] = ['Ruang Penelitian', 'Lab. Komputer Dasar', 'Lab. Basis Data', 'Lab. Jaringan Komputer'];
+            $data['ruang'] = $this->db->get('ruangan')->result_array();
             $data['dosen'] = $this->Dosen_model->getAllDosen();
             $data['mahasiswa'] = $this->Kolokium_model->getKolokiumByNIM($nim);
 
@@ -83,7 +83,7 @@ class Pendadaran extends CI_Controller {
                 }
 
                 if ($hasil == 0) {
-                    $this->session->set_userdata('nim',$nim);
+                    $this->session->set_userdata('nim', $nim);
                     $this->session->set_flashdata('bentrok', 'Ada Bentrok Jadwal');
                     redirect('pendadaran/tambahGagal');
 //                    var_dump($hasil);
@@ -103,9 +103,9 @@ class Pendadaran extends CI_Controller {
     public function tambahGagal() {
         $data['judul'] = "Tambah Jadwal Pendadaran";
         $data['jam'] = ['07.00-09.00', '08.00-10.00', '09.00-11.00', '10.00-12.00', '11.00-13.00', '12.00-14.00', '13.00-15.00', '14.00-16.00', '15.00-17.00'];
-        $data['ruang'] = ['Ruang Penelitian', 'Lab. Komputer Dasar', 'Lab. Basis Data', 'Lab. Jaringan Komputer'];
+        $data['ruang'] = $this->db->get('ruangan')->result_array();
         $data['dosen'] = $this->Dosen_model->getAllDosen();
-        $nim=$this->session->userdata('nim');
+        $nim = $this->session->userdata('nim');
         $data['mahasiswa'] = $this->Kolokium_model->getKolokiumByNIM($nim);
 
         $this->form_validation->set_rules('nama', 'Nama Mahasiswa', 'required');
@@ -213,7 +213,7 @@ class Pendadaran extends CI_Controller {
     public function edit($id) {
         $data['judul'] = "Edit Jadwal Pendadaran";
         $data['jam'] = ['07.00-08.00', '08.00-09.00', '09.00-10.00', '10.00-11.00', '11.00-12.00', '12.00-13.00', '13.00-14.00', '14.00-15.00', '15.00-16.00', '16.0-17.00'];
-        $data['ruang'] = ['Ruang Penelitian', 'Lab. Komputer Dasar', 'Lab. Basis Data', 'Lab. Jaringan Komputer'];
+        $data['ruang'] = $this->db->get('ruangan')->result_array();
         $data['pendadaran'] = $this->Pendadaran_model->getPendadaranByID($id);
         $data['dosen'] = $this->Dosen_model->getAllDosen();
 
@@ -265,6 +265,23 @@ class Pendadaran extends CI_Controller {
         $this->dompdf->load_html($html);
         $this->dompdf->render();
         $this->dompdf->stream('Undangan_Pendadaran.pdf', array('Attachment' => 0));
+    }
+
+    public function undangantxt($id) {
+        $data['pendadaran'] = $this->Pendadaran_model->getPendadaranByID($id);
+        $mahasiswa = $data['pendadaran']['nim'];
+        $filename = 'Undangan_Pendadaran_' . $mahasiswa . '.txt';
+
+        header('Content-type:text/plain');
+        header('COntent-Disposition: attachment;filename=' . $filename);
+        header('Cache-Control: no-store, no-chace, must-revalidate');
+        header('Cache-Control: post-check=0, pre-check=0');
+        header('Pragma: no-cache');
+        header('Expires:0');
+
+        $handle = fopen('php://output', 'w');
+
+        $data['undangan'] = $this->load->view('pendadaran/undangan_txt', $data);
     }
 
 }

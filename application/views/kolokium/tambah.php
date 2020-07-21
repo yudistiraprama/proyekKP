@@ -82,7 +82,7 @@
                             <label for="ruang">Ruang</label>
                             <select class="form-control" id="ruang" name="ruang">
                                 <?php foreach ($ruang as $r): ?>
-                                    <option value="<?= $r; ?>"><?= $r; ?></option>
+                                    <option value="<?= $r['nama']; ?>"><?= $r['nama']; ?></option>
                                 <?php endforeach; ?>
                             </select>
                         </div>

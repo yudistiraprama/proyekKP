@@ -90,7 +90,7 @@
                                     <p class="card-text">Jam:</p>
                                 </td>
                                 <td>
-                                    <p class="card-text"><?= $pendadaran['durasi']; ?>< WIB/p>
+                                    <p class="card-text"><?= $pendadaran['durasi']; ?>< WIB</p>
                                 </td>
                             </tr>
                             <tr>
@@ -105,8 +105,9 @@
                     </table>
                     <br>
                     <a href="<?= base_url() ?>pendadaran" class="btn btn-primary float-right"><i class="fas fa-arrow-left"></i> Kembali</a>
-                    <a href="<?= base_url() ?>pendadaran/pdf/<?= $pendadaran['id']; ?>" class="btn btn-danger"><i class="fas fa-file-pdf"></i> Simpan PDF</a>
-                    <a href="<?= base_url() ?>pendadaran/undangan/<?= $pendadaran['id']; ?>" class="btn btn-success"><i class="fas fa-file-pdf"></i> Undangan</a>
+                    <a href="<?= base_url() ?>pendadaran/pdf/<?= $pendadaran['id']; ?>" class="btn btn-danger"><i class="fas fa-file-pdf"></i> Detail</a>
+                    <a href="<?= base_url() ?>pendadaran/undangan/<?= $pendadaran['id']; ?>" class="btn btn-success"><i class="fas fa-file-pdf"></i> Undangan PDF</a>
+                    <a href="<?= base_url() ?>pendadaran/undangantxt/<?= $pendadaran['id']; ?>" class="btn btn-success"><i class="fas fa-file-alt"></i> Undangan TXT</a>
                 </div>
             </div>
         </div>
