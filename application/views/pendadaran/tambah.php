@@ -10,6 +10,50 @@
                 </div>
             </div>
         </div>
+    <?php elseif ($this->session->flashdata('rks')): ?>
+        <div class="row mt-3">
+            <div class="col-md-10">
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <?= $this->session->flashdata('rks'); ?>.
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    <?php elseif ($this->session->flashdata('rka')): ?>
+        <div class="row mt-3">
+            <div class="col-md-10">
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <?= $this->session->flashdata('rka'); ?>.
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    <?php elseif ($this->session->flashdata('rksa')): ?>
+        <div class="row mt-3">
+            <div class="col-md-10">
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <?= $this->session->flashdata('rksa'); ?>.
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    <?php elseif ($this->session->flashdata('rsa')): ?>
+        <div class="row mt-3">
+            <div class="col-md-10">
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <?= $this->session->flashdata('rsa'); ?>.
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            </div>
+        </div>
     <?php endif; ?>
     <div class="row mt-3">
         <div class="col">
@@ -48,45 +92,33 @@
                             <input type="text" name="reviewer" class="form-control" id="reviewer" value="<?= $mahasiswa['reviewer']; ?>" readonly>
 
                         </div>
-                        <?php $hasil = rand(0, 1); ?>
-                        <?php if ($hasil == 1): ?>
-                            <div class="form-group">
-                                <label for="ketuaPenguji">Ketua Penguji</label>
-                                <input type="text" name="ketuaPenguji" class="form-control" id="ketuaPenguji" value="<?= $mahasiswa['reviewer']; ?>">
+                        <div class="form-group">
+                            <label for="ketuaPenguji">Ketua Penguji</label>
+                            <select class="form-control" id="ketua" name="ketuaPenguji">
+                                <?php foreach ($dosen as $ds): ?>
+                                    <?php if ($ds['nama'] != $mahasiswa['dosen2'] && $ds['nama'] != $mahasiswa['dosen1']): ?>
 
-                            </div>
-                            <div class="form-group">
-                                <label for="sekretarisPenguji">Sekretaris Penguji</label>
-                                <select class="form-control" id="sekretarisPenguji" name="sekretarisPenguji">
-                                    <?php foreach ($dosen as $ds): ?>
-                                        <?php if ($ds['nama'] != $mahasiswa['reviewer'] && $ds['nama'] != $mahasiswa['dosen1']): ?>
-                                            <?php if ($ds['nama'] != $mahasiswa['dosen2']) : ?>
-                                                <option value="<?= $ds['nama']; ?>"><?= $ds['nama']; ?></option>
-                                            <?php endif; ?>
-                                        <?php endif; ?>
-                                    <?php endforeach; ?>
-                                </select>
-                                <small class="form-text text-danger"><?= form_error('sekretarisPenguji'); ?></small>
-                            </div>
-                        <?php else: ?>
-                            <div class="form-group">
-                                <label for="ketuaPenguji">Ketua Penguji</label>
-                                <select class="form-control" id="ketua" name="ketuaPenguji">
-                                    <?php foreach ($dosen as $ds): ?>
-                                        <?php if ($ds['nama'] != $mahasiswa['reviewer'] && $ds['nama'] != $mahasiswa['dosen1']): ?>
-                                            <?php if ($ds['nama'] != $mahasiswa['dosen2']) : ?>
-                                                <option value="<?= $ds['nama']; ?>"><?= $ds['nama']; ?></option>
-                                            <?php endif; ?>
-                                        <?php endif; ?>
-                                    <?php endforeach; ?>
-                                </select>
-                                <small class="form-text text-danger"><?= form_error('ketuaPenguji'); ?></small>
-                            </div>
-                            <div class="form-group">
-                                <label for="sekretarisPenguji">Sekretaris Penguji</label>
-                                <input type="text" name="sekretarisPenguji" class="form-control" id="sekretarisPenguji" value="<?= $mahasiswa['reviewer']; ?>" readonly>
-                            </div>
-                        <?php endif; ?>
+                                        <option value="<?= $ds['nama']; ?>"><?= $ds['nama']; ?></option>
+
+                                    <?php endif; ?>
+                                <?php endforeach; ?>
+                            </select>
+                            <small class="form-text text-danger"><?= form_error('ketuaPenguji'); ?></small>
+                        </div>
+                        <div class="form-group">
+                            <label for="sekretarisPenguji">Sekretaris Penguji</label>
+                            <select class="form-control" id="sekretarisPenguji" name="sekretarisPenguji">
+                                <?php foreach ($dosen as $ds): ?>
+                                    <?php if ($ds['nama'] != $mahasiswa['dosen2'] && $ds['nama'] != $mahasiswa['dosen1']): ?>
+
+                                        <option value="<?= $ds['nama']; ?>"><?= $ds['nama']; ?></option>
+
+                                    <?php endif; ?>
+                                <?php endforeach; ?>
+                            </select>
+                            <small class="form-text text-danger"><?= form_error('sekretarisPenguji'); ?></small>
+                        </div>
+
                         <div class="form-group">
                             <label for="judul">Anggota Penguji</label>
                             <select class="form-control" id="anggotaPenguji" name="anggotaPenguji">
@@ -124,3 +156,4 @@
             </div>
         </div>
     </div>
+</div>

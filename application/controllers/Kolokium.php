@@ -151,6 +151,7 @@ class Kolokium extends CI_Controller {
                 }
             }
             if ($hasil == 0) {
+                $this->session->set_userdata('nim', $nim);
                 $this->session->set_flashdata('bentrok', 'Jadwal Dosen Bertabrakan');
                 redirect('kolokium/tambahGagal');
             } else {
