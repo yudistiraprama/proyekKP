@@ -7,6 +7,9 @@ class Pendadaran_model extends CI_model {
     }
 
     public function tambahJadwalPendadaran() {
+        $tanggal = $this->input->post('tanggal', true);
+        $tgl = format_indo($tanggal);
+        
         $data = array(
             'nim' => $this->input->post('nim', true),
             'nama' => $this->input->post('nama', true),
@@ -17,7 +20,7 @@ class Pendadaran_model extends CI_model {
             'ketuaPenguji' => $this->input->post('ketuaPenguji', true),
             'sekretarisPenguji' => $this->input->post('sekretarisPenguji', true),
             'anggotaPenguji' => $this->input->post('anggotaPenguji', true),
-            'tanggal' => $this->input->post('tanggal', true),
+            'tanggal' => $tgl,
             'durasi' => $this->input->post('durasi', true),
             'ruang' => $this->input->post('ruang', true)
         );
@@ -35,6 +38,9 @@ class Pendadaran_model extends CI_model {
     }
 
     public function editJadwalPendadaran() {
+        $tanggal = $this->input->post('tanggal', true);
+        $tgl = format_indo($tanggal);
+        
         $data = array(
             'nim' => $this->input->post('nim', true),
             'nama' => $this->input->post('nama', true),
@@ -45,7 +51,7 @@ class Pendadaran_model extends CI_model {
             'ketuaPenguji' => $this->input->post('ketuaPenguji', true),
             'sekretarisPenguji' => $this->input->post('sekretarisPenguji', true),
             'anggotaPenguji' => $this->input->post('anggotaPenguji', true),
-            'tanggal' => $this->input->post('tanggal', true),
+            'tanggal' => $tgl,
             'durasi' => $this->input->post('durasi', true),
             'ruang' => $this->input->post('ruang', true)
         );

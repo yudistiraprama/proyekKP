@@ -1,4 +1,4 @@
-    <div class="container">
+<div class="container">
     <?php if ($this->session->flashdata('bentrok')): ?>
         <div class="row mt-3">
             <div class="col-md-10">
@@ -21,15 +21,15 @@
                     <form action="" method="post">
                         <div class="form-group">
                             <label for="nim">NIM Mahasiswa</label>
-                            
-                                <input type="text" name="nim" class="form-control" id="nim" value="<?= $mahasiswa['nim'] ?>" readonly>
-                            
+
+                            <input type="text" name="nim" class="form-control" id="nim" value="<?= $mahasiswa['nim'] ?>" readonly>
+
                         </div>
                         <div class="form-group">
                             <label for="nama">Nama Mahasiswa</label>
-                            
-                                <input type="text" name="nama" class="form-control" id="nama" value="<?= $mahasiswa['nama'] ?>" readonly>
-                            
+
+                            <input type="text" name="nama" class="form-control" id="nama" value="<?= $mahasiswa['nama'] ?>" readonly>
+
                         </div>
                         <div class="form-group">
                             <label for="judul">Dosen Pembimbing 1</label>
@@ -67,7 +67,7 @@
                         </div>
                         <div class="form-group">
                             <label for="tanggal">Tanggal</label>
-                            <input type="date" name="tanggal" class="form-control" id="tanggal">
+                            <input type="date" name="tanggal" class="form-control" id="tanggal">                        
                             <small class="form-text text-danger"><?= form_error('tanggal'); ?></small>
                         </div>
                         <div class="form-group">
