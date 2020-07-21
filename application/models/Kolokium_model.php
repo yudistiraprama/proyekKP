@@ -23,7 +23,8 @@ class Kolokium_model extends CI_model{
             'reviewer' => $this->input->post('reviewer', true),
             'tanggal' => $tgl,
             'durasi' => $this->input->post('durasi', true),
-            'ruang' => $this->input->post('ruang', true)
+            'ruang' => $this->input->post('ruang', true),
+            'keterangan' => $this->input->post('keterangan', true)
         );
 
         $this->db->insert('kolokium', $data);
@@ -58,7 +59,8 @@ class Kolokium_model extends CI_model{
             'reviewer' => $this->input->post('reviewer', true),
             'tanggal' => $tgl,
             'durasi' => $this->input->post('durasi', true),
-            'ruang' => $this->input->post('ruang', true)
+            'ruang' => $this->input->post('ruang', true),
+            'keterangan' => $this->input->post('keterangan', true)
         );
         
         $this->db->where('id', $this->input->post('id'));

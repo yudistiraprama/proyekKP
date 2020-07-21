@@ -22,7 +22,8 @@ class Pendadaran_model extends CI_model {
             'anggotaPenguji' => $this->input->post('anggotaPenguji', true),
             'tanggal' => $tgl,
             'durasi' => $this->input->post('durasi', true),
-            'ruang' => $this->input->post('ruang', true)
+            'ruang' => $this->input->post('ruang', true),
+            'keterangan' => $this->input->post('keterangan', true)
         );
 
         $this->db->insert('pendadaran', $data);
@@ -53,7 +54,8 @@ class Pendadaran_model extends CI_model {
             'anggotaPenguji' => $this->input->post('anggotaPenguji', true),
             'tanggal' => $tgl,
             'durasi' => $this->input->post('durasi', true),
-            'ruang' => $this->input->post('ruang', true)
+            'ruang' => $this->input->post('ruang', true),
+            'keterangan' => $this->input->post('keterangan', true)
         );
 
         $this->db->where('id', $this->input->post('id'));

@@ -101,6 +101,14 @@
                                     <p class="card-text"><?= $pendadaran['ruang']; ?></p>
                                 </td>
                             </tr>
+                            <tr>
+                                <td>
+                                    <p class="card-text">Keterangan:</p>
+                                </td>
+                                <td>
+                                    <p class="card-text"><?= $pendadaran['keterangan']; ?></p>
+                                </td>
+                            </tr>
                         </tbody>
                     </table>
                     <br>

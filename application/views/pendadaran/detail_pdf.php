@@ -82,6 +82,11 @@
             <td>:</td>
             <td><?= $pendadaran['ruang']; ?></td>
         </tr>
+        <tr>
+            <td>Keterangan</td>
+            <td>:</td>
+            <td><?= $pendadaran['keterangan']; ?></td>
+        </tr>
     </table>
 </body></html>
 

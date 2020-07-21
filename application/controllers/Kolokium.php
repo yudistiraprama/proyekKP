@@ -339,6 +339,7 @@ class Kolokium extends CI_Controller {
         $object->getActiveSheet()->setCellValue('H1', 'TANGGAL');
         $object->getActiveSheet()->setCellValue('I1', 'JAM');
         $object->getActiveSheet()->setCellValue('J1', 'RUANGAN');
+        $object->getActiveSheet()->setCellValue('K1', 'KETERANGAN');
 
         $baris = 2;
         $no = 1;
@@ -354,6 +355,7 @@ class Kolokium extends CI_Controller {
             $object->getActiveSheet()->setCellValue('H' . $baris, $mhs['tanggal']);
             $object->getActiveSheet()->setCellValue('I' . $baris, $mhs['durasi']);
             $object->getActiveSheet()->setCellValue('J' . $baris, $mhs['ruang']);
+            $object->getActiveSheet()->setCellValue('K' . $baris, $mhs['keterangan']);
 
             $baris++;
         }

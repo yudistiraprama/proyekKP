@@ -150,6 +150,10 @@
                                 <?php endforeach; ?>
                             </select>
                         </div>
+                        <div class="form-group">
+                            <label for="keterangan">Keterangan</label>
+                            <textarea class="form-control" name="keterangan" id="keterangan" rows="3" value="<?= $mahasiswa['keterangan']; ?>"><?= $mahasiswa['keterangan']; ?></textarea>
+                        </div>
                         <button type="submit" name="tambah" class="btn btn-primary float-right">Tambah Data</button>
                     </form>
                 </div>   

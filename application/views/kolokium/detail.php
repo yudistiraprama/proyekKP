@@ -76,6 +76,14 @@
                                     <p class="card-text"><?= $kolokium['ruang']; ?></p>
                                 </td>
                             </tr>
+                            <tr>
+                                <td>
+                                    <p class="card-text">Keterangan:</p>
+                                </td>
+                                <td>
+                                    <p class="card-text"><?= $kolokium['keterangan']; ?></p>
+                                </td>
+                            </tr>
                         </tbody>
                     </table>
                     <br>

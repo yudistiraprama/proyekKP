@@ -67,6 +67,11 @@
             <td>:</td>
             <td><?= $kolokium['ruang']; ?></td>
         </tr>
+        <tr>
+            <td>Keterangan</td>
+            <td>:</td>
+            <td><?= $kolokium['keterangan']; ?></td>
+        </tr>
     </table>
 </body></html>
 

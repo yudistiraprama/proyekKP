@@ -125,6 +125,10 @@
                                 <?php endforeach; ?>
                             </select>
                         </div>
+                        <div class="form-group">
+                            <label for="keterangan">Keterangan</label>
+                            <textarea class="form-control" name="keterangan" id="keterangan" rows="3"><?= $pendadaran['keterangan']; ?></textarea>
+                        </div>
 
                         <a href="<?= base_url() ?>pendadaran" class="btn btn-danger " role="button" >Kembali</a>
                         <button type="submit" name="tambah" class="btn btn-primary ">Edit Data</button>
