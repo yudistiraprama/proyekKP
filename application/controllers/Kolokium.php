@@ -258,6 +258,8 @@ class Kolokium extends CI_Controller {
     public function pdf($id) {
         $this->load->library('dompdf_gen');
         $data['kolokium'] = $this->Kolokium_model->getKolokiumByID($id);
+        $mahasiswa = $data['kolokium']['nim'];
+        $filename = 'Detail_Jadwal_Kolokium_' . $mahasiswa . '.pdf';
         $this->load->view('kolokium/detail_pdf', $data);
 
         $paper_size = 'A4';
@@ -267,12 +269,14 @@ class Kolokium extends CI_Controller {
 
         $this->dompdf->load_html($html);
         $this->dompdf->render();
-        $this->dompdf->stream('Detail_Mahasiswa.pdf', array('Attachment' => 0));
+        $this->dompdf->stream($filename, array('Attachment' => 0));
     }
 
     public function undangan($id) {
         $this->load->library('dompdf_gen');
         $data['kolokium'] = $this->Kolokium_model->getKolokiumByID($id);
+        $mahasiswa = $data['kolokium']['nim'];
+        $filename = 'Undangan_Kolokium_' . $mahasiswa . '.pdf';
         $this->load->view('kolokium/undangan_pdf', $data);
 
         $paper_size = 'A4';
@@ -282,24 +286,34 @@ class Kolokium extends CI_Controller {
 
         $this->dompdf->load_html($html);
         $this->dompdf->render();
-        $this->dompdf->stream('Undangan_Kolokium.pdf', array('Attachment' => 0));
+        $this->dompdf->stream($filename, array('Attachment' => 0));
     }
 
     public function undangantxt($id) {
         $data['kolokium'] = $this->Kolokium_model->getKolokiumByID($id);
         $mahasiswa = $data['kolokium']['nim'];
-        $filename='Undangan_Kolokium_'.$mahasiswa.'.txt';
-        
+        $filename = 'Undangan_Kolokium_' . $mahasiswa . '.txt';
+
         header('Content-type:text/plain');
-        header('COntent-Disposition: attachment;filename='.$filename);
+        header('COntent-Disposition: attachment;filename=' . $filename);
         header('Cache-Control: no-store, no-chace, must-revalidate');
         header('Cache-Control: post-check=0, pre-check=0');
         header('Pragma: no-cache');
         header('Expires:0');
 
         $handle = fopen('php://output', 'w');
-        
+
         $data['undangan'] = $this->load->view('kolokium/undangan_txt', $data);
+    }
+
+    public function report() {
+        $data['judul'] = 'Report Jadwal Kolokium';
+        $data['bulan'] = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember',];
+        $data['ruang'] = $this->db->get('ruangan')->result_array();
+        $data['dosen'] = $this->Dosen_model->getAllDosen();
+        $this->load->view('templates/header', $data);
+        $this->load->view('kolokium/report');
+        $this->load->view('templates/footer');
     }
 
 }

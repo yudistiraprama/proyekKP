@@ -242,6 +242,8 @@ class Pendadaran extends CI_Controller {
     public function pdf($id) {
         $this->load->library('dompdf_gen');
         $data['pendadaran'] = $this->Pendadaran_model->getPendadaranById($id);
+        $mahasiswa = $data['pendadaran']['nim'];
+        $filename = 'Detail_Jadwal_Pendadaran_' . $mahasiswa . '.pdf';
         $this->load->view('pendadaran/detail_pdf', $data);
         $paper_size = 'A4';
         $oreintation = 'potrait';
@@ -250,12 +252,14 @@ class Pendadaran extends CI_Controller {
 
         $this->dompdf->load_html($html);
         $this->dompdf->render();
-        $this->dompdf->stream('Detail_Mahasiswa.pdf', array('Attachment' => 0));
+        $this->dompdf->stream($filename, array('Attachment' => 0));
     }
 
     public function undangan($id) {
         $this->load->library('dompdf_gen');
         $data['pendadaran'] = $this->Pendadaran_model->getPendadaranById($id);
+        $mahasiswa = $data['pendadaran']['nim'];
+        $filename = 'Undangan_Pendadaran_' . $mahasiswa . '.pdf';
         $this->load->view('pendadaran/undangan_pdf', $data);
 
         $paper_size = 'A4';
@@ -264,7 +268,7 @@ class Pendadaran extends CI_Controller {
         $this->dompdf->set_paper($paper_size, $oreintation);
         $this->dompdf->load_html($html);
         $this->dompdf->render();
-        $this->dompdf->stream('Undangan_Pendadaran.pdf', array('Attachment' => 0));
+        $this->dompdf->stream($filename, array('Attachment' => 0));
     }
 
     public function undangantxt($id) {
@@ -282,6 +286,16 @@ class Pendadaran extends CI_Controller {
         $handle = fopen('php://output', 'w');
 
         $data['undangan'] = $this->load->view('pendadaran/undangan_txt', $data);
+    }
+
+    public function report() {
+        $data['judul'] = 'Report  Jadwal Pendadaran';
+        $data['bulan'] = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember',];
+        $data['ruang'] = $this->db->get('ruangan')->result_array();
+        $data['dosen'] = $this->Dosen_model->getAllDosen();
+        $this->load->view('templates/header', $data);
+        $this->load->view('pendadaran/report');
+        $this->load->view('templates/footer');
     }
 
 }

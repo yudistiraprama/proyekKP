@@ -7,12 +7,6 @@ class Kolokium_model extends CI_model{
         return $this->db->get('kolokium')->result_array();
         
     }
-    
-    public function getNIM()
-    {
-        return $this->db->get('kolokium')->result_array();
-        
-    }
 
     public function tambahJadwalKolokium()
     {

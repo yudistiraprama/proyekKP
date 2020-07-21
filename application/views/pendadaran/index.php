@@ -39,6 +39,7 @@
     <div class="row mt-3">
         <div class="col-md-10">
             <a href="<?= base_url(); ?>pendadaran/inputNim" class="btn btn-primary">Tambah Jadwal Pendadaran</a>
+            <a href="<?= base_url(); ?>pendadaran/report" class="btn btn-success"><i class="fas fa-file-alt"></i> Report</a>
         </div>
     </div>
 
