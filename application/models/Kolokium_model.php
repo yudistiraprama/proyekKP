@@ -86,7 +86,7 @@ class Kolokium_model extends CI_model{
         
     }
     
-    public function cekBentrokKolokiumAll($dosen1,$dosen2,$reviewer){
+    public function cekBentrokKolokiumAll($dosen1,$dosen2,$reviewer,$ruang){
         $this->db->or_where('dosen1',$dosen1);
         $this->db->or_where('dosen1',$dosen2);
         $this->db->or_where('dosen1',$reviewer);
@@ -96,17 +96,16 @@ class Kolokium_model extends CI_model{
         $this->db->or_where('reviewer',$dosen1);
         $this->db->or_where('reviewer',$dosen2);
         $this->db->or_where('reviewer',$reviewer);
-//        $this->db->where('ruang',$ruang);
+        $this->db->where('ruang',$ruang);
         return $this->db->get('kolokium')->result_array();  
     }
     
-    public function cekBentrokKolokiumAll2($dosen1,$reviewer){
+    public function cekBentrokKolokiumAll2($dosen1,$reviewer,$ruang){
         $this->db->or_where('dosen1',$dosen1);
         $this->db->or_where('dosen1',$reviewer);
         $this->db->or_where('reviewer',$dosen1);
         $this->db->or_where('reviewer',$reviewer);
-
-//        $this->db->where('ruang',$ruang);
+        $this->db->where('ruang',$ruang);
         return $this->db->get('kolokium')->result_array(); 
     }
 }

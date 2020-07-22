@@ -89,6 +89,7 @@
                         <div class="form-group">
                             <label for="dosen2">Dosen Pembimbing 2</label>
                             <select class="form-control" id="dosen2" name="dosen2">
+                                <option value="">-</option>
                                 <?php foreach ($dosen as $ds): ?>
                                     <?php if ($ds['nama'] == $pendadaran['dosen2']): ?>
                                         <option value="<?= $ds['nama']; ?>"selected><?= $ds['nama']; ?></option>
