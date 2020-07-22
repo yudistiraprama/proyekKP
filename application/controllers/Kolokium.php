@@ -72,30 +72,44 @@ class Kolokium extends CI_Controller {
                 $tanggal = format_indo($postData['tanggal']);
                 $durasi = $postData['durasi'];
                 $cekDosen = $this->cekInputKolokium($dosen1, $dosen2, $reviewer);
-                if ($cekDosen == 0) {
-                    $this->session->set_flashdata('dosen1Sama', 'Dosen pembimbing 1 tidak boleh sama dengan Dosen pembimbing 2');
-                    redirect('kolokium');
-                } elseif ($cekDosen == 1) {
-                    $this->session->set_flashdata('dosenReviewerSama', 'Dosen pembimbing tidak boleh sama dengan Dosen reviewer');
-                    redirect('kolokium');
-                } elseif ($cekDosen == 2) {
-                    $this->session->set_flashdata('dosen2Sama', 'Dosen pembimbing 2 tidak boleh sama dengan Dosen reviewer');
-                    redirect('kolokium');
-                } elseif ($cekDosen == 3) {
-                    if ($dosen2 == '') {
-                        $hasil = $this->cekBentrok2($dosen1, $reviewer, $ruang, $tanggal, $durasi);
-                    } else {
-                        $hasil = $this->cekBentrok($dosen1, $dosen2, $reviewer, $ruang, $tanggal, $durasi);
-                    }
+                switch ($cekDosen) {
+                    case 0:
+                        $this->session->set_userdata('nim', $nim);
+                        $this->session->set_flashdata('dosen1Sama', 'Dosen pembimbing 1 tidak boleh sama dengan Dosen pembimbing 2');
+                        redirect('kolokium/tambahGagal');
+                        break;
+                    case 1:
+                        $this->session->set_userdata('nim', $nim);
+                        $this->session->set_flashdata('dosenReviewerSama', 'Dosen pembimbing tidak boleh sama dengan Dosen reviewer');
+                        redirect('kolokium/tambahGagal');
+                        break;
+                    case 2:
+                        $this->session->set_userdata('nim', $nim);
+                        $this->session->set_flashdata('dosen2Sama', 'Dosen pembimbing 2 tidak boleh sama dengan Dosen reviewer');
+                        redirect('kolokium/tambahGagal');
+                        break;
+                    case 3:
+                        $this->session->set_userdata('nim', $nim);
+                        $this->session->set_flashdata('samaSemua', 'Dosen Pembimbing 1, 2, maupun reviewer tidak boleh sama');
+                        reidrect('kolokium/tambahGagal');
+                        break;
+                    default :
+                        if ($dosen2 == '') {
+                            $hasil = $this->cekBentrok2($dosen1, $reviewer, $ruang, $tanggal, $durasi);
+                        } else {
+                            $hasil = $this->cekBentrok($dosen1, $dosen2, $reviewer, $ruang, $tanggal, $durasi);
+                        }
+                        break;
                 }
-                if ($hasil == 0) {
-
+                if ($hasil != NULL) {
+//                    var_dump($hasil);
                     $this->session->set_userdata('nim', $nim);
-                    $this->session->set_flashdata('bentrok', 'Jadwal Dosen Bertabrakan');
+                    $this->session->set_flashdata('bentrok', $hasil);
                     redirect('kolokium/tambahGagal');
                 } else {
-                    $this->Kolokium_model->tambahJadwalKolokium();
-                    $this->session->set_flashdata('flash', 'Ditambahkan');
+//                    var_dump($hasil);
+                    $this->Kolokium_model->tambahJadwalKolokium();      
+                    $this->session->set_flashdata('flash', 'Ditambahkan'); 
                     redirect('kolokium');
                 }
             }
@@ -121,6 +135,7 @@ class Kolokium extends CI_Controller {
         $this->form_validation->set_rules('reviewer', 'Reviewer', 'required');
         $this->form_validation->set_rules('tanggal', 'Tanggal', 'required');
 
+
         if ($this->form_validation->run() == FALSE) {
             $this->load->view('templates/header', $data);
             $this->load->view('kolokium/tambah', $data);
@@ -134,27 +149,42 @@ class Kolokium extends CI_Controller {
             $tanggal = format_indo($postData['tanggal']);
             $durasi = $postData['durasi'];
             $cekDosen = $this->cekInputKolokium($dosen1, $dosen2, $reviewer);
-            if ($cekDosen == 0) {
-                $this->session->set_flashdata('dosen1Sama', 'Dosen pembimbing 1 tidak boleh sama dengan Dosen pembimbing 2');
-                redirect('kolokium');
-            } elseif ($cekDosen == 1) {
-                $this->session->set_flashdata('dosenReviewerSama', 'Dosen pembimbing tidak boleh sama dengan Dosen reviewer');
-                redirect('kolokium');
-            } elseif ($cekDosen == 2) {
-                $this->session->set_flashdata('dosen2Sama', 'Dosen pembimbing 2 tidak boleh sama dengan Dosen reviewer');
-                redirect('kolokium');
-            } elseif ($cekDosen == 3) {
-                if ($dosen2 == '') {
-                    $hasil = $this->cekBentrok2($dosen1, $reviewer, $ruang, $tanggal, $durasi);
-                } else {
-                    $hasil = $this->cekBentrok($dosen1, $dosen2, $reviewer, $ruang, $tanggal, $durasi);
-                }
+            switch ($cekDosen) {
+                case 0:
+                    $this->session->set_userdata('nim', $nim);
+                    $this->session->set_flashdata('dosen1Sama', 'Dosen pembimbing 1 tidak boleh sama dengan Dosen pembimbing 2');
+                    redirect('kolokium/tambahGagal');
+                    break;
+                case 1:
+                    $this->session->set_userdata('nim', $nim);
+                    $this->session->set_flashdata('dosenReviewerSama', 'Dosen pembimbing tidak boleh sama dengan Dosen reviewer');
+                    redirect('kolokium/tambahGagal');
+                    break;
+                case 2:
+                    $this->session->set_userdata('nim', $nim);
+                    $this->session->set_flashdata('dosen2Sama', 'Dosen pembimbing 2 tidak boleh sama dengan Dosen reviewer');
+                    redirect('kolokium/tambahGagal');
+                    break;
+                case 3:
+                    $this->session->set_userdata('nim', $nim);
+                    $this->session->set_flashdata('samaSemua', 'Dosen Pembimbing 1, 2, maupun reviewer tidak boleh sama');
+                    redirect('kolokium/tambahGagal');
+                    break;
+                default :
+                    if ($dosen2 == '') {
+                        $hasil = $this->cekBentrok2($dosen1, $reviewer, $ruang, $tanggal, $durasi);
+                    } else {
+                        $hasil = $this->cekBentrok($dosen1, $dosen2, $reviewer, $ruang, $tanggal, $durasi);
+                    }
+                    break;
             }
-            if ($hasil == 0) {
+            if ($hasil != NULL) {
+//                var_dump($hasil);
                 $this->session->set_userdata('nim', $nim);
-                $this->session->set_flashdata('bentrok', 'Jadwal Dosen Bertabrakan');
+                $this->session->set_flashdata('bentrok', $hasil);
                 redirect('kolokium/tambahGagal');
             } else {
+//                var_dump($hasil);
                 $this->Kolokium_model->tambahJadwalKolokium();
                 $this->session->set_flashdata('flash', 'Ditambahkan');
                 redirect('kolokium');
@@ -164,24 +194,34 @@ class Kolokium extends CI_Controller {
 
     public function cekBentrok($dosen1, $dosen2, $reviewer, $ruang, $tanggal, $durasi) {//ruang masih belum bisa dipakai
         $data1 = $this->Kolokium_model->cekBentrokKolokiumAll($dosen1, $dosen2, $reviewer);
-        foreach ($data1 as $dt) {
-            if ($dt['tanggal'] == $tanggal) {
-                if ($dt['durasi'] == $durasi) {
-                    return 0;
+        $detail = NULL;
+        $detailBentrok = "Ada bentrok jadwal kolokium Mahasiswa";
+        foreach ($data1 as $key => $value) {
+            if ($value['tanggal'] == $tanggal) {
+                if ($value['durasi'] == $durasi) {
+                    $detailBentrok = $detailBentrok." dengan NIM ".$value['nim']." dosbing 1 = ".$value['dosen1']." dosbing2 = ".$value['dosen2']." reviewer = "
+                            .$value['reviewer']." pada tanggal ".$value['tanggal']." Jam = ".$value['durasi']." di ruang ".$value['ruang']."";
+                    $detail = $detailBentrok;
                 }
             }
-        }return 1;
+        }
+        return $detail;
     }
 
     public function cekBentrok2($dosen1, $reviewer, $ruang, $tanggal, $durasi) {//ruang masih belum bisa dipakai
         $data1 = $this->Kolokium_model->cekBentrokKolokiumAll2($dosen1, $reviewer);
-        foreach ($data1 as $dt) {
-            if ($dt['tanggal'] == $tanggal) {
-                if ($dt['durasi'] == $durasi) {
-                    return 0;
+        $detail = NULL;
+        $detailBentrok = "Ada bentrok jadwal kolokium Mahasiswa";
+       foreach ($data1 as $key => $value) {
+            if ($value['tanggal'] == $tanggal) {
+                if ($value['durasi'] == $durasi) {
+                    $detailBentrok = $detailBentrok." dengan NIM ".$value['nim']." dosbing 1 = ".$value['dosen1']." reviewer = "
+                            .$value['reviewer']." pada tanggal = ".$value['tanggal']." Jam = ".$value['durasi']." di ruang ".$value['ruang']."";
+                    $detail = $detailBentrok;
                 }
             }
-        }return 1;
+        }
+        return $detail;
     }
 
     public function cekInputKolokium($dosen1, $dosen2, $reviewer) {
@@ -191,8 +231,10 @@ class Kolokium extends CI_Controller {
             return 1;
         } elseif ($dosen2 == $reviewer) {
             return 2;
-        } else {
+        } elseif ($dosen1 == $reviewer && $dosen2 == $reviewer && $dosen1 == $dosen2) {
             return 3;
+        } else {
+            return 4;
         }
     }
 
@@ -237,6 +279,7 @@ class Kolokium extends CI_Controller {
         $data['kolokium'] = $this->Kolokium_model->getKolokiumByID($id);
         $data['dosen'] = $this->Dosen_model->getAllDosen();
 
+
         $this->form_validation->set_rules('nama', 'Nama Mahasiswa', 'required');
         $this->form_validation->set_rules('nim', 'NIM Mahasiswa', 'required|numeric');
         $this->form_validation->set_rules('dosen1', 'Dosen Pembimbing 1', 'required');
@@ -250,9 +293,122 @@ class Kolokium extends CI_Controller {
             $this->load->view('kolokium/edit', $data);
             $this->load->view('templates/footer');
         } else {
-            $this->Kolokium_model->editJadwalKolokium();
-            $this->session->set_flashdata('flash', 'Diubah');
-            redirect('kolokium');
+            $postData = $this->input->post();
+
+            $dosen1 = $postData['dosen1'];
+            $dosen2 = $postData['dosen2'];
+            $reviewer = $postData['reviewer'];
+            $judul = $postData['judul'];
+            $tanggal = $posData['tanggal'];
+            $jam = $postData['jam'];
+            $ruang = $postData['ruang'];
+            $keterangan = $postData['keterangan'];
+
+            $cekInputDosen = $this->cekInputKolokium($dosen1, $dosen2, $reviewer);
+            switch ($cekDosen) {
+                case 0:
+                    $this->session->set_userdata('id', $id);
+                    $this->session->set_flashdata('dosen1Sama', 'Dosen pembimbing 1 tidak boleh sama dengan Dosen pembimbing 2');
+                    redirect('kolokium/editGagal');
+                    break;
+                case 1:
+                    $this->session->set_userdata('id', $id);
+                    $this->session->set_flashdata('dosenReviewerSama', 'Dosen pembimbing tidak boleh sama dengan Dosen reviewer');
+                    redirect('kolokium/editGagal');
+                    break;
+                case 2:
+                    $this->session->set_userdata('id', $id);
+                    $this->session->set_flashdata('dosen2Sama', 'Dosen pembimbing 2 tidak boleh sama dengan Dosen reviewer');
+                    redirect('kolokium/editGagal');
+                    break;
+                default :
+                    if ($dosen2 == '') {
+                        $hasil = $this->cekBentrok2($dosen1, $reviewer, $ruang, $tanggal, $durasi);
+                    } else {
+                        $hasil = $this->cekBentrok($dosen1, $dosen2, $reviewer, $ruang, $tanggal, $durasi);
+                    }
+                    break;
+            }
+            if ($hasil == 0) {
+
+                $this->session->set_userdata('id', $id);
+                $this->session->set_flashdata('bentrok', 'Ada bentrok Jadwal');
+                redirect('kolokium/editGagal');
+            } else {
+                $this->Kolokium_model->editJadwalKolokium();
+                $this->session->set_flashdata('flash', 'Diubah');
+                redirect('kolokium');
+            }
+        }
+    }
+
+    public function editGagal() {
+        $data['judul'] = "Edit Jadwal Kolokium";
+        $data['jam'] = ['07.00-08.00', '08.00-09.00', '09.00-10.00', '10.00-11.00', '11.00-12.00', '12.00-13.00', '13.00-14.00', '14.00-15.00', '15.00-16.00', '16.0-17.00'];
+        $data['ruang'] = $this->db->get('ruangan')->result_array();
+        $id = $this->session->userdata('id');
+        $data['kolokium'] = $this->Kolokium_model->getKolokiumByID($id);
+        $data['dosen'] = $this->Dosen_model->getAllDosen();
+
+
+        $this->form_validation->set_rules('nama', 'Nama Mahasiswa', 'required');
+        $this->form_validation->set_rules('nim', 'NIM Mahasiswa', 'required|numeric');
+        $this->form_validation->set_rules('dosen1', 'Dosen Pembimbing 1', 'required');
+        $this->form_validation->set_rules('dosen2', 'osen Pembimbing 1');
+        $this->form_validation->set_rules('judul', 'Judul Tugas Akhir', 'required');
+        $this->form_validation->set_rules('reviewer', 'Reviewer', 'required');
+        $this->form_validation->set_rules('tanggal', 'Tanggal', 'required');
+
+        if ($this->form_validation->run() == FALSE) {
+            $this->load->view('templates/header', $data);
+            $this->load->view('kolokium/edit', $data);
+            $this->load->view('templates/footer');
+        } else {
+            $postData = $this->input->post();
+
+            $dosen1 = $postData['dosen1'];
+            $dosen2 = $postData['dosen2'];
+            $reviewer = $postData['reviewer'];
+            $judul = $postData['judul'];
+            $tanggal = $posData['tanggal'];
+            $jam = $postData['jam'];
+            $ruang = $postData['ruang'];
+            $keterangan = $postData['keterangan'];
+
+            $cekInputDosen = $this->cekInputKolokium($dosen1, $dosen2, $reviewer);
+            switch ($cekDosen) {
+                case 0:
+                    $this->session->set_userdata('id', $id);
+                    $this->session->set_flashdata('dosen1Sama', 'Dosen pembimbing 1 tidak boleh sama dengan Dosen pembimbing 2');
+                    redirect('kolokium/editGagal');
+                    break;
+                case 1:
+                    $this->session->set_userdata('id', $id);
+                    $this->session->set_flashdata('dosenReviewerSama', 'Dosen pembimbing tidak boleh sama dengan Dosen reviewer');
+                    redirect('kolokium/editGagal');
+                    break;
+                case 2:
+                    $this->session->set_userdata('id', $id);
+                    $this->session->set_flashdata('dosen2Sama', 'Dosen pembimbing 2 tidak boleh sama dengan Dosen reviewer');
+                    redirect('kolokium/editGagal');
+                    break;
+                default :
+                    if ($dosen2 == '') {
+                        $hasil = $this->cekBentrok2($dosen1, $reviewer, $ruang, $tanggal, $durasi);
+                    } else {
+                        $hasil = $this->cekBentrok($dosen1, $dosen2, $reviewer, $ruang, $tanggal, $durasi);
+                    }
+                    break;
+            }
+            if ($hasil == 0) {
+                $this->session->set_userdata('id', $id);
+                $this->session->set_flashdata('bentrok', 'Ada bentrok Jadwal');
+                redirect('kolokium/editGagal');
+            } else {
+                $this->Kolokium_model->editJadwalKolokium();
+                $this->session->set_flashdata('flash', 'Diubah');
+                redirect('kolokium');
+            }
         }
     }
 

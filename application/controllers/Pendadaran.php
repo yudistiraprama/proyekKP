@@ -81,54 +81,59 @@ class Pendadaran extends CI_Controller {
 
                 switch ($cekInputDosen) {
                     case 0:
+                        $this->session->set_userdata('nim', $nim);
                         $this->session->set_flashdata('rks', 'Reviewer tidak bisa menjadi Ketua Penguji dan Sekretaris Penguji disaat bersama');
                         redirect('pendadaran/tambahGagal');
                         break;
-                    case 1:
+                    case 1:$this->session->set_userdata('nim', $nim);
                         $this->session->set_flashdata('rka', 'Reviewer tidak bisa menjadi Ketua Penguji dan Anggota Penguji disaat bersama');
                         redirect('pendadaran/tambahGagal');
                         break;
-                    case 2:
+                    case 2:$this->session->set_userdata('nim', $nim);
                         $this->session->set_flashdata('rksa', 'Reviewer tidak bisa menjadi Ketua Penguji, Sekretaris Penguji, dan Anggota Penguji disaat bersama');
                         redirect('pendadaran/tambahGagal');
                         break;
-                    case 3:
+                    case 3:$this->session->set_userdata('nim', $nim);
                         $this->session->set_flashdata('rks', 'Reviewer tidak bisa menjadi Ketua Penguji dan Sekretaris Penguji disaat bersama');
                         redirect('pendadaran/tambahGagal');
                         break;
-                    case 4:
+                    case 4:$this->session->set_userdata('nim', $nim);
                         $this->session->set_flashdata('rsa', 'Reviewer tidak bisa menjadi Sekretaris Penguji dan Anggota Penguji disaat bersama');
                         redirect('pendadaran/tambahGagal');
                         break;
-                    case 5:
+                    case 5:$this->session->set_userdata('nim', $nim);
                         $this->session->set_flashdata('rksa', 'Reviewer tidak bisa menjadi Ketua Penguji, Sekretaris Penguji, dan Anggota Penguji disaat bersama');
                         redirect('pendadaran/tambahGagal');
                         break;
-                    case 6:
+                    case 6:$this->session->set_userdata('nim', $nim);
                         $this->session->set_flashdata('rka', 'Reviewer tidak bisa menjadi Ketua Penguji dan Anggota Penguji disaat bersama');
                         redirect('pendadaran/tambahGagal');
                         break;
-                    case 7:
+                    case 7:$this->session->set_userdata('nim', $nim);
                         $this->session->set_flashdata('rka', 'Reviewer tidak bisa menjadi Sekretaris Penguji dan Anggota Penguji disaat bersama');
                         redirect('pendadaran/tambahGagal');
                         break;
-                    case 8:
+                    case 8:$this->session->set_userdata('nim', $nim);
                         $this->session->set_flashdata('rksa', 'Reviewer tidak bisa menjadi Ketua Penguji, Sekretaris Penguji, dan Anggota Penguji disaat bersama');
                         redirect('pendadaran/tambahGagal');
                         break;
                     default:
-                        if ($dosen2 == '') {
+                        if ($dosen2 == '' && $anggotaPenguji == '') {
                             $hasil = $this->cekBentrok2($dosen1, $ketuaPenguji, $sekretarisPenguji, $ruang, $tanggal, $durasi);
-                        } else {
+                        } elseif ($dosen2 != '' && $anggotaPenguji == '') {
                             $hasil = $this->cekBentrok($dosen1, $dosen2, $ketuaPenguji, $sekretarisPenguji, $ruang, $tanggal, $durasi);
+                        } elseif ($dosen2 == '' && $anggotaPenguji != '') {
+                            $hasil = $this->cekBentrok3($dosen1, $ketuaPenguji, $sekretarisPenguji, $anggotaPenguji, $ruang, $tanggal, $durasi);
+                        } else {
+                            $hasil = $this->cekBentrok4($dosen1, $dosen2, $ketuaPenguji, $sekretarisPenguji, $anggotaPenguji, $ruang, $tanggal, $durasi);
                         }
                         break;
                 }
 
 
-                if ($hasil == 0) {
+                if ($hasil != NULL) {
                     $this->session->set_userdata('nim', $nim);
-                    $this->session->set_flashdata('bentrok', 'Ada Bentrok Jadwal');
+                    $this->session->set_flashdata('bentrok', $hasil);
                     redirect('pendadaran/tambahGagal');
                 } else {
 
@@ -181,85 +186,167 @@ class Pendadaran extends CI_Controller {
 
             switch ($cekInputDosen) {
                 case 0:
+                    $this->session->set_userdata('nim', $nim);
                     $this->session->set_flashdata('rks', 'Reviewer tidak bisa menjadi Ketua Penguji dan Sekretaris Penguji disaat bersama');
                     redirect('pendadaran/tambahGagal');
                     break;
                 case 1:
+                    $this->session->set_userdata('nim', $nim);
                     $this->session->set_flashdata('rka', 'Reviewer tidak bisa menjadi Ketua Penguji dan Anggota Penguji disaat bersama');
                     redirect('pendadaran/tambahGagal');
                     break;
                 case 2:
+                    $this->session->set_userdata('nim', $nim);
                     $this->session->set_flashdata('rksa', 'Reviewer tidak bisa menjadi Ketua Penguji, Sekretaris Penguji, dan Anggota Penguji disaat bersama');
                     redirect('pendadaran/tambahGagal');
                     break;
                 case 3:
+                    $this->session->set_userdata('nim', $nim);
                     $this->session->set_flashdata('rks', 'Reviewer tidak bisa menjadi Ketua Penguji dan Sekretaris Penguji disaat bersama');
                     redirect('pendadaran/tambahGagal');
                     break;
                 case 4:
+                    $this->session->set_userdata('nim', $nim);
                     $this->session->set_flashdata('rsa', 'Reviewer tidak bisa menjadi Sekretaris Penguji dan Anggota Penguji disaat bersama');
                     redirect('pendadaran/tambahGagal');
                     break;
                 case 5:
+                    $this->session->set_userdata('nim', $nim);
                     $this->session->set_flashdata('rksa', 'Reviewer tidak bisa menjadi Ketua Penguji, Sekretaris Penguji, dan Anggota Penguji disaat bersama');
                     redirect('pendadaran/tambahGagal');
                     break;
                 case 6:
+                    $this->session->set_userdata('nim', $nim);
                     $this->session->set_flashdata('rka', 'Reviewer tidak bisa menjadi Ketua Penguji dan Anggota Penguji disaat bersama');
                     redirect('pendadaran/tambahGagal');
                     break;
                 case 7:
+                    $this->session->set_userdata('nim', $nim);
                     $this->session->set_flashdata('rka', 'Reviewer tidak bisa menjadi Sekretaris Penguji dan Anggota Penguji disaat bersama');
                     redirect('pendadaran/tambahGagal');
                     break;
                 case 8:
+                    $this->session->set_userdata('nim', $nim);
                     $this->session->set_flashdata('rksa', 'Reviewer tidak bisa menjadi Ketua Penguji, Sekretaris Penguji, dan Anggota Penguji disaat bersama');
                     redirect('pendadaran/tambahGagal');
                     break;
                 default:
-                    if ($dosen2 == '') {
+                    if ($dosen2 == '' && $anggotaPenguji == '') {
                         $hasil = $this->cekBentrok2($dosen1, $ketuaPenguji, $sekretarisPenguji, $ruang, $tanggal, $durasi);
-                    } else {
+                    } elseif ($dosen2 != '' && $anggotaPenguji == '') {
                         $hasil = $this->cekBentrok($dosen1, $dosen2, $ketuaPenguji, $sekretarisPenguji, $ruang, $tanggal, $durasi);
+                    } elseif ($dosen2 == '' && $anggotaPenguji != '') {
+                        $hasil = $this->cekBentrok3($dosen1, $ketuaPenguji, $sekretarisPenguji, $anggotaPenguji, $ruang, $tanggal, $durasi);
+                    } else {
+                        $hasil = $this->cekBentrok4($dosen1, $dosen2, $ketuaPenguji, $sekretarisPenguji, $anggotaPenguji, $ruang, $tanggal, $durasi);
                     }
                     break;
             }
 
 
-            if ($hasil == 0) {
-                $this->session->set_flashdata('bentrok', 'Ada Bentrok Jadwal');
+            if ($hasil != NULL) {
+                $this->session->set_userdata('nim', $nim);
+                $this->session->set_flashdata('bentrok', $hasil);
                 redirect('pendadaran/tambahGagal');
-//                    var_dump($hasil);
             } else {
                 var_dump($cekInputDosen);
-//                $this->Pendadaran_model->tambahJadwalPendadaran();
+                $this->Pendadaran_model->tambahJadwalPendadaran();
                 $this->session->set_flashdata('flash', 'Ditambahkan');
                 redirect('pendadaran');
-//                    var_dump($hasil);
             }
         }
     }
 
     public function cekBentrok($dosen1, $dosen2, $ketuaPenguji, $sekretarisPenguji, $ruang, $tanggal, $durasi) {//ruang masih belum bisa dipakai
-        $data1 = $this->Pendadaran_model->cekBentrokPendadaranAll($dosen1, $dosen2, $ketuaPenguji, $sekretarisPenguji);
-        foreach ($data1 as $dt) {
-            if ($dt['tanggal'] == $tanggal) {
-                if ($dt['durasi'] == $durasi) {
-                    return 0;
+        $data1 = $this->Pendadaran_model->cekBentrokPendadaranAll($dosen1, $dosen2, $ketuaPenguji, $sekretarisPenguji, $ruang);
+        $detail = NULL;
+        $detailBentrok = "Ada bentrok jadwal pendadaran Mahasiswa";
+        foreach ($data1 as $value) {
+            if ($value['tanggal'] == $tanggal) {
+                if ($value['ruang'] == $ruang) {
+                    if ($value['durasi'] == $durasi) {
+                        $detailBentrok = $detailBentrok . " karena " . $value['ruang'] . " dipakai oleh NIM =" . $value['nim'] . " dosbing1 = " . $value['dosen1'] . " dosbing2 = " . $value['dosen2'] . " Ketua Penguji = "
+                                . $value['ketuaPenguji'] . " Sekrterais Penguji = " . $value['sekretarisPenguji'] . " pada tanggal " . $value['tanggal'] . " Jam = " . $value['jam'] . "";
+                        $detail = $detailBentrok;
+                    }
+                } else {
+                    if ($value['durasi'] == $durasi) {
+                        $detailBentrok = $detailBentrok . " dengan NIM =" . $value['nim'] . " dosbing1 = " . $value['dosen1'] . " dosbing2 = " . $value['dosen2'] . " Ketua Penguji = "
+                                . $value['ketuaPenguji'] . " Sekrterais Penguji = " . $value['sekretarisPenguji'] . " pada tanggal " . $value['tanggal'] . " Jam = " . $value['jam'] . " di ruang " . $value['ruang'] . "";
+                        $detail = $detailBentrok;
+                    }
                 }
             }
-        }return 1;
+        }return $detail;
     }
 
     public function cekBentrok2($dosen1, $ketuaPenguji, $sekretarisPenguji, $ruang, $tanggal, $durasi) {//ruang masih belum bisa dipakai
-        $data1 = $this->Pendadaran_model->cekBentrokPendadaranAll2($dosen1, $ketuaPenguji, $sekretarisPenguji);
-        foreach ($data1 as $dt) {
-            if ($dt['tanggal'] == $tanggal) {
-                if ($dt['durasi'] == $durasi) {
-                    return 0;
+        $data1 = $this->Pendadaran_model->cekBentrokPendadaranAll2($dosen1, $ketuaPenguji, $sekretarisPenguji, $ruang);
+        $detail = NULL;
+        $detailBentrok = "Ada bentrok jadwal pendadaran Mahasiswa";
+        foreach ($data1 as $value) {
+            if ($value['tanggal'] == $tanggal) {
+                if ($value['ruang'] == $ruang) {
+                    if ($value['durasi'] == $durasi) {
+                        $detailBentrok = $detailBentrok . " karena " . $value['ruang'] . " dipakai oleh NIM =" . $value['nim'] . " dosbing1 = " . $value['dosen1'] . " Ketua Penguji = "
+                                . $value['ketuaPenguji'] . " Sekrterais Penguji = " . $value['sekretarisPenguji'] . " pada tanggal " . $value['tanggal'] . " Jam = " . $value['jam'] . "";
+                        $detail = $detailBentrok;
+                    }
+                } else {
+                    if ($value['durasi'] == $durasi) {
+                        $detailBentrok = $detailBentrok . " dengan NIM =" . $value['nim'] . " dosbing1 = " . $value['dosen1'] . " Ketua Penguji = "
+                                . $value['ketuaPenguji'] . " Sekrterais Penguji = " . $value['sekretarisPenguji'] . " pada tanggal " . $value['tanggal'] . " Jam = " . $value['jam'] . " di ruang " . $value['ruang'] . "";
+                        $detail = $detailBentrok;
+                    }
                 }
             }
-        } return 1;
+        }return $detail;
+    }
+
+    public function cekBentrok3($dosen1, $ketuaPenguji, $sekretarisPenguji, $anggotaPenguji, $ruang, $tanggal, $durasi) {//ruang masih belum bisa dipakai
+        $data1 = $this->Pendadaran_model->cekBentrokPendadaranAll4($dosen1, $ketuaPenguji, $sekretarisPenguji, $anggotaPenguji, $ruang);
+        $detail = NULL;
+        $detailBentrok = "Ada bentrok jadwal pendadaran Mahasiswa";
+        foreach ($data1 as $value) {
+            if ($value['tanggal'] == $tanggal) {
+                if ($value['ruang'] == $ruang) {
+                    if ($value['durasi'] == $durasi) {
+                        $detailBentrok = $detailBentrok . " karena " . $vvalue['ruang'] . " dipakai oleh NIM =" . $value['nim'] . " dosbing1 = " . $value['dosen1'] . " Ketua Penguji = "
+                                . $value['ketuaPenguji'] . " Sekrterais Penguji = " . $value['sekretarisPenguji'] . " Anggota Penguji = " . $value['anggotaPenguji'] . " pada tanggal " . $value['tanggal'] . " Jam = " . $value['jam'] . "";
+                        $detail = $detailBentrok;
+                    }
+                } else {
+                    if ($value['durasi'] == $durasi) {
+                        $detailBentrok = $detailBentrok . " dengan NIM =" . $value['nim'] . " dosbing1 = " . $value['dosen1'] . " Ketua Penguji = "
+                                . $value['ketuaPenguji'] . " Sekrterais Penguji = " . $value['sekretarisPenguji'] . " Anggota Penguji = " . $value['anggotaPenguji'] . " pada tanggal " . $value['tanggal'] . " Jam = " . $value['jam'] . " di ruang " . $value['ruang'] . "";
+                        $detail = $detailBentrok;
+                    }
+                }
+            }
+        }return $detail;
+    }
+
+    public function cekBentrok4($dosen1, $dosen2, $ketuaPenguji, $sekretarisPenguji, $anggotaPenguji, $ruang, $tanggal, $durasi) {//ruang masih belum bisa dipakai
+        $data1 = $this->Pendadaran_model->cekBentrokPendadaranAll4($dosen1, $dosen2, $ketuaPenguji, $sekretarisPenguji, $anggotaPenguji, $ruang);
+        $detail = NULL;
+        $detailBentrok = "Ada bentrok jadwal pendadaran Mahasiswa";
+        foreach ($data1 as $value) {
+            if ($value['tanggal'] == $tanggal) {
+                if ($value['ruang' == $ruang]) {
+                    if ($value['durasi'] == $durasi) {
+                        $detailBentrok = $detailBentrok . " karena ".$value['ruang']." dipakai oleh NIM =" . $value['nim'] . " dosbing1 = " . $value['dosen1'] . " dosbing2 = " . $value['dosen2'] . " Ketua Penguji = "
+                                . $value['ketuaPenguji'] . " Sekrterais Penguji = " . $value['sekretarisPenguji'] . " Anggota Penguji = " . $value['anggotaPenguji'] . " pada tanggal " . $value['tanggal'] . " Jam = " . $value['jam'] ."";
+                        $detail = $detailBentrok;
+                    }
+                } else {
+                    if ($value['durasi'] == $durasi) {
+                        $detailBentrok = $detailBentrok . " dengan NIM =" . $value['nim'] . " dosbing1 = " . $value['dosen1'] . " dosbing2 = " . $value['dosen2'] . " Ketua Penguji = "
+                                . $value['ketuaPenguji'] . " Sekrterais Penguji = " . $value['sekretarisPenguji'] . " Anggota Penguji = " . $value['anggotaPenguji'] . " pada tanggal " . $value['tanggal'] . " Jam = " . $value['jam'] . " di ruang " . $value['ruang'] . "";
+                        $detail = $detailBentrok;
+                    }
+                }
+            }
+        }return $detail;
     }
 
     public function cekInputDosen($reviewer, $ketuaPenguji, $sekretarisPenguji, $anggotaPenguji) {
@@ -334,7 +421,7 @@ class Pendadaran extends CI_Controller {
 
     public function edit($id) {
         $data['judul'] = "Edit Jadwal Pendadaran";
-        $data['jam'] = ['07.00-08.00', '08.00-09.00', '09.00-10.00', '10.00-11.00', '11.00-12.00', '12.00-13.00', '13.00-14.00', '14.00-15.00', '15.00-16.00', '16.0-17.00'];
+        $data['jam'] = ['07.00-09.00', '08.00-10.00', '09.00-11.00', '10.00-12.00', '11.00-13.00', '12.00-14.00', '13.00-15.00', '14.00-16.00', '15.00-17.00'];
         $data['ruang'] = $this->db->get('ruangan')->result_array();
         $data['pendadaran'] = $this->Pendadaran_model->getPendadaranByID($id);
         $data['dosen'] = $this->Dosen_model->getAllDosen();
@@ -350,14 +437,202 @@ class Pendadaran extends CI_Controller {
         $this->form_validation->set_rules('anggotaPenguji', 'Anggota Penguji');
         $this->form_validation->set_rules('tanggal', 'Tanggal', 'required');
 
+
         if ($this->form_validation->run() == FALSE) {
             $this->load->view('templates/header', $data);
             $this->load->view('pendadaran/edit', $data);
             $this->load->view('templates/footer');
         } else {
-            $this->Pendadaran_model->editJadwalPendadaran();
-            $this->session->set_flashdata('flash', 'Diubah');
-            redirect('pendadaran');
+
+            $postData = $this->input->post();
+            $dosen1 = $postData['dosen1'];
+            $dosen2 = $postData['dosen2'];
+            $reviewer = $postData['reviewer'];
+            $judul = $postData['judul'];
+            $ketuaPenguji = $postData['ketuaPenguji'];
+            $sekretarisPenguji = $postData['sekretarisPenguji'];
+            $anggotaPenguji = $postData['anggotaPenguji'];
+            $tanggal = $postData['tanggal'];
+            $durasi = $postData['durasi'];
+            $cekInputDosen = $this->cekInputDosen($reviewer, $ketuaPenguji, $sekretarisPenguji, $anggotaPenguji);
+
+            switch ($cekInputDosen) {
+                case 0:
+                    $this->session->set_userdata('id', $id);
+                    $this->session->set_flashdata('rks', 'Reviewer tidak bisa menjadi Ketua Penguji dan Sekretaris Penguji disaat bersama');
+                    redirect('pendadaran/editGagal');
+                    break;
+                case 1:
+                    $this->session->set_userdata('id', $id);
+                    $this->session->set_flashdata('rka', 'Reviewer tidak bisa menjadi Ketua Penguji dan Anggota Penguji disaat bersama');
+                    redirect('pendadaran/editGagal');
+                    break;
+                case 2:
+                    $this->session->set_userdata('id', $id);
+                    $this->session->set_flashdata('rksa', 'Reviewer tidak bisa menjadi Ketua Penguji, Sekretaris Penguji, dan Anggota Penguji disaat bersama');
+                    redirect('pendadaran/editGagal');
+                    break;
+                case 3:
+                    $this->session->set_userdata('id', $id);
+                    $this->session->set_flashdata('rks', 'Reviewer tidak bisa menjadi Ketua Penguji dan Sekretaris Penguji disaat bersama');
+                    redirect('pendadaran/editGagal');
+                    break;
+                case 4:
+                    $this->session->set_userdata('id', $id);
+                    $this->session->set_flashdata('rsa', 'Reviewer tidak bisa menjadi Sekretaris Penguji dan Anggota Penguji disaat bersama');
+                    redirect('pendadaran/editGagal');
+                    break;
+                case 5:
+                    $this->session->set_userdata('id', $id);
+                    $this->session->set_flashdata('rksa', 'Reviewer tidak bisa menjadi Ketua Penguji, Sekretaris Penguji, dan Anggota Penguji disaat bersama');
+                    redirect('pendadaran/editGagal');
+                    break;
+                case 6:
+                    $this->session->set_userdata('id', $id);
+                    $this->session->set_flashdata('rka', 'Reviewer tidak bisa menjadi Ketua Penguji dan Anggota Penguji disaat bersama');
+                    redirect('pendadaran/editGagal');
+                    break;
+                case 7:
+                    $this->session->set_userdata('id', $id);
+                    $this->session->set_flashdata('rka', 'Reviewer tidak bisa menjadi Sekretaris Penguji dan Anggota Penguji disaat bersama');
+                    redirect('pendadaran/editGagal');
+                    break;
+                case 8:
+                    $this->session->set_userdata('id', $id);
+                    $this->session->set_flashdata('rksa', 'Reviewer tidak bisa menjadi Ketua Penguji, Sekretaris Penguji, dan Anggota Penguji disaat bersama');
+                    redirect('pendadaran/editGagal');
+                    break;
+                default:
+                    if ($dosen2 == '' && $anggotaPenguji == '') {
+                        $hasil = $this->cekBentrok2($dosen1, $ketuaPenguji, $sekretarisPenguji, $ruang, $tanggal, $durasi);
+                    } elseif ($dosen2 != '' && $anggotaPenguji == '') {
+                        $hasil = $this->cekBentrok($dosen1, $dosen2, $ketuaPenguji, $sekretarisPenguji, $ruang, $tanggal, $durasi);
+                    } elseif ($dosen2 == '' && $anggotaPenguji != '') {
+                        $hasil = $this->cekBentrok3($dosen1, $ketuaPenguji, $sekretarisPenguji, $anggotaPenguji, $ruang, $tanggal, $durasi);
+                    } else {
+                        $hasil = $this->cekBentrok4($dosen1, $dosen2, $ketuaPenguji, $sekretarisPenguji, $anggotaPenguji, $ruang, $tanggal, $durasi);
+                    }
+                    break;
+            }
+
+            if ($hasil != NULL) {
+                $this->session->set_userdata('id', $id);
+                $this->session->set_flashdata('bentrok', $hasil);
+                redirect('pendadaran/editGagal');
+            } else {
+                $this->Pendadaran_model->editJadwalPendadaran();
+                $this->session->set_flashdata('flash', 'Diubah');
+                redirect('pendadaran');
+            }
+        }
+    }
+
+    public function editGagal() {
+        $data['judul'] = "Edit Jadwal Pendadaran";
+        $data['jam'] = ['07.00-09.00', '08.00-10.00', '09.00-11.00', '10.00-12.00', '11.00-13.00', '12.00-14.00', '13.00-15.00', '14.00-16.00', '15.00-17.00'];
+        $data['ruang'] = $this->db->get('ruangan')->result_array();
+        $id = $this->session->userdata('id');
+        $data['pendadaran'] = $this->Pendadaran_model->getPendadaranByID($id);
+        $data['dosen'] = $this->Dosen_model->getAllDosen();
+
+        $this->form_validation->set_rules('nama', 'Nama Mahasiswa', 'required');
+        $this->form_validation->set_rules('nim', 'NIM Mahasiswa', 'required|numeric');
+        $this->form_validation->set_rules('dosen1', 'Dosen Pembimbing 1', 'required');
+        $this->form_validation->set_rules('dosen2', 'osen Pembimbing 1');
+        $this->form_validation->set_rules('judul', 'Judul Tugas Akhir', 'required');
+        $this->form_validation->set_rules('reviewer', 'Reviewer', 'required');
+        $this->form_validation->set_rules('ketuaPenguji', 'Ketua Penguji', 'required');
+        $this->form_validation->set_rules('sekretarisPenguji', 'Sekretaris Penguji', 'required');
+        $this->form_validation->set_rules('anggotaPenguji', 'Anggota Penguji');
+        $this->form_validation->set_rules('tanggal', 'Tanggal', 'required');
+
+
+        if ($this->form_validation->run() == FALSE) {
+            $this->load->view('templates/header', $data);
+            $this->load->view('pendadaran/edit', $data);
+            $this->load->view('templates/footer');
+        } else {
+
+            $postData = $this->input->post();
+            $dosen1 = $postData['dosen1'];
+            $dosen2 = $postData['dosen2'];
+            $reviewer = $postData['reviewer'];
+            $judul = $postData['judul'];
+            $ketuaPenguji = $postData['ketuaPenguji'];
+            $sekretarisPenguji = $postData['sekretarisPenguji'];
+            $anggotaPenguji = $postData['anggotaPenguji'];
+            $tanggal = $postData['tanggal'];
+            $durasi = $postData['durasi'];
+            $cekInputDosen = $this->cekInputDosen($reviewer, $ketuaPenguji, $sekretarisPenguji, $anggotaPenguji);
+
+            switch ($cekInputDosen) {
+                case 0:
+                    $this->session->set_userdata('id', $id);
+                    $this->session->set_flashdata('rks', 'Reviewer tidak bisa menjadi Ketua Penguji dan Sekretaris Penguji disaat bersama');
+                    redirect('pendadaran/editGagal');
+                    break;
+                case 1:
+                    $this->session->set_userdata('id', $id);
+                    $this->session->set_flashdata('rka', 'Reviewer tidak bisa menjadi Ketua Penguji dan Anggota Penguji disaat bersama');
+                    redirect('pendadaran/editGagal');
+                    break;
+                case 2:
+                    $this->session->set_userdata('id', $id);
+                    $this->session->set_flashdata('rksa', 'Reviewer tidak bisa menjadi Ketua Penguji, Sekretaris Penguji, dan Anggota Penguji disaat bersama');
+                    redirect('pendadaran/editGagal');
+                    break;
+                case 3:
+                    $this->session->set_userdata('id', $id);
+                    $this->session->set_flashdata('rks', 'Reviewer tidak bisa menjadi Ketua Penguji dan Sekretaris Penguji disaat bersama');
+                    redirect('pendadaran/editGagal');
+                    break;
+                case 4:
+                    $this->session->set_userdata('id', $id);
+                    $this->session->set_flashdata('rsa', 'Reviewer tidak bisa menjadi Sekretaris Penguji dan Anggota Penguji disaat bersama');
+                    redirect('pendadaran/editGagal');
+                    break;
+                case 5:
+                    $this->session->set_userdata('id', $id);
+                    $this->session->set_flashdata('rksa', 'Reviewer tidak bisa menjadi Ketua Penguji, Sekretaris Penguji, dan Anggota Penguji disaat bersama');
+                    redirect('pendadaran/editGagal');
+                    break;
+                case 6:
+                    $this->session->set_userdata('id', $id);
+                    $this->session->set_flashdata('rka', 'Reviewer tidak bisa menjadi Ketua Penguji dan Anggota Penguji disaat bersama');
+                    redirect('pendadaran/editGagal');
+                    break;
+                case 7:
+                    $this->session->set_userdata('id', $id);
+                    $this->session->set_flashdata('rka', 'Reviewer tidak bisa menjadi Sekretaris Penguji dan Anggota Penguji disaat bersama');
+                    redirect('pendadaran/editGagal');
+                    break;
+                case 8:
+                    $this->session->set_userdata('id', $id);
+                    $this->session->set_flashdata('rksa', 'Reviewer tidak bisa menjadi Ketua Penguji, Sekretaris Penguji, dan Anggota Penguji disaat bersama');
+                    redirect('pendadaran/editGagal');
+                    break;
+                default:
+                    if ($dosen2 == '' && $anggotaPenguji == '') {
+                        $hasil = $this->cekBentrok2($dosen1, $ketuaPenguji, $sekretarisPenguji, $ruang, $tanggal, $durasi);
+                    } elseif ($dosen2 != '' && $anggotaPenguji == '') {
+                        $hasil = $this->cekBentrok($dosen1, $dosen2, $ketuaPenguji, $sekretarisPenguji, $ruang, $tanggal, $durasi);
+                    } elseif ($dosen2 == '' && $anggotaPenguji != '') {
+                        $hasil = $this->cekBentrok3($dosen1, $ketuaPenguji, $sekretarisPenguji, $anggotaPenguji, $ruang, $tanggal, $durasi);
+                    } else {
+                        $hasil = $this->cekBentrok4($dosen1, $dosen2, $ketuaPenguji, $sekretarisPenguji, $anggotaPenguji, $ruang, $tanggal, $durasi);
+                    }
+                    break;
+            }
+
+            if ($hasil != 1) {
+                $this->session->set_userdata('id', $id);
+                $this->session->set_flashdata('bentrok', $hasil);
+                redirect('pendadaran/editGagal');
+            } else {
+                $this->Pendadaran_model->editJadwalPendadaran();
+                $this->session->set_flashdata('flash', 'Diubah');
+                redirect('pendadaran');
+            }
         }
     }
 

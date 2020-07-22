@@ -1,4 +1,49 @@
 <div class="container">
+    <?php if ($this->session->flashdata('bentrok')): ?>
+        <div class="row mt-3">
+            <div class="col-md-10">
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <?= $this->session->flashdata('bentrok'); ?>.
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    <?php elseif ($this->session->flashdata('dosen1Sama')): ?>
+        <div class="row mt-3">
+            <div class="col-md-10">
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <?= $this->session->flashdata('dosen1Sama'); ?>.
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    <?php elseif ($this->session->flashdata('dosenReviewerSama')): ?>
+        <div class="row mt-3">
+            <div class="col-md-10">
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <?= $this->session->flashdata('dosenReviewerSama'); ?>.
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    <?php elseif ($this->session->flashdata('dosen2Sama')): ?>
+        <div class="row mt-3">
+            <div class="col-md-10">
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <?= $this->session->flashdata('dosenReviewerSama'); ?>.
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    <?php endif; ?>
     <div class="row mt-3">
         <div class="col-md-6">
             <div class="card">
@@ -10,12 +55,12 @@
                         <input type="hidden" name="id" value="<?= $kolokium['id']; ?>">
                         <div class="form-group">
                             <label for="nim">NIM Mahasiswa</label>
-                            <input type="text" name="nim" class="form-control" id="nim" value="<?= $kolokium['nim']; ?>">
+                            <input type="text" name="nim" class="form-control" id="nim" value="<?= $kolokium['nim']; ?>" readonly>
                             <small class="form-text text-danger"><?= form_error('nim'); ?></small>
                         </div>
                         <div class="form-group">
                             <label for="nama">Nama Mahasiswa</label>
-                            <input type="text" name="nama" class="form-control" id="nama" value="<?= $kolokium['nama']; ?>">
+                            <input type="text" name="nama" class="form-control" id="nama" value="<?= $kolokium['nama']; ?>" readonly>
                             <small class="form-text text-danger"><?= form_error('nama'); ?></small>
                         </div>
                         <div class="form-group">
@@ -33,6 +78,7 @@
                         <div class="form-group">
                             <label for="dosen2">Dosen Pembimbing 2</label>
                             <select class="form-control" id="dosen2" name="dosen2">
+                                <option value="">-</option>                            
                                 <?php foreach ($dosen as $ds): ?>
                                     <?php if ($ds['nama'] == $kolokium['dosen2']): ?>
                                         <option value="<?= $ds['nama']; ?>"selected><?= $ds['nama']; ?></option>
@@ -90,7 +136,7 @@
                         </div>
                         <div class="form-group">
                             <label for="Keterangan">Keterangan</label>
-                            <textarea class="form-control" name="Keterangan" id="Keterangan" rows="3"><?= $kolokium['keterangan']; ?></textarea>
+                            <textarea class="form-control" name="keterangan" id="keterangan" rows="3"><?= $kolokium['keterangan']; ?></textarea>
                         </div>
 
                         <a href="<?= base_url() ?>kolokium" class="btn btn-danger " role="button" >Kembali</a>
@@ -101,3 +147,4 @@
             </div>
         </div>
     </div>
+</div>

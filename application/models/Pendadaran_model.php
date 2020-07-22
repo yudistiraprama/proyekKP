@@ -79,7 +79,7 @@ class Pendadaran_model extends CI_model {
         return $this->db->get_where('pendadaran', ['nim' => $nim])->row_array();
     }
 
-    public function cekBentrokPendadaranAll($dosen1, $dosen2, $ketuaPenguji, $sekretarisPenguji) {
+    public function cekBentrokPendadaranAll($dosen1, $dosen2, $ketuaPenguji, $sekretarisPenguji,$ruang) {
         $this->db->or_where('dosen1', $dosen1);
         $this->db->or_where('dosen1', $dosen2);
         $this->db->or_where('dosen1', $ketuaPenguji);
@@ -96,11 +96,11 @@ class Pendadaran_model extends CI_model {
         $this->db->or_where('sekretarisPenguji', $dosen2);
         $this->db->or_where('sekretarisPenguji', $ketuaPenguji);
         $this->db->or_where('sekretarisPenguji', $sekretarisPenguji);
-//        $this->db->where('ruang',$ruang);
+        $this->db->where('ruang',$ruang);
         return $this->db->get('pendadaran')->result_array();
     }
 
-    public function cekBentrokPendadaranAll2($dosen1, $ketuaPenguji, $sekretarisPenguji) {
+    public function cekBentrokPendadaranAll2($dosen1, $ketuaPenguji, $sekretarisPenguji,$ruang) {
         $this->db->or_where('dosen1', $dosen1);
         $this->db->or_where('dosen1', $ketuaPenguji);
         $this->db->or_where('dosen1', $sekretarisPenguji);
@@ -110,8 +110,58 @@ class Pendadaran_model extends CI_model {
         $this->db->or_where('sekretarisPenguji', $dosen1);
         $this->db->or_where('sekretarisPenguji', $ketuaPenguji);
         $this->db->or_where('sekretarisPenguji', $sekretarisPenguji);
-//        $this->db->where('ruang',$ruang);
+        $this->db->where('ruang',$ruang);
         return $this->db->get('pendadaran')->result_array();
     }
 
+    public function cekBentrokPendadaranAll3($dosen1, $ketuaPenguji, $sekretarisPenguji,$anggotaPenguji,$ruang) {
+        $this->db->or_where('dosen1', $dosen1);      
+        $this->db->or_where('dosen1', $ketuaPenguji);
+        $this->db->or_where('dosen1', $sekretarisPenguji);      
+        $this->db->or_where('dosen1', $anggotaPenguji);      
+        $this->db->or_where('ketuaPenguji', $dosen1);       
+        $this->db->or_where('ketuaPenguji', $ketuaPenguji);
+        $this->db->or_where('ketuaPenguji', $sekretarisPenguji);
+        $this->db->or_where('ketuaPenguji', $anggotaPenguji);
+        $this->db->or_where('sekretarisPenguji', $dosen1);    
+        $this->db->or_where('sekretarisPenguji', $ketuaPenguji);
+        $this->db->or_where('sekretarisPenguji', $sekretarisPenguji);
+        $this->db->or_where('sekretarisPenguji', $anggotaPenguji);
+        $this->db->or_where('anggotaPenguji', $dosen1);    
+        $this->db->or_where('anggotaPenguji', $ketuaPenguji);
+        $this->db->or_where('anggotaPenguji', $sekretarisPenguji);
+        $this->db->or_where('anggotaPenguji', $anggotaPenguji);
+        $this->db->where('ruang',$ruang);
+        return $this->db->get('pendadaran')->result_array();
+    }
+    
+    public function cekBentrokPendadaranAll4($dosen1, $dosen2, $ketuaPenguji, $sekretarisPenguji,$anggotaPenguji,$ruang) {
+        $this->db->or_where('dosen1', $dosen1);
+        $this->db->or_where('dosen1', $dosen2);
+        $this->db->or_where('dosen1', $ketuaPenguji);
+        $this->db->or_where('dosen1', $sekretarisPenguji);
+        $this->db->or_where('dosen1', $anggotaPenguji);
+        $this->db->or_where('dosen2', $dosen1);
+        $this->db->or_where('dosen2', $dosen2);
+        $this->db->or_where('dosen2', $ketuaPenguji);
+        $this->db->or_where('dosen2', $sekretarisPenguji);
+        $this->db->or_where('dosen2', $anggotaPenguji);
+        $this->db->or_where('ketuaPenguji', $dosen1);
+        $this->db->or_where('ketuaPenguji', $dosen2);
+        $this->db->or_where('ketuaPenguji', $ketuaPenguji);
+        $this->db->or_where('ketuaPenguji', $sekretarisPenguji);
+        $this->db->or_where('ketuaPenguji', $anggotaPenguji);
+        $this->db->or_where('sekretarisPenguji', $dosen1);
+        $this->db->or_where('sekretarisPenguji', $dosen2);
+        $this->db->or_where('sekretarisPenguji', $ketuaPenguji);
+        $this->db->or_where('sekretarisPenguji', $sekretarisPenguji);
+        $this->db->or_where('sekretarisPenguji', $anggotaPenguji);
+        $this->db->or_where('anggotaPenguji', $dosen1);
+        $this->db->or_where('anggotaPenguji', $dosen2);
+        $this->db->or_where('anggotaPenguji', $ketuaPenguji);
+        $this->db->or_where('anggotaPenguji', $sekretarisPenguji);
+        $this->db->or_where('anggotaPenguji', $anggotaPenguji);
+        $this->db->where('ruang',$ruang);
+        return $this->db->get('pendadaran')->result_array();
+    }
 }

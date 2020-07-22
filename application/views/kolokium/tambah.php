@@ -10,6 +10,50 @@
                 </div>
             </div>
         </div>
+    <?php elseif ($this->session->flashdata('dosen1Sama')): ?>
+        <div class="row mt-3">
+            <div class="col-md-10">
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <?= $this->session->flashdata('dosen1Sama'); ?>.
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    <?php elseif ($this->session->flashdata('dosen2Sama')): ?>
+        <div class="row mt-3">
+            <div class="col-md-10">
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <?= $this->session->flashdata('dosen2Sama'); ?>.
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    <?php elseif ($this->session->flashdata('dosenReviewerSama')): ?>
+        <div class="row mt-3">
+            <div class="col-md-10">
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <?= $this->session->flashdata('dosenReviewerSama'); ?>.
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    <?php elseif ($this->session->flashdata('semuaSama')): ?>
+        <div class="row mt-3">
+            <div class="col-md-10">
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <?= $this->session->flashdata('semuaSama'); ?>.
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            </div>
+        </div>
     <?php endif; ?>
     <div class="row mt-3">
         <div class="col">
@@ -33,8 +77,7 @@
                         </div>
                         <div class="form-group">
                             <label for="judul">Dosen Pembimbing 1</label>
-                            <select class="form-control" id="dosen1" name="dosen1">
-                                <option value="">-</option>
+                            <select class="form-control" id="dosen1" name="dosen1">                              
                                 <?php foreach ($dosen as $ds): ?>
                                     <option value="<?= $ds['nama']; ?>"><?= $ds['nama']; ?></option>
                                 <?php endforeach; ?>
@@ -57,8 +100,7 @@
                         </div>
                         <div class="form-group">
                             <label for="reviewer">Reviewer</label>
-                            <select class="form-control" id="reviewer" name="reviewer">
-                                <option value="">-</option>
+                            <select class="form-control" id="reviewer" name="reviewer">                               
                                 <?php foreach ($dosen as $ds): ?>
                                     <option value="<?= $ds['nama']; ?>"><?= $ds['nama']; ?></option>
                                 <?php endforeach; ?>
