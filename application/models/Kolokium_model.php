@@ -65,7 +65,7 @@ class Kolokium_model extends CI_model {
             $this->db->like('nama', $keyword);
             $this->db->or_like('nim', $keyword);
         }
-
+        $this->db->order_by('id', 'DESC');
         return $this->db->get('kolokium', $limit, $start)->result_array();
     }
 
@@ -87,7 +87,7 @@ class Kolokium_model extends CI_model {
         $this->db->or_where('reviewer', $dosen1);
         $this->db->or_where('reviewer', $dosen2);
         $this->db->or_where('reviewer', $reviewer);
-      
+
         return $this->db->get('kolokium')->result_array();
     }
 
@@ -96,22 +96,20 @@ class Kolokium_model extends CI_model {
         $this->db->or_where('dosen1', $reviewer);
         $this->db->or_where('reviewer', $dosen1);
         $this->db->or_where('reviewer', $reviewer);
-       
+
         return $this->db->get('kolokium')->result_array();
     }
 
-    public function cekStatusRuang($tanggal,$durasi) {
-        $this->db->where('tanggal',$tanggal);
+    public function cekStatusRuang($tanggal, $durasi) {
+        $this->db->where('tanggal', $tanggal);
         $this->db->where('durasi', $durasi);
         return $this->db->get('kolokium')->result_array();
-        
     }
-    
-    public function cekStatusRuangEdit($tanggal,$durasi) {
-        $this->db->or_where('tanggal',$tanggal);
+
+    public function cekStatusRuangEdit($tanggal, $durasi) {
+        $this->db->or_where('tanggal', $tanggal);
         $this->db->or_where('durasi', $durasi);
         return $this->db->get('kolokium')->result_array();
-        
     }
 
 }

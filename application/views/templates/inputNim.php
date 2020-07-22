@@ -35,7 +35,7 @@
                     <form action="" method="post">
                         <div class="form-group">
                             <label for="nim">NIM Mahasiswa</label>
-                            <input type="text" name="nim" class="form-control" id="nim">
+                            <input type="text" name="nim" class="form-control" id="nim" autofocus="">
                             <small class="form-text text-danger"><?= form_error('nim'); ?></small>
                         </div>
                         <button type="submit" name="inputNim" value="inputNim" class="btn btn-primary float-right">Search</button>

@@ -67,7 +67,7 @@ class Pendadaran_model extends CI_model {
             $this->db->like('nama', $keyword);
             $this->db->or_like('nim', $keyword);
         }
-
+        $this->db->order_by('id', 'DESC');
         return $this->db->get('pendadaran', $limit, $start)->result_array();
     }
 

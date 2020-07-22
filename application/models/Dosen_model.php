@@ -40,7 +40,7 @@ class Dosen_model extends CI_model {
             $this->db->like('nama', $keyword);
             $this->db->or_like('npp', $keyword);
         }
-
+        $this->db->order_by('nama', 'ASC');
         return $this->db->get('dosen', $limit, $start)->result_array();
     }
 
