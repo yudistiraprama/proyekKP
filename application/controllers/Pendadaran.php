@@ -747,10 +747,24 @@ class Pendadaran extends CI_Controller {
             $data['bulan'] = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember',];
             $data['ruang'] = $this->db->get('ruangan')->result_array();
             $data['dosen'] = $this->Dosen_model->getAllDosen();
+
+            $postData = $this->input->post();
+
+            $dataPendadaran = array(
+                'bulan' => $postData['bulan'],
+                'dosen1' => $postData['dosen1'],
+                'dosen2' => $postData['dosen2'],
+                'reviewer' => $postData['reviewer'],
+                'ketuaPenguji' => $postData['ketuaPenguji'],
+                'sekretarisPenguji' => $postData['sekretarisPenguji']
+            );
+
+            $this->session->set_userdata($dataPendadaran);
+
             $data['pendadaran'] = $this->Pendadaran_model->getPendadaranReport();
             $data['jumlahData'] = $this->Pendadaran_model->getJumlahReport();
             if ($data['pendadaran'] == NULL) {
-                $this->session->set_flashdata('report', 'Data Mahasiwa Tidak Ada');
+                $this->session->set_flashdata('reportPendadaran', 'Data Mahasiwa Tidak Ada');
                 redirect('pendadaran/report');
             }
             $this->load->view('templates/header', $data);
@@ -806,7 +820,7 @@ class Pendadaran extends CI_Controller {
             $baris++;
         }
 
-        $filename = 'Jadwal_Pendadaran.xlsx';
+        $filename = 'Jadwal_Pendadaran_'. date("d-m-Y").'.xlsx';
         $object->getActiveSheet()->setTitle("Jadwal Pendadaran");
 
         header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');

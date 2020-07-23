@@ -118,6 +118,11 @@ class Kolokium_model extends CI_model {
         $dosen2 = $this->session->userdata('dosen2');
         $reviewer = $this->session->userdata('reviewer');
 
+//        $bln = $postData['bulan'];
+//        $dosen1 = $postData['dosen1'];
+//        $dosen2 = $postData['dosen2'];
+//        $reviewer = $postData['reviewer'];
+
         if ($bln != NULL && $dosen1 == NULL && $dosen2 == NULL && $reviewer == NULL) {
             $this->db->like('tanggal', $bln);
             return $this->db->get('kolokium')->result_array();
@@ -165,7 +170,7 @@ class Kolokium_model extends CI_model {
             return $this->db->query($sql)->result_array();
         }
     }
-    
+
     public function getJumlahReport() {
         return count($this->getKolokiumReport());
     }

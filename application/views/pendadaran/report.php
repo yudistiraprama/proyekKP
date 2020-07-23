@@ -4,7 +4,7 @@
         <div class="row mt-3">
             <div class="col-md-10">
                 <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                    <?= $this->session->flashdata('report'); ?>.
+                    <?= $this->session->flashdata('reportPendadaran'); ?>.
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -14,6 +14,7 @@
     <?php endif; ?>
 
     <?php if ($pendadaran == null): ?>
+
         <div class="row mt-3">
             <div class="col-md-6">
                 <h3 class="mt-3">Report Jadwal Pendadaran</h3>
@@ -81,6 +82,7 @@
                 </form>
             </div>
         </div>
+
     <?php else: ?>
 
         <?php $postData = $this->input->post(); ?>
@@ -174,19 +176,6 @@
                 </form>
             </div>
         </div>
-
-        <?php
-        $arraydata = array(
-            'bulan' => $postData['bulan'],
-            'dosen1' => $postData['dosen1'],
-            'dosen2' => $postData['dosen2'],
-            'reviewer' => $postData['reviewer'],
-            'ketuaPenguji' => $postData['ketuaPenguji'],
-            'sekretarisPenguji' => $postData['sekretarisPenguji']
-        );
-
-        $this->session->set_userdata($arraydata);
-        ?>
 
         <div class="row">
             <div class="col-md-16">

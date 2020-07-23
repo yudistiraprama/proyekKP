@@ -1,9 +1,10 @@
+<?php var_dump($this->session->userdata()); ?>
 <div class="container">
     <?php if ($this->session->flashdata('report')): ?>
         <div class="row mt-3">
             <div class="col-md-10">
                 <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                    <?= $this->session->flashdata('report'); ?>.
+                    <?= $this->session->flashdata('reportKolokium'); ?>.
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -27,7 +28,6 @@
                                 <option value="<?= $b; ?>"><?= $b; ?></option>
                             <?php endforeach; ?>
                         </select>
-                        <small class="form-text text-danger"><?= form_error('bulan'); ?></small>
                     </div>
                     <div class="form-group">
                         <label for="dosen1">Dosen Pembimbing 1</label>
@@ -37,7 +37,6 @@
                                 <option value="<?= $ds['nama']; ?>"><?= $ds['nama']; ?></option>
                             <?php endforeach; ?>
                         </select>
-                        <small class="form-text text-danger"><?= form_error('dosen1'); ?></small>
                     </div>
                     <div class="form-group">
                         <label for="dosen2">Dosen Pembimbing 2</label>
@@ -63,7 +62,7 @@
             </div>
         </div>
     <?php else: ?>
-    
+
         <?php $postData = $this->input->post(); ?>
 
         <div class="row mt-3">
@@ -130,17 +129,6 @@
             </div>
         </div>
 
-        <?php
-        $data = array(
-            'bulan' => $postData['bulan'],
-            'dosen1' => $postData['dosen1'],
-            'dosen2' => $postData['dosen2'],
-            'reviewer' => $postData['reviewer']
-        );
-
-        $this->session->set_userdata($data);
-        ?>
-
         <div class="row">
             <div class="col-md-16">
 
@@ -158,16 +146,6 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <?php if (empty($kolokium)) : ?>
-                            <tr>
-                                <td colspan="4">
-                                    <div class="alert alert-danger" role="alert">
-                                        Data tidak ditemukan!
-                                    </div>
-                                </td>
-                            </tr>
-                        <?php endif; ?>
-
                         <?php $start = 0; ?>
                         <?php foreach ($kolokium as $kol) : ?>
                             <tr style="text-align:center">

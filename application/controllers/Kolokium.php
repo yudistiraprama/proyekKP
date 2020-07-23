@@ -467,21 +467,33 @@ class Kolokium extends CI_Controller {
             $data['kolokium'] = NULL;
             $data['jumlahData'] = 0;
             $this->load->view('templates/header', $data);
-            $this->load->view('kolokium/report');
+            $this->load->view('kolokium/report', $data);
             $this->load->view('templates/footer');
         } else {
             $data['judul'] = 'Report Jadwal Kolokium';
             $data['bulan'] = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember',];
             $data['ruang'] = $this->db->get('ruangan')->result_array();
             $data['dosen'] = $this->Dosen_model->getAllDosen();
+
+            $postData = $this->input->post();
+
+            $dataKolokium = array(
+                'bulan' => $postData['bulan'],
+                'dosen1' => $postData['dosen1'],
+                'dosen2' => $postData['dosen2'],
+                'reviewer' => $postData['reviewer']
+            );
+
+            $this->session->set_userdata($dataKolokium);
+
             $data['kolokium'] = $this->Kolokium_model->getKolokiumReport();
             $data['jumlahData'] = $this->Kolokium_model->getJumlahReport();
             if ($data['kolokium'] == NULL) {
-                $this->session->set_flashdata('report', 'Data Mahasiwa Tidak Ada');
+                $this->session->set_flashdata('reportKolokium', 'Data Mahasiwa Tidak Ada');
                 redirect('kolokium/report');
             }
             $this->load->view('templates/header', $data);
-            $this->load->view('kolokium/report');
+            $this->load->view('kolokium/report', $data);
             $this->load->view('templates/footer');
         }
     }
@@ -529,7 +541,7 @@ class Kolokium extends CI_Controller {
             $baris++;
         }
 
-        $filename = 'Jadwal_Kolokium.xlsx';
+        $filename = 'Jadwal_Kolokium_'. date("d-m-Y").'.xlsx';
         $object->getActiveSheet()->setTitle("Jadwal Kolokium");
 
         header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
