@@ -112,4 +112,24 @@ class Kolokium_model extends CI_model {
         return $this->db->get('kolokium')->result_array();
     }
 
+    public function getKolokiumReport() {
+        $postData = $this->input->post();
+        $bln = $postData['bulan'];
+        $dosen1 = $postData['dosen1'];
+        $dosen2 = $postData['dosen2'];
+        $reviewer = $postData['reviewer'];
+        $ketuaPenguji = $postData['dosen1'];
+        
+        $this->db->like('tanggal', $bln);
+        $this->db->like('tanggal', $dosen1);
+        $this->db->like('tanggal', $dosen2);
+        $this->db->like('tanggal', $reviewer);
+        $this->db->like('tanggal', $ketuaPenguji);
+        return $this->db->get('kolokium')->result_array();
+    }
+    
+    public function getJumlahReport(){
+        
+    }
+
 }

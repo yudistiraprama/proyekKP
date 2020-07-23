@@ -550,7 +550,7 @@ class Kolokium extends CI_Controller {
             }
         }return $detail;
     }
-    
+
     public function pdf($id) {
         $this->load->library('dompdf_gen');
         $data['kolokium'] = $this->Kolokium_model->getKolokiumByID($id);
@@ -603,13 +603,25 @@ class Kolokium extends CI_Controller {
     }
 
     public function report() {
-        $data['judul'] = 'Report Jadwal Kolokium';
-        $data['bulan'] = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember',];
-        $data['ruang'] = $this->db->get('ruangan')->result_array();
-        $data['dosen'] = $this->Dosen_model->getAllDosen();
+        if ($this->input->post() == NULL) {
+            $data['judul'] = 'Report Jadwal Kolokium';
+            $data['bulan'] = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember',];
+            $data['ruang'] = $this->db->get('ruangan')->result_array();
+            $data['dosen'] = $this->Dosen_model->getAllDosen();
+            $this->load->view('templates/header', $data);
+            $this->load->view('kolokium/report');
+            $this->load->view('templates/footer');
+        }
+    }
+
+    public function hasilReport() {
+        $data['judul'] = "Report Jadwal Kolokium";
+        $this->load->model('Kolokium_model', 'kolokium');
+
+        $data['kolokium'] = $this->Kolokium_model->getKolokiumReport();
         $this->load->view('templates/header', $data);
-        $this->load->view('kolokium/report');
-        $this->load->view('templates/footer');
+            $this->load->view('kolokium/hasilReport', $data);
+            $this->load->view('templates/footer');
     }
 
     public function excel() {
