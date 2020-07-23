@@ -46,7 +46,7 @@ class Pendadaran extends CI_Controller {
     public function tambah($nim) {
         if ($this->Pendadaran_model->cekStatusPendadaran($nim) == NULL) {
             $data['judul'] = "Tambah Jadwal Pendadaran";
-            $data['jam'] = ['07.00-09.00', '08.00-10.00', '09.00-11.00', '10.00-12.00', '11.00-13.00', '12.00-14.00', '13.00-15.00', '14.00-16.00', '15.00-17.00'];
+            $data['jam'] = ['07.00-09.00', '09.00-11.00', '11.00-13.00', '13.00-15.00', '15.00-17.00'];
             $data['ruang'] = $this->db->get('ruangan')->result_array();
             $data['dosen'] = $this->Dosen_model->getAllDosen();
             $data['mahasiswa'] = $this->Kolokium_model->getKolokiumByNIM($nim);
@@ -112,29 +112,31 @@ class Pendadaran extends CI_Controller {
                     case 7:$this->session->set_userdata('nim', $nim);
                         $this->session->set_flashdata('rka', 'Reviewer tidak bisa menjadi Sekretaris Penguji dan Anggota Penguji disaat bersama');
                         redirect('pendadaran/tambah/' . $this->session->userdata('nim'));
-                        break;
+                        break;  
                     case 8:$this->session->set_userdata('nim', $nim);
                         $this->session->set_flashdata('rksa', 'Reviewer tidak bisa menjadi Ketua Penguji, Sekretaris Penguji, dan Anggota Penguji disaat bersama');
                         redirect('pendadaran/tambah/' . $this->session->userdata('nim'));
                         break;
                     default:
-//                        if ($dosen2 == '' && $anggotaPenguji == '') {
-//                            $hasil = $this->cekBentrok2($dosen1, $ketuaPenguji, $sekretarisPenguji, $ruang, $tanggal, $durasi);
-//                        } elseif ($dosen2 != '' && $anggotaPenguji == '') {
-//                            $hasil = $this->cekBentrok($dosen1, $dosen2, $ketuaPenguji, $sekretarisPenguji, $ruang, $tanggal, $durasi);
-//                        } elseif ($dosen2 == '' && $anggotaPenguji != '') {
-//                            $hasil = $this->cekBentrok3($dosen1, $ketuaPenguji, $sekretarisPenguji, $anggotaPenguji, $ruang, $tanggal, $durasi);
-//                        } else {
-//                            $hasil = $this->cekBentrok4($dosen1, $dosen2, $ketuaPenguji, $sekretarisPenguji, $anggotaPenguji, $ruang, $tanggal, $durasi);
-//                        }
-                        $hasil = $this->cekBentrok4($dosen1, $dosen2, $ketuaPenguji, $sekretarisPenguji, $anggotaPenguji, $ruang, $tanggal, $durasi);
+                        if ($dosen2 == '' && $anggotaPenguji == '') {
+                            $hasil = $this->cekBentrok2($dosen1, $ketuaPenguji, $sekretarisPenguji, $ruang, $tanggal, $durasi);
+                        } elseif ($dosen2 != '' && $anggotaPenguji == '') {
+                            $hasil = $this->cekBentrok($dosen1, $dosen2, $ketuaPenguji, $sekretarisPenguji, $ruang, $tanggal, $durasi);
+                        } elseif ($dosen2 == '' && $anggotaPenguji != '') {
+                            $hasil = $this->cekBentrok3($dosen1, $ketuaPenguji, $sekretarisPenguji, $anggotaPenguji, $ruang, $tanggal, $durasi);
+                        } elseif ($dosen2 != '' && $anggotaPenguji != '') {
+                            $hasil = $this->cekBentrok4($dosen1, $dosen2, $ketuaPenguji, $sekretarisPenguji, $anggotaPenguji, $ruang, $tanggal, $durasi);
+                        }
+                         
                         break;
                 }
                 if ($hasil != NULL) {
+//                    var_dump($hasil);
                     $this->session->set_userdata('nim', $nim);
                     $this->session->set_flashdata('bentrok', $hasil);
                     redirect('pendadaran/tambah/' . $this->session->userdata('nim'));
                 } else {
+//                    var_dump($hasil);
                     $this->Pendadaran_model->tambahJadwalPendadaran();
                     $this->session->set_flashdata('flash', 'Ditambahkan');
                     redirect('pendadaran');
@@ -146,182 +148,196 @@ class Pendadaran extends CI_Controller {
         }
     }
 
-//    public function cekBentrok($dosen1, $dosen2, $ketuaPenguji, $sekretarisPenguji, $ruang, $tanggal, $durasi) {//ruang masih belum bisa dipakai
-//        $detail = NULL;
-//        $dataRuang = $this->Pendadaran_model->cekStatusRuang($durasi, $ruang);
-//        $detailBentrok = "Ada bentrok jadwal pendadaran Mahasiswa";
-//        foreach ($dataRuang as $dr) {
-//            if ($dr['dosen1'] == $dosen1 || $dr['dosen1'] == $dosen2 || $dr['dosen1'] == $ketuaPenguji || $dr['dosen1'] == $sekretarisPenguji ||
-//                    $dr['dosen2'] == $dosen1 || $dr['dosen2'] == $dosen2 || $dr['dosen2'] == $ketuaPenguji || $dr['dosen2'] == $sekretarisPenguji ||
-//                    $dr['ketuaPenguji'] == $dosen1 || $dr['ketuaPenguji'] == $dosen2 || $dr['ketuaPenguji'] == $ketuaPenguji || $dr['ketuaPenguji'] == $sekretarisPenguji ||
-//                    $dr['sekretarisPenguji'] == $dosen1 || $dr['sekretarisPenguji'] == $dosen2 || $dr['sekretarisPenguji'] == $ketuaPenguji || $dr['sekretarisPenguji'] == $sekretarisPenguji) {
-//                if ($dr['tanggal'] == $tanggal) {
-//                    if ($dr['ruang'] == $ruang) {
-//                        if ($dr['durasi'] == $durasi) {
-//                            $detailBentrok = $detailBentrok . " karena " . $dr['ruang'] . " dipakai oleh NIM =" . $dr['nim'] . " dosbing1 = " . $dr['dosen1'] . " dosbing2 = " . $dr['dosen2'] . " Ketua Penguji = "
-//                                    . $dr['ketuaPenguji'] . " Sekrterais Penguji = " . $dr['sekretarisPenguji'] . " pada tanggal " . $dr['tanggal'] . " Jam = " . $dr['jam'] . "";
-//                            $detail = $detailBentrok;
-//                        }
-//                    } else {
-//                        if ($dr['durasi'] == $durasi) {
-//                            $detailBentrok = $detailBentrok . " dengan NIM =" . $dr['nim'] . " dosbing1 = " . $dr['dosen1'] . " dosbing2 = " . $dr['dosen2'] . " Ketua Penguji = "
-//                                    . $dr['ketuaPenguji'] . " Sekrterais Penguji = " . $dr['sekretarisPenguji'] . " pada tanggal " . $dr['tanggal'] . " Jam = " . $dr['jam'] . " di ruang " . $dr['ruang'] . "";
-//                            $detail = $detailBentrok;
-//                        }
-//                    }
-//                }
-//            } else {
-//                if ($dr['tanggal'] == $tanggal) {
-//                    if ($dr['ruang'] == $ruang) {
-//                        if ($dr['durasi'] == $durasi) {
-//                            $detailBentrok = $detailBentrok . " karena " . $dr['ruang'] . " dipakai oleh NIM =" . $dr['nim'] . " dosbing1 = " . $dr['dosen1'] . " dosbing2 = " . $dr['dosen2'] . " Ketua Penguji = "
-//                                    . $dr['ketuaPenguji'] . " Sekrterais Penguji = " . $dr['sekretarisPenguji'] . " pada tanggal " . $dr['tanggal'] . " Jam = " . $dr['jam'] . "";
-//                            $detail = $detailBentrok;
-//                        }
-//                    } else {
-//                        if ($dr['durasi'] == $durasi) {
-//                            $detailBentrok = $detailBentrok . " dengan NIM =" . $dr['nim'] . " dosbing1 = " . $dr['dosen1'] . " dosbing2 = " . $dr['dosen2'] . " Ketua Penguji = "
-//                                    . $dr['ketuaPenguji'] . " Sekrterais Penguji = " . $dr['sekretarisPenguji'] . " pada tanggal " . $dr['tanggal'] . " Jam = " . $dr['jam'] . " di ruang " . $dr['ruang'] . "";
-//                            $detail = $detailBentrok;
-//                        }
-//                    }
-//                }
-//            }
-//        }
-//        return $detail;
-//    }
-//
-//    public function cekBentrok2($dosen1, $ketuaPenguji, $sekretarisPenguji, $ruang, $tanggal, $durasi) {//ruang masih belum bisa dipakai
-//        $detail = NULL;
-//        $dataRuang = $this->Pendadaran_model->cekStatusRuang($durasi, $ruang);
-//        $detailBentrok = "Ada bentrok jadwal pendadaran Mahasiswa";
-//        foreach ($dataRuang as $dr) {
-//            if ($dr['dosen1'] == $dosen1 || $dr['dosen1'] == $ketuaPenguji || $dr['dosen1'] == $sekretarisPenguji ||
-//                    $dr['ketuaPenguji'] == $dosen1 || $dr['ketuaPenguji'] == $ketuaPenguji || $dr['ketuaPenguji'] == $sekretarisPenguji ||
-//                    $dr['sekretarisPenguji'] == $dosen1 || $dr['sekretarisPenguji'] == $ketuaPenguji || $dr['sekretarisPenguji'] == $sekretarisPenguji) {
-//                if ($dr['tanggal'] == $tanggal) {
-//                    if ($dr['ruang'] == $ruang) {
-//                        if ($dr['durasi'] == $durasi) {
-//                            $detailBentrok = $detailBentrok . " karena " . $dr['ruang'] . " dipakai oleh NIM =" . $dr['nim'] . " dosbing1 = " . $dr['dosen1'] . " Ketua Penguji = "
-//                                    . $dr['ketuaPenguji'] . " Sekrterais Penguji = " . $dr['sekretarisPenguji'] . " pada tanggal " . $dr['tanggal'] . " Jam = " . $dr['jam'] . "";
-//                            $detail = $detailBentrok;
-//                        }
-//                    } else {
-//                        if ($dr['durasi'] == $durasi) {
-//                            $detailBentrok = $detailBentrok . " dengan NIM =" . $dr['nim'] . " dosbing1 = " . $dr['dosen1'] . " Ketua Penguji = "
-//                                    . $dr['ketuaPenguji'] . " Sekrterais Penguji = " . $dr['sekretarisPenguji'] . " pada tanggal " . $dr['tanggal'] . " Jam = " . $dr['jam'] . " di ruang " . $dr['ruang'] . "";
-//                            $detail = $detailBentrok;
-//                        }
-//                    }
-//                }
-//            } else {
-//                if ($dr['tanggal'] == $tanggal) {
-//                    if ($dr['ruang'] == $ruang) {
-//                        if ($dr['durasi'] == $durasi) {
-//                            $detailBentrok = $detailBentrok . " karena " . $dr['ruang'] . " dipakai oleh NIM =" . $dr['nim'] . " dosbing1 = " . $dr['dosen1'] . " Ketua Penguji = "
-//                                    . $dr['ketuaPenguji'] . " Sekrterais Penguji = " . $dr['sekretarisPenguji'] . " pada tanggal " . $dr['tanggal'] . " Jam = " . $dr['jam'] . "";
-//                            $detail = $detailBentrok;
-//                        }
-//                    } else {
-//                        if ($dr['durasi'] == $durasi) {
-//                            $detailBentrok = $detailBentrok . " dengan NIM =" . $dr['nim'] . " dosbing1 = " . $dr['dosen1'] . " Ketua Penguji = "
-//                                    . $dr['ketuaPenguji'] . " Sekrterais Penguji = " . $dr['sekretarisPenguji'] . " pada tanggal " . $dr['tanggal'] . " Jam = " . $dr['jam'] . " di ruang " . $dr['ruang'] . "";
-//                            $detail = $detailBentrok;
-//                        }
-//                    }
-//                }
-//            }
-//        }
-//        return $detail;
-//    }
-//
-//    public function cekBentrok3($dosen1, $ketuaPenguji, $sekretarisPenguji, $anggotaPenguji, $ruang, $tanggal, $durasi) {//ruang masih belum bisa dipakai
-//        $detail = NULL;
-//        $dataRuang = $this->Pendadaran_model->cekStatusRuang($durasi, $ruang);
-//        $detailBentrok = "Ada bentrok jadwal pendadaran Mahasiswa";
-//        foreach ($dataRuang as $dr) {
-//            if ($dr['dosen1'] == $dosen1 || $dr['dosen1'] == $ketuaPenguji || $dr['dosen1'] == $sekretarisPenguji || $dr['dosen1'] == $anggotaPenguji ||
-//                    $dr['ketuaPenguji'] == $dosen1 || $dr['ketuaPenguji'] == $ketuaPenguji || $dr['ketuaPenguji'] == $sekretarisPenguji || $dr['ketuaPenguji'] == $anggotaPenguji ||
-//                    $dr['sekretarisPenguji'] == $dosen1 || $dr['sekretarisPenguji'] == $ketuaPenguji || $dr['sekretarisPenguji'] == $sekretarisPenguji || $dr['sekretarisPenguji'] == $anggotaPenguji ||
-//                    $dr['anggotaPenguji'] == $dosen1 || $dr['anggotaPenguji'] == $ketuaPenguji || $dr['anggotaPenguji'] == $sekretarisPenguji || $dr['anggotaPenguji'] == $anggotaPenguji) {
-//                if ($dr['tanggal'] == $tanggal) {
-//                    if ($dr['ruang'] == $ruang) {
-//                        if ($dr['durasi'] == $durasi) {
-//                            $detailBentrok = $detailBentrok . " karena " . $dr['ruang'] . " dipakai oleh NIM =" . $dr['nim'] . " dosbing1 = " . $dr['dosen1'] . " Ketua Penguji = "
-//                                    . $dr['ketuaPenguji'] . " Sekrterais Penguji = " . $dr['sekretarisPenguji'] . " Anggota Penguji = " . $dr['anggotaPenguji'] . " pada tanggal " . $dr['tanggal'] . " Jam = " . $dr['jam'] . "";
-//                            $detail = $detailBentrok;
-//                        }
-//                    } else {
-//                        if ($dr['durasi'] == $durasi) {
-//                            $detailBentrok = $detailBentrok . " dengan NIM =" . $dr['nim'] . " dosbing1 = " . $dr['dosen1'] . " Ketua Penguji = "
-//                                    . $dr['ketuaPenguji'] . " Sekrterais Penguji = " . $dr['sekretarisPenguji'] . " Anggota Penguji = " . $dr['anggotaPenguji'] . " pada tanggal " . $dr['tanggal'] . " Jam = " . $dr['jam'] . " di ruang " . $dr['ruang'] . "";
-//                            $detail = $detailBentrok;
-//                        }
-//                    }
-//                }
-//            } else {
-//                if ($dr['tanggal'] == $tanggal) {
-//                    if ($dr['ruang'] == $ruang) {
-//                        if ($dr['durasi'] == $durasi) {
-//                            $detailBentrok = $detailBentrok . " karena " . $dr['ruang'] . " dipakai oleh NIM =" . $dr['nim'] . " dosbing1 = " . $dr['dosen1'] . " Ketua Penguji = "
-//                                    . $dr['ketuaPenguji'] . " Sekrterais Penguji = " . $dr['sekretarisPenguji'] . " Anggota Penguji = " . $dr['anggotaPenguji'] . " pada tanggal " . $dr['tanggal'] . " Jam = " . $dr['jam'] . "";
-//                            $detail = $detailBentrok;
-//                        }
-//                    } else {
-//                        if ($dr['durasi'] == $durasi) {
-//                            $detailBentrok = $detailBentrok . " dengan NIM =" . $dr['nim'] . " dosbing1 = " . $dr['dosen1'] . " Ketua Penguji = "
-//                                    . $dr['ketuaPenguji'] . " Sekrterais Penguji = " . $dr['sekretarisPenguji'] . " Anggota Penguji = " . $dr['anggotaPenguji'] . " pada tanggal " . $dr['tanggal'] . " Jam = " . $dr['jam'] . " di ruang " . $dr['ruang'] . "";
-//                            $detail = $detailBentrok;
-//                        }
-//                    }
-//                }
-//            }
-//        }return $detail;
-//    }
-
-    public function cekBentrok4($dosen1, $dosen2, $ketuaPenguji, $sekretarisPenguji, $anggotaPenguji, $ruang, $tanggal, $durasi) {//ruang masih belum bisa dipakai
+    public function cekBentrok($dosen1, $dosen2, $ketuaPenguji, $sekretarisPenguji, $ruang, $tanggal, $durasi) {//ruang masih belum bisa dipakai
         $detail = NULL;
-        $dataRuang = $this->Pendadaran_model->cekStatusRuang($durasi, $ruang);
+        $dataRuang = $this->Pendadaran_model->cekStatusRuang($tanggal, $durasi);
         $detailBentrok = "Ada bentrok jadwal pendadaran Mahasiswa";
         foreach ($dataRuang as $dr) {
-            if ($dr['tanggal'] == $tanggal) {
-                if ($dr['ruang'] == $ruang) {
-                    if ($dr['durasi'] == $durasi) {
-                        if ($dr['dosen1'] == $dosen1 || $dr['dosen1'] == $dosen2 || $dr['dosen1'] == $ketuaPenguji || $dr['dosen1'] == $sekretarisPenguji || $dr['dosen1'] == $anggotaPenguji ||
-                                $dr['dosen2'] == $dosen1 || $dr['dosen2'] == $dosen2 || $dr['dosen2'] == $ketuaPenguji || $dr['dosen2'] == $sekretarisPenguji || $dr['dosen2'] == $anggotaPenguji ||
-                                $dr['ketuaPenguji'] == $dosen1 || $dr['ketuaPenguji'] == $dosen2 || $dr['ketuaPenguji'] == $ketuaPenguji || $dr['ketuaPenguji'] == $sekretarisPenguji || $dr['ketuaPenguji'] == $anggotaPenguji ||
-                                $dr['sekretarisPenguji'] == $dosen1 || $dr['sekretarisPenguji'] == $dosen2 || $dr['sekretarisPenguji'] == $ketuaPenguji || $dr['sekretarisPenguji'] == $sekretarisPenguji || $dr['sekretarisPenguji'] == $anggotaPenguji ||
-                                $dr['anggotaPenguji'] == $dosen1 || $dr['anggotaPenguji'] == $dosen2 || $dr['anggotaPenguji'] == $ketuaPenguji || $dr['anggotaPenguji'] == $sekretarisPenguji || $dr['anggotaPenguji'] == $anggotaPenguji) {
-
+            if ($dr['dosen1'] == $dosen1 || $dr['dosen1'] == $dosen2 || $dr['dosen1'] == $ketuaPenguji || $dr['dosen1'] == $sekretarisPenguji ||
+                    $dr['dosen2'] == $dosen1 || $dr['dosen2'] == $dosen2 || $dr['dosen2'] == $ketuaPenguji || $dr['dosen2'] == $sekretarisPenguji ||
+                    $dr['ketuaPenguji'] == $dosen1 || $dr['ketuaPenguji'] == $dosen2 || $dr['ketuaPenguji'] == $ketuaPenguji || $dr['ketuaPenguji'] == $sekretarisPenguji ||
+                    $dr['sekretarisPenguji'] == $dosen1 || $dr['sekretarisPenguji'] == $dosen2 || $dr['sekretarisPenguji'] == $ketuaPenguji || $dr['sekretarisPenguji'] == $sekretarisPenguji) {
+                if ($dr['tanggal'] == $tanggal) {
+                    if ($dr['ruang'] == $ruang) {
+                        if ($dr['durasi'] == $durasi) {
                             $detailBentrok = $detailBentrok . " karena " . $dr['ruang'] . " dipakai oleh NIM =" . $dr['nim'] . " dosbing1 = " . $dr['dosen1'] . " dosbing2 = " . $dr['dosen2'] . " Ketua Penguji = "
-                                    . $dr['ketuaPenguji'] . " Sekrterais Penguji = " . $dr['sekretarisPenguji'] . " Anggota Penguji = " . $dr['anggotaPenguji'] . " pada tanggal " . $dr['tanggal'] . " Jam = " . $dr['durasi'] . "";
-                            $detail = $detailBentrok;
-                        } else {
-                            $detailBentrok = $detailBentrok . " karena " . $dr['ruang'] . " dipakai oleh NIM =" . $dr['nim'] . " dosbing1 = " . $dr['dosen1'] . " dosbing2 = " . $dr['dosen2'] . " Ketua Penguji = "
-                                    . $dr['ketuaPenguji'] . " Sekrterais Penguji = " . $dr['sekretarisPenguji'] . " Anggota Penguji = " . $dr['anggotaPenguji'] . " pada tanggal " . $dr['tanggal'] . " Jam = " . $dr['durasi'] . "";
+                                    . $dr['ketuaPenguji'] . " Sekrterais Penguji = " . $dr['sekretarisPenguji'] . " pada tanggal " . $dr['tanggal'] . " Jam = " . $dr['durasi'] . "";
                             $detail = $detailBentrok;
                         }
-                    }
-                } else {
-                    if ($dr['durasi'] == $durasi) {
-                        if ($dr['dosen1'] == $dosen1 || $dr['dosen1'] == $dosen2 || $dr['dosen1'] == $ketuaPenguji || $dr['dosen1'] == $sekretarisPenguji || $dr['dosen1'] == $anggotaPenguji ||
-                                $dr['dosen2'] == $dosen1 || $dr['dosen2'] == $dosen2 || $dr['dosen2'] == $ketuaPenguji || $dr['dosen2'] == $sekretarisPenguji || $dr['dosen2'] == $anggotaPenguji ||
-                                $dr['ketuaPenguji'] == $dosen1 || $dr['ketuaPenguji'] == $dosen2 || $dr['ketuaPenguji'] == $ketuaPenguji || $dr['ketuaPenguji'] == $sekretarisPenguji || $dr['ketuaPenguji'] == $anggotaPenguji ||
-                                $dr['sekretarisPenguji'] == $dosen1 || $dr['sekretarisPenguji'] == $dosen2 || $dr['sekretarisPenguji'] == $ketuaPenguji || $dr['sekretarisPenguji'] == $sekretarisPenguji || $dr['sekretarisPenguji'] == $anggotaPenguji ||
-                                $dr['anggotaPenguji'] == $dosen1 || $dr['anggotaPenguji'] == $dosen2 || $dr['anggotaPenguji'] == $ketuaPenguji || $dr['anggotaPenguji'] == $sekretarisPenguji || $dr['anggotaPenguji'] == $anggotaPenguji) {
-
-                            $detailBentrok = $detailBentrok . " karena " . $dr['ruang'] . " dipakai oleh NIM =" . $dr['nim'] . " dosbing1 = " . $dr['dosen1'] . " dosbing2 = " . $dr['dosen2'] . " Ketua Penguji = "
-                                    . $dr['ketuaPenguji'] . " Sekrterais Penguji = " . $dr['sekretarisPenguji'] . " Anggota Penguji = " . $dr['anggotaPenguji'] . " pada tanggal " . $dr['tanggal'] . " Jam = " . $dr['durasi'] . "";
-                            $detail = $detailBentrok;
-                        } else {
-                            $detailBentrok = $detailBentrok . " karena " . $dr['ruang'] . " dipakai oleh NIM =" . $dr['nim'] . " dosbing1 = " . $dr['dosen1'] . " dosbing2 = " . $dr['dosen2'] . " Ketua Penguji = "
-                                    . $dr['ketuaPenguji'] . " Sekrterais Penguji = " . $dr['sekretarisPenguji'] . " Anggota Penguji = " . $dr['anggotaPenguji'] . " pada tanggal " . $dr['tanggal'] . " Jam = " . $dr['durasi'] . "";
+                    } else {
+                        if ($dr['durasi'] == $durasi) {
+                            $detailBentrok = $detailBentrok . " dengan NIM =" . $dr['nim'] . " dosbing1 = " . $dr['dosen1'] . " dosbing2 = " . $dr['dosen2'] . " Ketua Penguji = "
+                                    . $dr['ketuaPenguji'] . " Sekrterais Penguji = " . $dr['sekretarisPenguji'] . " pada tanggal " . $dr['tanggal'] . " Jam = " . $dr['durasi'] . " di ruang " . $dr['ruang'] . "";
                             $detail = $detailBentrok;
                         }
                     }
                 }
+            } else {
+                if ($dr['tanggal'] == $tanggal) {
+                    if ($dr['ruang'] == $ruang) {
+                        if ($dr['durasi'] == $durasi) {
+                            $detailBentrok = $detailBentrok . " karena " . $dr['ruang'] . " dipakai oleh NIM =" . $dr['nim'] . " dosbing1 = " . $dr['dosen1'] . " dosbing2 = " . $dr['dosen2'] . " Ketua Penguji = "
+                                    . $dr['ketuaPenguji'] . " Sekrterais Penguji = " . $dr['sekretarisPenguji'] . " pada tanggal " . $dr['tanggal'] . " Jam = " . $dr['durasi'] . "";
+                            $detail = $detailBentrok;
+                        }
+                    } else {
+//                        if ($dr['durasi'] == $durasi) {
+//                            $detailBentrok = $detailBentrok . " dengan NIM =" . $dr['nim'] . " dosbing1 = " . $dr['dosen1'] . " dosbing2 = " . $dr['dosen2'] . " Ketua Penguji = "
+//                                    . $dr['ketuaPenguji'] . " Sekrterais Penguji = " . $dr['sekretarisPenguji'] . " pada tanggal " . $dr['tanggal'] . " Jam = " . $dr['durasi'] . " di ruang " . $dr['ruang'] . "";
+//                            $detail = $detailBentrok;
+//                        }
+                    }
+                }
             }
-        }return $detail;
+        }
+        return $detail;
+    }
+
+    public function cekBentrok2($dosen1, $ketuaPenguji, $sekretarisPenguji, $ruang, $tanggal, $durasi) {//ruang masih belum bisa dipakai
+        $detail = NULL;
+        $dataRuang = $this->Pendadaran_model->cekStatusRuang($tanggal, $durasi);
+        $detailBentrok = "Ada bentrok jadwal pendadaran Mahasiswa";
+        foreach ($dataRuang as $dr) {
+            if ($dr['dosen1'] == $dosen1 || $dr['dosen1'] == $ketuaPenguji || $dr['dosen1'] == $sekretarisPenguji ||
+                    $dr['ketuaPenguji'] == $dosen1 || $dr['ketuaPenguji'] == $ketuaPenguji || $dr['ketuaPenguji'] == $sekretarisPenguji ||
+                    $dr['sekretarisPenguji'] == $dosen1 || $dr['sekretarisPenguji'] == $ketuaPenguji || $dr['sekretarisPenguji'] == $sekretarisPenguji) {
+                if ($dr['tanggal'] == $tanggal) {
+                    if ($dr['ruang'] == $ruang) {
+                        if ($dr['durasi'] == $durasi) {
+                            $detailBentrok = $detailBentrok . " karena " . $dr['ruang'] . " dipakai oleh NIM =" . $dr['nim'] . " dosbing1 = " . $dr['dosen1'] . " Ketua Penguji = "
+                                    . $dr['ketuaPenguji'] . " Sekrterais Penguji = " . $dr['sekretarisPenguji'] . " pada tanggal " . $dr['tanggal'] . " Jam = " . $dr['durasi'] . "";
+                            $detail = $detailBentrok;
+                        }
+                    } else{
+                        if ($dr['durasi'] == $durasi) {
+                            $detailBentrok = $detailBentrok . " dengan NIM =" . $dr['nim'] . " dosbing1 = " . $dr['dosen1'] . " Ketua Penguji = "
+                                    . $dr['ketuaPenguji'] . " Sekrterais Penguji = " . $dr['sekretarisPenguji'] . " pada tanggal " . $dr['tanggal'] . " Jam = " . $dr['durasi'] . " di ruang " . $dr['ruang'] . "";
+                            $detail = $detailBentrok;
+                        }
+                    }
+                }
+            } else {
+                if ($dr['tanggal'] == $tanggal) {
+                    if ($dr['ruang'] == $ruang) {
+                        if ($dr['durasi'] == $durasi) {
+                            $detailBentrok = $detailBentrok . " karena " . $dr['ruang'] . " dipakai oleh NIM =" . $dr['nim'] . " dosbing1 = " . $dr['dosen1'] . " Ketua Penguji = "
+                                    . $dr['ketuaPenguji'] . " Sekrterais Penguji = " . $dr['sekretarisPenguji'] . " pada tanggal " . $dr['tanggal'] . " Jam = " . $dr['durasi'] . "";
+                            $detail = $detailBentrok;
+                        }
+                    } else {
+//                        if ($dr['durasi'] == $durasi) {
+//                            $detailBentrok = $detailBentrok . " dengan NIM =" . $dr['nim'] . " dosbing1 = " . $dr['dosen1'] . " Ketua Penguji = "
+//                                    . $dr['ketuaPenguji'] . " Sekrterais Penguji = " . $dr['sekretarisPenguji'] . " pada tanggal " . $dr['tanggal'] . " Jam = " . $dr['durasi'] . " di ruang " . $dr['ruang'] . "";
+//                            $detail = $detailBentrok;
+//                        }
+                    }
+                }
+            }
+        }
+        return $detail;
+    }
+
+    public function cekBentrok3($dosen1, $ketuaPenguji, $sekretarisPenguji, $anggotaPenguji, $ruang, $tanggal, $durasi) {//ruang masih belum bisa dipakai
+        $detail = NULL;
+        $dataRuang = $this->Pendadaran_model->cekStatusRuang($tanggal, $durasi);
+        $detailBentrok = "Ada bentrok jadwal pendadaran Mahasiswa";
+        foreach ($dataRuang as $dr) {
+            if ($dr['dosen1'] == $dosen1 || $dr['dosen1'] == $ketuaPenguji || $dr['dosen1'] == $sekretarisPenguji || $dr['dosen1'] == $anggotaPenguji ||
+                    $dr['ketuaPenguji'] == $dosen1 || $dr['ketuaPenguji'] == $ketuaPenguji || $dr['ketuaPenguji'] == $sekretarisPenguji || $dr['ketuaPenguji'] == $anggotaPenguji ||
+                    $dr['sekretarisPenguji'] == $dosen1 || $dr['sekretarisPenguji'] == $ketuaPenguji || $dr['sekretarisPenguji'] == $sekretarisPenguji || $dr['sekretarisPenguji'] == $anggotaPenguji ||
+                    $dr['anggotaPenguji'] == $dosen1 || $dr['anggotaPenguji'] == $ketuaPenguji || $dr['anggotaPenguji'] == $sekretarisPenguji || $dr['anggotaPenguji'] == $anggotaPenguji) {
+                if ($dr['tanggal'] == $tanggal) {
+                    if ($dr['ruang'] == $ruang) {
+                        if ($dr['durasi'] == $durasi) {
+                            $detailBentrok = $detailBentrok . " karena " . $dr['ruang'] . " dipakai oleh NIM =" . $dr['nim'] . " dosbing1 = " . $dr['dosen1'] . " Ketua Penguji = "
+                                    . $dr['ketuaPenguji'] . " Sekrterais Penguji = " . $dr['sekretarisPenguji'] . " Anggota Penguji = " . $dr['anggotaPenguji'] . " pada tanggal " . $dr['tanggal'] . " Jam = " . $dr['durasi'] . "";
+                            $detail = $detailBentrok;
+                        }
+                    } else {
+                        if ($dr['durasi'] == $durasi) {
+                            $detailBentrok = $detailBentrok . " dengan NIM =" . $dr['nim'] . " dosbing1 = " . $dr['dosen1'] . " Ketua Penguji = "
+                                    . $dr['ketuaPenguji'] . " Sekrterais Penguji = " . $dr['sekretarisPenguji'] . " Anggota Penguji = " . $dr['anggotaPenguji'] . " pada tanggal " . $dr['tanggal'] . " Jam = " . $dr['durasi'] . " di ruang " . $dr['ruang'] . "";
+                            $detail = $detailBentrok;
+                        }
+                    }
+                }
+            } else {
+                if ($dr['tanggal'] == $tanggal) {
+                    if ($dr['ruang'] == $ruang) {
+                        if ($dr['durasi'] == $durasi) {
+                            $detailBentrok = $detailBentrok . " karena " . $dr['ruang'] . " dipakai oleh NIM =" . $dr['nim'] . " dosbing1 = " . $dr['dosen1'] . " Ketua Penguji = "
+                                    . $dr['ketuaPenguji'] . " Sekrterais Penguji = " . $dr['sekretarisPenguji'] . " Anggota Penguji = " . $dr['anggotaPenguji'] . " pada tanggal " . $dr['tanggal'] . " Jam = " . $dr['durasi'] . "";
+                            $detail = $detailBentrok;
+                        }
+                    } else {
+//                        if ($dr['durasi'] == $durasi) {
+//                            $detailBentrok = $detailBentrok . " dengan NIM =" . $dr['nim'] . " dosbing1 = " . $dr['dosen1'] . " Ketua Penguji = "
+//                                    . $dr['ketuaPenguji'] . " Sekrterais Penguji = " . $dr['sekretarisPenguji'] . " Anggota Penguji = " . $dr['anggotaPenguji'] . " pada tanggal " . $dr['tanggal'] . " Jam = " . $dr['durasi'] . " di ruang " . $dr['ruang'] . "";
+//                            $detail = $detailBentrok;
+//                        }
+                    }
+                }
+            }
+        }
+        return $detail;
+    }
+
+    public function cekBentrok4($dosen1, $dosen2, $ketuaPenguji, $sekretarisPenguji, $anggotaPenguji, $ruang, $tanggal, $durasi) {//ruang masih belum bisa dipakai
+        $detail = NULL;
+        $dataRuang = $this->Pendadaran_model->cekStatusRuang($tanggal, $durasi);
+        $detailBentrok = "Ada bentrok jadwal pendadaran Mahasiswa";
+        foreach ($dataRuang as $dr) {
+            if ($dr['dosen1'] == $dosen1 || $dr['dosen1'] == $dosen2 || $dr['dosen1'] == $ketuaPenguji || $dr['dosen1'] == $sekretarisPenguji || $dr['dosen1'] == $anggotaPenguji ||
+                    $dr['dosen2'] == $dosen1 || $dr['dosen2'] == $dosen2 || $dr['dosen2'] == $ketuaPenguji || $dr['dosen2'] == $sekretarisPenguji || $dr['dosen2'] == $anggotaPenguji ||
+                    $dr['ketuaPenguji'] == $dosen1 || $dr['ketuaPenguji'] == $dosen2 || $dr['ketuaPenguji'] == $ketuaPenguji || $dr['ketuaPenguji'] == $sekretarisPenguji || $dr['ketuaPenguji'] == $anggotaPenguji ||
+                    $dr['sekretarisPenguji'] == $dosen1 || $dr['sekretarisPenguji'] == $dosen2 || $dr['sekretarisPenguji'] == $ketuaPenguji || $dr['sekretarisPenguji'] == $sekretarisPenguji || $dr['sekretarisPenguji'] == $anggotaPenguji ||
+                    $dr['anggotaPenguji'] == $dosen1 || $dr['anggotaPenguji'] == $dosen2 || $dr['anggotaPenguji'] == $ketuaPenguji || $dr['anggotaPenguji'] == $sekretarisPenguji || $dr['anggotaPenguji'] == $anggotaPenguji) {
+                if ($dr['tanggal'] == $tanggal) {
+                    if ($dr['ruang'] == $ruang) {
+                        if ($dr['durasi'] == $durasi) {
+                            $detailBentrok = $detailBentrok . " karena " . $dr['ruang'] . " dipakai oleh NIM =" . $dr['nim'] . " dosbing1 = " . $dr['dosen1'] . " dosbing2 = " . $dr['dosen2'] . " Ketua Penguji = "
+                                    . $dr['ketuaPenguji'] . " Sekrterais Penguji = " . $dr['sekretarisPenguji'] . " Anggota Penguji = " . $dr['anggotaPenguji'] . " pada tanggal " . $dr['tanggal'] . " Jam = " . $dr['durasi'] . "";
+                            $detail = $detailBentrok;
+                        } else {
+                            $detailBentrok = $detailBentrok . " karena " . $dr['ruang'] . " dipakai oleh NIM =" . $dr['nim'] . " dosbing1 = " . $dr['dosen1'] . " dosbing2 = " . $dr['dosen2'] . " Ketua Penguji = "
+                                    . $dr['ketuaPenguji'] . " Sekrterais Penguji = " . $dr['sekretarisPenguji'] . " Anggota Penguji = " . $dr['anggotaPenguji'] . " pada tanggal " . $dr['tanggal'] . " Jam = " . $dr['durasi'] . "";
+                            $detail = $detailBentrok;
+                        }
+                    } elseif ($dr['ruang'] != $ruang) {
+//                        if ($dr['durasi'] == $durasi) {
+//                            $detailBentrok = $detailBentrok . " bentrok dengan NIM =" . $dr['nim'] . " dosbing1 = " . $dr['dosen1'] . " dosbing2 = " . $dr['dosen2'] . " Ketua Penguji = "
+//                                    . $dr['ketuaPenguji'] . " Sekrterais Penguji = " . $dr['sekretarisPenguji'] . " Anggota Penguji = " . $dr['anggotaPenguji'] . " pada tanggal " . $dr['tanggal'] . " Jam = " . $dr['durasi'] . " ruang = " . $dr['ruang'] . "";
+//                            $detail = $detailBentrok;
+//                        } else {
+//                            $detailBentrok = $detailBentrok . " bentrok dengan NIM =" . $dr['nim'] . " dosbing1 = " . $dr['dosen1'] . " dosbing2 = " . $dr['dosen2'] . " Ketua Penguji = "
+//                                    . $dr['ketuaPenguji'] . " Sekrterais Penguji = " . $dr['sekretarisPenguji'] . " Anggota Penguji = " . $dr['anggotaPenguji'] . " pada tanggal " . $dr['tanggal'] . " Jam = " . $dr['durasi'] . " ruang = " . $dr['ruang'] . "";
+//                            $detail = $detailBentrok;
+//                        }
+                    }
+                }
+            } else {
+                if ($dr['tanggal'] == $tanggal) {
+                    if ($dr['ruang'] == $ruang) {
+                        if ($dr['durasi'] == $durasi) {
+                            $detailBentrok = $detailBentrok . " karena " . $dr['ruang'] . " dipakai oleh NIM =" . $dr['nim'] . " dosbing1 = " . $dr['dosen1'] . " dosbing2 = " . $dr['dosen2'] . " Ketua Penguji = "
+                                    . $dr['ketuaPenguji'] . " Sekrterais Penguji = " . $dr['sekretarisPenguji'] . " Anggota Penguji = " . $dr['anggotaPenguji'] . " pada tanggal " . $dr['tanggal'] . " Jam = " . $dr['durasi'] . "";
+                            $detail = $detailBentrok;
+                        } else {
+//                            $detailBentrok = $detailBentrok . " karena " . $dr['ruang'] . " dipakai oleh NIM =" . $dr['nim'] . " dosbing1 = " . $dr['dosen1'] . " dosbing2 = " . $dr['dosen2'] . " Ketua Penguji = "
+//                                    . $dr['ketuaPenguji'] . " Sekrterais Penguji = " . $dr['sekretarisPenguji'] . " Anggota Penguji = " . $dr['anggotaPenguji'] . " pada tanggal " . $dr['tanggal'] . " Jam = " . $dr['durasi'] . "";
+//                            $detail = $detailBentrok;
+                        }
+                    } elseif ($dr['ruang'] != $ruang) {
+//                        if ($dr['durasi'] == $durasi) {
+//                            $detailBentrok = $detailBentrok . " bentrok dengan NIM =" . $dr['nim'] . " dosbing1 = " . $dr['dosen1'] . " dosbing2 = " . $dr['dosen2'] . " Ketua Penguji = "
+//                                    . $dr['ketuaPenguji'] . " Sekrterais Penguji = " . $dr['sekretarisPenguji'] . " Anggota Penguji = " . $dr['anggotaPenguji'] . " pada tanggal " . $dr['tanggal'] . " Jam = " . $dr['durasi'] . " ruang = " . $dr['ruang'] . "";
+//                            $detail = $detailBentrok;
+//                        } 
+                    }
+                }
+            }
+        }
+        return $detail;
     }
 
     public function cekInputDosen($reviewer, $ketuaPenguji, $sekretarisPenguji, $anggotaPenguji) {
@@ -396,7 +412,7 @@ class Pendadaran extends CI_Controller {
 
     public function edit($id) {
         $data['judul'] = "Edit Jadwal Pendadaran";
-        $data['jam'] = ['07.00-09.00', '08.00-10.00', '09.00-11.00', '10.00-12.00', '11.00-13.00', '12.00-14.00', '13.00-15.00', '14.00-16.00', '15.00-17.00'];
+        $data['jam'] = ['07.00-09.00', '09.00-11.00', '11.00-13.00', '13.00-15.00', '15.00-17.00'];
         $data['ruang'] = $this->db->get('ruangan')->result_array();
         $data['pendadaran'] = $this->Pendadaran_model->getPendadaranByID($id);
         $data['dosen'] = $this->Dosen_model->getAllDosen();
@@ -421,6 +437,7 @@ class Pendadaran extends CI_Controller {
         } else {
 
             $postData = $this->input->post();
+            $nim = $postData['nim'];
             $dosen1 = $postData['dosen1'];
             $dosen2 = $postData['dosen2'];
             $reviewer = $postData['reviewer'];
@@ -479,16 +496,16 @@ class Pendadaran extends CI_Controller {
                     redirect('pendadaran/edit/' . $this->session->userdata('id'));
                     break;
                 default:
-//                    if ($dosen2 == '' && $anggotaPenguji == '') {
-//                        $hasil = $this->cekBentrokEdit2($dosen1, $ketuaPenguji, $sekretarisPenguji, $ruang, $tanggal, $durasi);
-//                    } elseif ($dosen2 != '' && $anggotaPenguji == '') {
-//                        $hasil = $this->cekBentrokEdit($dosen1, $dosen2, $ketuaPenguji, $sekretarisPenguji, $ruang, $tanggal, $durasi);
-//                    } elseif ($dosen2 == '' && $anggotaPenguji != '') {
-//                        $hasil = $this->cekBentrokEdit3($dosen1, $ketuaPenguji, $sekretarisPenguji, $anggotaPenguji, $ruang, $tanggal, $durasi);
-//                    } else {
-//                        $hasil = $this->cekBentrokEdit4($dosen1, $dosen2, $ketuaPenguji, $sekretarisPenguji, $anggotaPenguji, $ruang, $tanggal, $durasi);
-//                    }  
-                    $hasil = $this->cekBentrokEdit4($dosen1, $dosen2, $ketuaPenguji, $sekretarisPenguji, $anggotaPenguji, $ruang, $tanggal, $durasi);
+                    if ($dosen2 == '' && $anggotaPenguji == '') {
+                        $hasil = $this->cekBentrokEdit2($nim, $dosen1, $ketuaPenguji, $sekretarisPenguji, $ruang, $tanggal, $durasi);
+                    } elseif ($dosen2 != '' && $anggotaPenguji == '') {
+                        $hasil = $this->cekBentrokEdit($nim, $dosen1, $dosen2, $ketuaPenguji, $sekretarisPenguji, $ruang, $tanggal, $durasi);
+                    } elseif ($dosen2 == '' && $anggotaPenguji != '') {
+                        $hasil = $this->cekBentrokEdit3($nim, $dosen1, $ketuaPenguji, $sekretarisPenguji, $anggotaPenguji, $ruang, $tanggal, $durasi);
+                    } elseif ($dosen2 != '' && $anggotaPenguji != '') {
+                        $hasil = $this->cekBentrokEdit4($nim, $dosen1, $dosen2, $ketuaPenguji, $sekretarisPenguji, $anggotaPenguji, $ruang, $tanggal, $durasi);
+                    }
+
                     break;
             }
             if ($hasil != NULL) {
@@ -496,7 +513,6 @@ class Pendadaran extends CI_Controller {
                 $this->session->set_flashdata('bentrok', $hasil);
                 redirect('pendadaran/edit/' . $this->session->userdata('id'));
             } else {
-
                 $this->Pendadaran_model->editJadwalPendadaran();
                 $this->session->set_flashdata('flash', 'Diubah');
                 redirect('pendadaran');
@@ -504,182 +520,340 @@ class Pendadaran extends CI_Controller {
         }
     }
 
-//     public function cekBentrokEdit($dosen1, $dosen2, $ketuaPenguji, $sekretarisPenguji, $ruang, $tanggal, $durasi) {//ruang masih belum bisa dipakai
-//        $detail = NULL;
-//        $dataRuang = $this->Pendadaran_model->cekStatusRuangEdit($durasi, $ruang);
-//        $detailBentrok = "Ada bentrok jadwal pendadaran Mahasiswa";
-//        foreach ($dataRuang as $dr) {
-//            if ($dr['dosen1'] == $dosen1 || $dr['dosen1'] == $dosen2 || $dr['dosen1'] == $ketuaPenguji || $dr['dosen1'] == $sekretarisPenguji ||
-//                    $dr['dosen2'] == $dosen1 || $dr['dosen2'] == $dosen2 || $dr['dosen2'] == $ketuaPenguji || $dr['dosen2'] == $sekretarisPenguji ||
-//                    $dr['ketuaPenguji'] == $dosen1 || $dr['ketuaPenguji'] == $dosen2 || $dr['ketuaPenguji'] == $ketuaPenguji || $dr['ketuaPenguji'] == $sekretarisPenguji ||
-//                    $dr['sekretarisPenguji'] == $dosen1 || $dr['sekretarisPenguji'] == $dosen2 || $dr['sekretarisPenguji'] == $ketuaPenguji || $dr['sekretarisPenguji'] == $sekretarisPenguji) {
-//                if ($dr['tanggal'] == $tanggal) {
-//                    if ($dr['ruang'] == $ruang) {
-//                        if ($dr['durasi'] == $durasi) {
-//                            $detailBentrok = $detailBentrok . " karena " . $dr['ruang'] . " dipakai oleh NIM =" . $dr['nim'] . " dosbing1 = " . $dr['dosen1'] . " dosbing2 = " . $dr['dosen2'] . " Ketua Penguji = "
-//                                    . $dr['ketuaPenguji'] . " Sekrterais Penguji = " . $dr['sekretarisPenguji'] . " pada tanggal " . $dr['tanggal'] . " Jam = " . $dr['jam'] . "";
-//                            $detail = $detailBentrok;
-//                        }
-//                    } else {
-//                        if ($dr['durasi'] == $durasi) {
-//                            $detailBentrok = $detailBentrok . " dengan NIM =" . $dr['nim'] . " dosbing1 = " . $dr['dosen1'] . " dosbing2 = " . $dr['dosen2'] . " Ketua Penguji = "
-//                                    . $dr['ketuaPenguji'] . " Sekrterais Penguji = " . $dr['sekretarisPenguji'] . " pada tanggal " . $dr['tanggal'] . " Jam = " . $dr['jam'] . " di ruang " . $dr['ruang'] . "";
-//                            $detail = $detailBentrok;
-//                        }
-//                    }
-//                }
-//            } else {
-//                if ($dr['tanggal'] == $tanggal) {
-//                    if ($dr['ruang'] == $ruang) {
-//                        if ($dr['durasi'] == $durasi) {
-//                            $detailBentrok = $detailBentrok . " karena " . $dr['ruang'] . " dipakai oleh NIM =" . $dr['nim'] . " dosbing1 = " . $dr['dosen1'] . " dosbing2 = " . $dr['dosen2'] . " Ketua Penguji = "
-//                                    . $dr['ketuaPenguji'] . " Sekrterais Penguji = " . $dr['sekretarisPenguji'] . " pada tanggal " . $dr['tanggal'] . " Jam = " . $dr['jam'] . "";
-//                            $detail = $detailBentrok;
-//                        }
-//                    } else {
-//                        if ($dr['durasi'] == $durasi) {
-//                            $detailBentrok = $detailBentrok . " dengan NIM =" . $dr['nim'] . " dosbing1 = " . $dr['dosen1'] . " dosbing2 = " . $dr['dosen2'] . " Ketua Penguji = "
-//                                    . $dr['ketuaPenguji'] . " Sekrterais Penguji = " . $dr['sekretarisPenguji'] . " pada tanggal " . $dr['tanggal'] . " Jam = " . $dr['jam'] . " di ruang " . $dr['ruang'] . "";
-//                            $detail = $detailBentrok;
-//                        }
-//                    }
-//                }
-//            }
-//        }
-//        return $detail;
-//    }
-//
-//    public function cekBentrok2Edit($dosen1, $ketuaPenguji, $sekretarisPenguji, $ruang, $tanggal, $durasi) {//ruang masih belum bisa dipakai
-//        $detail = NULL;
-//        $dataRuang = $this->Pendadaran_model->cekStatusRuangEdit($durasi, $ruang);
-//        $detailBentrok = "Ada bentrok jadwal pendadaran Mahasiswa";
-//        foreach ($dataRuang as $dr) {
-//            if ($dr['dosen1'] == $dosen1 || $dr['dosen1'] == $ketuaPenguji || $dr['dosen1'] == $sekretarisPenguji ||
-//                    $dr['ketuaPenguji'] == $dosen1 || $dr['ketuaPenguji'] == $ketuaPenguji || $dr['ketuaPenguji'] == $sekretarisPenguji ||
-//                    $dr['sekretarisPenguji'] == $dosen1 || $dr['sekretarisPenguji'] == $ketuaPenguji || $dr['sekretarisPenguji'] == $sekretarisPenguji) {
-//                if ($dr['tanggal'] == $tanggal) {
-//                    if ($dr['ruang'] == $ruang) {
-//                        if ($dr['durasi'] == $durasi) {
-//                            $detailBentrok = $detailBentrok . " karena " . $dr['ruang'] . " dipakai oleh NIM =" . $dr['nim'] . " dosbing1 = " . $dr['dosen1'] . " Ketua Penguji = "
-//                                    . $dr['ketuaPenguji'] . " Sekrterais Penguji = " . $dr['sekretarisPenguji'] . " pada tanggal " . $dr['tanggal'] . " Jam = " . $dr['jam'] . "";
-//                            $detail = $detailBentrok;
-//                        }
-//                    } else {
-//                        if ($dr['durasi'] == $durasi) {
-//                            $detailBentrok = $detailBentrok . " dengan NIM =" . $dr['nim'] . " dosbing1 = " . $dr['dosen1'] . " Ketua Penguji = "
-//                                    . $dr['ketuaPenguji'] . " Sekrterais Penguji = " . $dr['sekretarisPenguji'] . " pada tanggal " . $dr['tanggal'] . " Jam = " . $dr['jam'] . " di ruang " . $dr['ruang'] . "";
-//                            $detail = $detailBentrok;
-//                        }
-//                    }
-//                }
-//            } else {
-//                if ($dr['tanggal'] == $tanggal) {
-//                    if ($dr['ruang'] == $ruang) {
-//                        if ($dr['durasi'] == $durasi) {
-//                            $detailBentrok = $detailBentrok . " karena " . $dr['ruang'] . " dipakai oleh NIM =" . $dr['nim'] . " dosbing1 = " . $dr['dosen1'] . " Ketua Penguji = "
-//                                    . $dr['ketuaPenguji'] . " Sekrterais Penguji = " . $dr['sekretarisPenguji'] . " pada tanggal " . $dr['tanggal'] . " Jam = " . $dr['jam'] . "";
-//                            $detail = $detailBentrok;
-//                        }
-//                    } else {
-//                        if ($dr['durasi'] == $durasi) {
-//                            $detailBentrok = $detailBentrok . " dengan NIM =" . $dr['nim'] . " dosbing1 = " . $dr['dosen1'] . " Ketua Penguji = "
-//                                    . $dr['ketuaPenguji'] . " Sekrterais Penguji = " . $dr['sekretarisPenguji'] . " pada tanggal " . $dr['tanggal'] . " Jam = " . $dr['jam'] . " di ruang " . $dr['ruang'] . "";
-//                            $detail = $detailBentrok;
-//                        }
-//                    }
-//                }
-//            }
-//        }
-//        return $detail;
-//    }
-//
-//    public function cekBentrokEdit3($dosen1, $ketuaPenguji, $sekretarisPenguji, $anggotaPenguji, $ruang, $tanggal, $durasi) {//ruang masih belum bisa dipakai
-//        $detail = NULL;
-//        $dataRuang = $this->Pendadaran_model->cekStatusRuangEdit($durasi, $ruang);
-//        $detailBentrok = "Ada bentrok jadwal pendadaran Mahasiswa";
-//        foreach ($dataRuang as $dr) {
-//            if ($dr['dosen1'] == $dosen1 || $dr['dosen1'] == $ketuaPenguji || $dr['dosen1'] == $sekretarisPenguji || $dr['dosen1'] == $anggotaPenguji ||
-//                    $dr['ketuaPenguji'] == $dosen1 || $dr['ketuaPenguji'] == $ketuaPenguji || $dr['ketuaPenguji'] == $sekretarisPenguji || $dr['ketuaPenguji'] == $anggotaPenguji ||
-//                    $dr['sekretarisPenguji'] == $dosen1 || $dr['sekretarisPenguji'] == $ketuaPenguji || $dr['sekretarisPenguji'] == $sekretarisPenguji || $dr['sekretarisPenguji'] == $anggotaPenguji ||
-//                    $dr['anggotaPenguji'] == $dosen1 || $dr['anggotaPenguji'] == $ketuaPenguji || $dr['anggotaPenguji'] == $sekretarisPenguji || $dr['anggotaPenguji'] == $anggotaPenguji) {
-//                if ($dr['tanggal'] == $tanggal) {
-//                    if ($dr['ruang'] == $ruang) {
-//                        if ($dr['durasi'] == $durasi) {
-//                            $detailBentrok = $detailBentrok . " karena " . $dr['ruang'] . " dipakai oleh NIM =" . $dr['nim'] . " dosbing1 = " . $dr['dosen1'] . " Ketua Penguji = "
-//                                    . $dr['ketuaPenguji'] . " Sekrterais Penguji = " . $dr['sekretarisPenguji'] . " Anggota Penguji = " . $dr['anggotaPenguji'] . " pada tanggal " . $dr['tanggal'] . " Jam = " . $dr['jam'] . "";
-//                            $detail = $detailBentrok;
-//                        }
-//                    } else {
-//                        if ($dr['durasi'] == $durasi) {
-//                            $detailBentrok = $detailBentrok . " dengan NIM =" . $dr['nim'] . " dosbing1 = " . $dr['dosen1'] . " Ketua Penguji = "
-//                                    . $dr['ketuaPenguji'] . " Sekrterais Penguji = " . $dr['sekretarisPenguji'] . " Anggota Penguji = " . $dr['anggotaPenguji'] . " pada tanggal " . $dr['tanggal'] . " Jam = " . $dr['jam'] . " di ruang " . $dr['ruang'] . "";
-//                            $detail = $detailBentrok;
-//                        }
-//                    }
-//                }
-//            } else {
-//                if ($dr['tanggal'] == $tanggal) {
-//                    if ($dr['ruang'] == $ruang) {
-//                        if ($dr['durasi'] == $durasi) {
-//                            $detailBentrok = $detailBentrok . " karena " . $dr['ruang'] . " dipakai oleh NIM =" . $dr['nim'] . " dosbing1 = " . $dr['dosen1'] . " Ketua Penguji = "
-//                                    . $dr['ketuaPenguji'] . " Sekrterais Penguji = " . $dr['sekretarisPenguji'] . " Anggota Penguji = " . $dr['anggotaPenguji'] . " pada tanggal " . $dr['tanggal'] . " Jam = " . $dr['jam'] . "";
-//                            $detail = $detailBentrok;
-//                        }
-//                    } else {
-//                        if ($dr['durasi'] == $durasi) {
-//                            $detailBentrok = $detailBentrok . " dengan NIM =" . $dr['nim'] . " dosbing1 = " . $dr['dosen1'] . " Ketua Penguji = "
-//                                    . $dr['ketuaPenguji'] . " Sekrterais Penguji = " . $dr['sekretarisPenguji'] . " Anggota Penguji = " . $dr['anggotaPenguji'] . " pada tanggal " . $dr['tanggal'] . " Jam = " . $dr['jam'] . " di ruang " . $dr['ruang'] . "";
-//                            $detail = $detailBentrok;
-//                        }
-//                    }
-//                }
-//            }
-//        }return $detail;
-//    }
-
-    public function cekBentrokEdit4($dosen1, $dosen2, $ketuaPenguji, $sekretarisPenguji, $anggotaPenguji, $ruang, $tanggal, $durasi) {//ruang masih belum bisa dipakai
+    public function cekBentrokEdit($nim, $dosen1, $dosen2, $ketuaPenguji, $sekretarisPenguji, $ruang, $tanggal, $durasi) {//ruang masih belum bisa dipakai
         $detail = NULL;
-        $dataRuang = $this->Pendadaran_model->cekStatusRuangEdit($durasi, $ruang);
+        $dataRuang = $this->Pendadaran_model->cekStatusRuangEdit($tanggal, $durasi);
         $detailBentrok = "Ada bentrok jadwal pendadaran Mahasiswa";
         foreach ($dataRuang as $dr) {
-            if ($dr['tanggal'] == $tanggal) {
-                if ($dr['ruang'] == $ruang) {
-                    if ($dr['durasi'] == $durasi) {
-                        if ($dr['dosen1'] == $dosen1 || $dr['dosen1'] == $dosen2 || $dr['dosen1'] == $ketuaPenguji || $dr['dosen1'] == $sekretarisPenguji || $dr['dosen1'] == $anggotaPenguji ||
-                                $dr['dosen2'] == $dosen1 || $dr['dosen2'] == $dosen2 || $dr['dosen2'] == $ketuaPenguji || $dr['dosen2'] == $sekretarisPenguji || $dr['dosen2'] == $anggotaPenguji ||
-                                $dr['ketuaPenguji'] == $dosen1 || $dr['ketuaPenguji'] == $dosen2 || $dr['ketuaPenguji'] == $ketuaPenguji || $dr['ketuaPenguji'] == $sekretarisPenguji || $dr['ketuaPenguji'] == $anggotaPenguji ||
-                                $dr['sekretarisPenguji'] == $dosen1 || $dr['sekretarisPenguji'] == $dosen2 || $dr['sekretarisPenguji'] == $ketuaPenguji || $dr['sekretarisPenguji'] == $sekretarisPenguji || $dr['sekretarisPenguji'] == $anggotaPenguji ||
-                                $dr['anggotaPenguji'] == $dosen1 || $dr['anggotaPenguji'] == $dosen2 || $dr['anggotaPenguji'] == $ketuaPenguji || $dr['anggotaPenguji'] == $sekretarisPenguji || $dr['anggotaPenguji'] == $anggotaPenguji) {
-
-                            $detailBentrok = $detailBentrok . " karena " . $dr['ruang'] . " dipakai oleh NIM =" . $dr['nim'] . " dosbing1 = " . $dr['dosen1'] . " dosbing2 = " . $dr['dosen2'] . " Ketua Penguji = "
-                                    . $dr['ketuaPenguji'] . " Sekrterais Penguji = " . $dr['sekretarisPenguji'] . " Anggota Penguji = " . $dr['anggotaPenguji'] . " pada tanggal " . $dr['tanggal'] . " Jam = " . $dr['durasi'] . "";
-                            $detail = $detailBentrok;
+            if ($dr['nim'] == $nim) {
+                if ($dr['dosen1'] == $dosen1 || $dr['dosen1'] == $dosen2 || $dr['dosen1'] == $ketuaPenguji || $dr['dosen1'] == $sekretarisPenguji ||
+                        $dr['dosen2'] == $dosen1 || $dr['dosen2'] == $dosen2 || $dr['dosen2'] == $ketuaPenguji || $dr['dosen2'] == $sekretarisPenguji ||
+                        $dr['ketuaPenguji'] == $dosen1 || $dr['ketuaPenguji'] == $dosen2 || $dr['ketuaPenguji'] == $ketuaPenguji || $dr['ketuaPenguji'] == $sekretarisPenguji ||
+                        $dr['sekretarisPenguji'] == $dosen1 || $dr['sekretarisPenguji'] == $dosen2 || $dr['sekretarisPenguji'] == $ketuaPenguji || $dr['sekretarisPenguji'] == $sekretarisPenguji) {
+                    if ($dr['tanggal'] == $tanggal) {
+                        if ($dr['ruang'] == $ruang) {
+                            if ($dr['durasi'] == $durasi) {
+                                $detailBentrok = $detailBentrok . " karena " . $dr['ruang'] . " dipakai oleh NIM =" . $dr['nim'] . " dosbing1 = " . $dr['dosen1'] . " dosbing2 = " . $dr['dosen2'] . " Ketua Penguji = "
+                                        . $dr['ketuaPenguji'] . " Sekrterais Penguji = " . $dr['sekretarisPenguji'] . " pada tanggal " . $dr['tanggal'] . " Jam = " . $dr['jam'] . "";
+                                $detail = $detailBentrok;
+                            }
                         } else {
-                            $detailBentrok = $detailBentrok . " karena " . $dr['ruang'] . " dipakai oleh NIM =" . $dr['nim'] . " dosbing1 = " . $dr['dosen1'] . " dosbing2 = " . $dr['dosen2'] . " Ketua Penguji = "
-                                    . $dr['ketuaPenguji'] . " Sekrterais Penguji = " . $dr['sekretarisPenguji'] . " Anggota Penguji = " . $dr['anggotaPenguji'] . " pada tanggal " . $dr['tanggal'] . " Jam = " . $dr['durasi'] . "";
-                            $detail = $detailBentrok;
+                            if ($dr['durasi'] == $durasi) {
+                                $detailBentrok = $detailBentrok . " dengan NIM =" . $dr['nim'] . " dosbing1 = " . $dr['dosen1'] . " dosbing2 = " . $dr['dosen2'] . " Ketua Penguji = "
+                                        . $dr['ketuaPenguji'] . " Sekrterais Penguji = " . $dr['sekretarisPenguji'] . " pada tanggal " . $dr['tanggal'] . " Jam = " . $dr['jam'] . " di ruang " . $dr['ruang'] . "";
+                                $detail = $detailBentrok;
+                            }
                         }
                     }
                 } else {
-                    if ($dr['durasi'] == $durasi) {
-                        if ($dr['dosen1'] == $dosen1 || $dr['dosen1'] == $dosen2 || $dr['dosen1'] == $ketuaPenguji || $dr['dosen1'] == $sekretarisPenguji || $dr['dosen1'] == $anggotaPenguji ||
-                                $dr['dosen2'] == $dosen1 || $dr['dosen2'] == $dosen2 || $dr['dosen2'] == $ketuaPenguji || $dr['dosen2'] == $sekretarisPenguji || $dr['dosen2'] == $anggotaPenguji ||
-                                $dr['ketuaPenguji'] == $dosen1 || $dr['ketuaPenguji'] == $dosen2 || $dr['ketuaPenguji'] == $ketuaPenguji || $dr['ketuaPenguji'] == $sekretarisPenguji || $dr['ketuaPenguji'] == $anggotaPenguji ||
-                                $dr['sekretarisPenguji'] == $dosen1 || $dr['sekretarisPenguji'] == $dosen2 || $dr['sekretarisPenguji'] == $ketuaPenguji || $dr['sekretarisPenguji'] == $sekretarisPenguji || $dr['sekretarisPenguji'] == $anggotaPenguji ||
-                                $dr['anggotaPenguji'] == $dosen1 || $dr['anggotaPenguji'] == $dosen2 || $dr['anggotaPenguji'] == $ketuaPenguji || $dr['anggotaPenguji'] == $sekretarisPenguji || $dr['anggotaPenguji'] == $anggotaPenguji) {
-
-                            $detailBentrok = $detailBentrok . " karena " . $dr['ruang'] . " dipakai oleh NIM =" . $dr['nim'] . " dosbing1 = " . $dr['dosen1'] . " dosbing2 = " . $dr['dosen2'] . " Ketua Penguji = "
-                                    . $dr['ketuaPenguji'] . " Sekrterais Penguji = " . $dr['sekretarisPenguji'] . " Anggota Penguji = " . $dr['anggotaPenguji'] . " pada tanggal " . $dr['tanggal'] . " Jam = " . $dr['durasi'] . "";
-                            $detail = $detailBentrok;
+                    if ($dr['tanggal'] == $tanggal) {
+                        if ($dr['ruang'] == $ruang) {
+                            if ($dr['durasi'] == $durasi) {
+                                $detailBentrok = $detailBentrok . " karena " . $dr['ruang'] . " dipakai oleh NIM =" . $dr['nim'] . " dosbing1 = " . $dr['dosen1'] . " dosbing2 = " . $dr['dosen2'] . " Ketua Penguji = "
+                                        . $dr['ketuaPenguji'] . " Sekrterais Penguji = " . $dr['sekretarisPenguji'] . " pada tanggal " . $dr['tanggal'] . " Jam = " . $dr['jam'] . "";
+                                $detail = $detailBentrok;
+                            }
                         } else {
-                            $detailBentrok = $detailBentrok . " karena " . $dr['ruang'] . " dipakai oleh NIM =" . $dr['nim'] . " dosbing1 = " . $dr['dosen1'] . " dosbing2 = " . $dr['dosen2'] . " Ketua Penguji = "
-                                    . $dr['ketuaPenguji'] . " Sekrterais Penguji = " . $dr['sekretarisPenguji'] . " Anggota Penguji = " . $dr['anggotaPenguji'] . " pada tanggal " . $dr['tanggal'] . " Jam = " . $dr['durasi'] . "";
-                            $detail = $detailBentrok;
+//                            if ($dr['durasi'] == $durasi) {
+//                                $detailBentrok = $detailBentrok . " dengan NIM =" . $dr['nim'] . " dosbing1 = " . $dr['dosen1'] . " dosbing2 = " . $dr['dosen2'] . " Ketua Penguji = "
+//                                        . $dr['ketuaPenguji'] . " Sekrterais Penguji = " . $dr['sekretarisPenguji'] . " pada tanggal " . $dr['tanggal'] . " Jam = " . $dr['jam'] . " di ruang " . $dr['ruang'] . "";
+//                                $detail = $detailBentrok;
+//                            }
+                        }
+                    }
+                }
+            } else {
+                if ($dr['dosen1'] == $dosen1 || $dr['dosen1'] == $dosen2 || $dr['dosen1'] == $ketuaPenguji || $dr['dosen1'] == $sekretarisPenguji ||
+                        $dr['dosen2'] == $dosen1 || $dr['dosen2'] == $dosen2 || $dr['dosen2'] == $ketuaPenguji || $dr['dosen2'] == $sekretarisPenguji ||
+                        $dr['ketuaPenguji'] == $dosen1 || $dr['ketuaPenguji'] == $dosen2 || $dr['ketuaPenguji'] == $ketuaPenguji || $dr['ketuaPenguji'] == $sekretarisPenguji ||
+                        $dr['sekretarisPenguji'] == $dosen1 || $dr['sekretarisPenguji'] == $dosen2 || $dr['sekretarisPenguji'] == $ketuaPenguji || $dr['sekretarisPenguji'] == $sekretarisPenguji) {
+                    if ($dr['tanggal'] == $tanggal) {
+                        if ($dr['ruang'] == $ruang) {
+                            if ($dr['durasi'] == $durasi) {
+                                $detailBentrok = $detailBentrok . " karena " . $dr['ruang'] . " dipakai oleh NIM =" . $dr['nim'] . " dosbing1 = " . $dr['dosen1'] . " dosbing2 = " . $dr['dosen2'] . " Ketua Penguji = "
+                                        . $dr['ketuaPenguji'] . " Sekrterais Penguji = " . $dr['sekretarisPenguji'] . " pada tanggal " . $dr['tanggal'] . " Jam = " . $dr['jam'] . "";
+                                $detail = $detailBentrok;
+                            }
+                        } else {
+                            if ($dr['durasi'] == $durasi) {
+                                $detailBentrok = $detailBentrok . " dengan NIM =" . $dr['nim'] . " dosbing1 = " . $dr['dosen1'] . " dosbing2 = " . $dr['dosen2'] . " Ketua Penguji = "
+                                        . $dr['ketuaPenguji'] . " Sekrterais Penguji = " . $dr['sekretarisPenguji'] . " pada tanggal " . $dr['tanggal'] . " Jam = " . $dr['jam'] . " di ruang " . $dr['ruang'] . "";
+                                $detail = $detailBentrok;
+                            }
+                        }
+                    }
+                } else {
+                    if ($dr['tanggal'] == $tanggal) {
+                        if ($dr['ruang'] == $ruang) {
+                            if ($dr['durasi'] == $durasi) {
+                                $detailBentrok = $detailBentrok . " karena " . $dr['ruang'] . " dipakai oleh NIM =" . $dr['nim'] . " dosbing1 = " . $dr['dosen1'] . " dosbing2 = " . $dr['dosen2'] . " Ketua Penguji = "
+                                        . $dr['ketuaPenguji'] . " Sekrterais Penguji = " . $dr['sekretarisPenguji'] . " pada tanggal " . $dr['tanggal'] . " Jam = " . $dr['jam'] . "";
+                                $detail = $detailBentrok;
+                            }
+                        } else {
+//                            if ($dr['durasi'] == $durasi) {
+//                                $detailBentrok = $detailBentrok . " dengan NIM =" . $dr['nim'] . " dosbing1 = " . $dr['dosen1'] . " dosbing2 = " . $dr['dosen2'] . " Ketua Penguji = "
+//                                        . $dr['ketuaPenguji'] . " Sekrterais Penguji = " . $dr['sekretarisPenguji'] . " pada tanggal " . $dr['tanggal'] . " Jam = " . $dr['jam'] . " di ruang " . $dr['ruang'] . "";
+//                                $detail = $detailBentrok;
+//                            }
                         }
                     }
                 }
             }
-        }return $detail;
+        }
+        return $detail;
+    }
+
+    public function cekBentrok2Edit($nim, $dosen1, $ketuaPenguji, $sekretarisPenguji, $ruang, $tanggal, $durasi) {//ruang masih belum bisa dipakai
+        $detail = NULL;
+        $dataRuang = $this->Pendadaran_model->cekStatusRuangEdit($tanggal, $durasi);
+        $detailBentrok = "Ada bentrok jadwal pendadaran Mahasiswa";
+        foreach ($dataRuang as $dr) {
+            if ($dr['nim'] == $nim) {
+                if ($dr['dosen1'] == $dosen1 || $dr['dosen1'] == $ketuaPenguji || $dr['dosen1'] == $sekretarisPenguji ||
+                        $dr['ketuaPenguji'] == $dosen1 || $dr['ketuaPenguji'] == $ketuaPenguji || $dr['ketuaPenguji'] == $sekretarisPenguji ||
+                        $dr['sekretarisPenguji'] == $dosen1 || $dr['sekretarisPenguji'] == $ketuaPenguji || $dr['sekretarisPenguji'] == $sekretarisPenguji) {
+                    if ($dr['tanggal'] == $tanggal) {
+                        if ($dr['ruang'] == $ruang) {
+                            if ($dr['durasi'] == $durasi) {
+                                $detailBentrok = $detailBentrok . " karena " . $dr['ruang'] . " dipakai oleh NIM =" . $dr['nim'] . " dosbing1 = " . $dr['dosen1'] . " Ketua Penguji = "
+                                        . $dr['ketuaPenguji'] . " Sekrterais Penguji = " . $dr['sekretarisPenguji'] . " pada tanggal " . $dr['tanggal'] . " Jam = " . $dr['jam'] . "";
+                                $detail = $detailBentrok;
+                            }
+                        } else {
+                            if ($dr['durasi'] == $durasi) {
+                                $detailBentrok = $detailBentrok . " dengan NIM =" . $dr['nim'] . " dosbing1 = " . $dr['dosen1'] . " Ketua Penguji = "
+                                        . $dr['ketuaPenguji'] . " Sekrterais Penguji = " . $dr['sekretarisPenguji'] . " pada tanggal " . $dr['tanggal'] . " Jam = " . $dr['jam'] . " di ruang " . $dr['ruang'] . "";
+                                $detail = $detailBentrok;
+                            }
+                        }
+                    }
+                } else {
+                    if ($dr['tanggal'] == $tanggal) {
+                        if ($dr['ruang'] == $ruang) {
+                            if ($dr['durasi'] == $durasi) {
+                                $detailBentrok = $detailBentrok . " karena " . $dr['ruang'] . " dipakai oleh NIM =" . $dr['nim'] . " dosbing1 = " . $dr['dosen1'] . " Ketua Penguji = "
+                                        . $dr['ketuaPenguji'] . " Sekrterais Penguji = " . $dr['sekretarisPenguji'] . " pada tanggal " . $dr['tanggal'] . " Jam = " . $dr['jam'] . "";
+                                $detail = $detailBentrok;
+                            }
+                        } else {
+//                            if ($dr['durasi'] == $durasi) {
+//                                $detailBentrok = $detailBentrok . " dengan NIM =" . $dr['nim'] . " dosbing1 = " . $dr['dosen1'] . " Ketua Penguji = "
+//                                        . $dr['ketuaPenguji'] . " Sekrterais Penguji = " . $dr['sekretarisPenguji'] . " pada tanggal " . $dr['tanggal'] . " Jam = " . $dr['jam'] . " di ruang " . $dr['ruang'] . "";
+//                                $detail = $detailBentrok;
+//                            }
+                        }
+                    }
+                }
+            } else {
+                if ($dr['dosen1'] == $dosen1 || $dr['dosen1'] == $ketuaPenguji || $dr['dosen1'] == $sekretarisPenguji ||
+                        $dr['ketuaPenguji'] == $dosen1 || $dr['ketuaPenguji'] == $ketuaPenguji || $dr['ketuaPenguji'] == $sekretarisPenguji ||
+                        $dr['sekretarisPenguji'] == $dosen1 || $dr['sekretarisPenguji'] == $ketuaPenguji || $dr['sekretarisPenguji'] == $sekretarisPenguji) {
+                    if ($dr['tanggal'] == $tanggal) {
+                        if ($dr['ruang'] == $ruang) {
+                            if ($dr['durasi'] == $durasi) {
+                                $detailBentrok = $detailBentrok . " karena " . $dr['ruang'] . " dipakai oleh NIM =" . $dr['nim'] . " dosbing1 = " . $dr['dosen1'] . " Ketua Penguji = "
+                                        . $dr['ketuaPenguji'] . " Sekrterais Penguji = " . $dr['sekretarisPenguji'] . " pada tanggal " . $dr['tanggal'] . " Jam = " . $dr['jam'] . "";
+                                $detail = $detailBentrok;
+                            }
+                        } else {
+                            if ($dr['durasi'] == $durasi) {
+                                $detailBentrok = $detailBentrok . " dengan NIM =" . $dr['nim'] . " dosbing1 = " . $dr['dosen1'] . " Ketua Penguji = "
+                                        . $dr['ketuaPenguji'] . " Sekrterais Penguji = " . $dr['sekretarisPenguji'] . " pada tanggal " . $dr['tanggal'] . " Jam = " . $dr['jam'] . " di ruang " . $dr['ruang'] . "";
+                                $detail = $detailBentrok;
+                            }
+                        }
+                    }
+                } else {
+                    if ($dr['tanggal'] == $tanggal) {
+                        if ($dr['ruang'] == $ruang) {
+                            if ($dr['durasi'] == $durasi) {
+                                $detailBentrok = $detailBentrok . " karena " . $dr['ruang'] . " dipakai oleh NIM =" . $dr['nim'] . " dosbing1 = " . $dr['dosen1'] . " Ketua Penguji = "
+                                        . $dr['ketuaPenguji'] . " Sekrterais Penguji = " . $dr['sekretarisPenguji'] . " pada tanggal " . $dr['tanggal'] . " Jam = " . $dr['jam'] . "";
+                                $detail = $detailBentrok;
+                            }
+                        } else {
+//                            if ($dr['durasi'] == $durasi) {
+//                                $detailBentrok = $detailBentrok . " dengan NIM =" . $dr['nim'] . " dosbing1 = " . $dr['dosen1'] . " Ketua Penguji = "
+//                                        . $dr['ketuaPenguji'] . " Sekrterais Penguji = " . $dr['sekretarisPenguji'] . " pada tanggal " . $dr['tanggal'] . " Jam = " . $dr['jam'] . " di ruang " . $dr['ruang'] . "";
+//                                $detail = $detailBentrok;
+//                            }
+                        }
+                    }
+                }
+            }
+        }
+        return $detail;
+    }
+
+    public function cekBentrokEdit3($nim, $dosen1, $ketuaPenguji, $sekretarisPenguji, $anggotaPenguji, $ruang, $tanggal, $durasi) {//ruang masih belum bisa dipakai
+        $detail = NULL;
+        $dataRuang = $this->Pendadaran_model->cekStatusRuangEdit($tanggal, $durasi);
+        $detailBentrok = "Ada bentrok jadwal pendadaran Mahasiswa";
+        foreach ($dataRuang as $dr) {
+            if ($dr['nim'] == $nim) {
+                if ($dr['dosen1'] == $dosen1 || $dr['dosen1'] == $ketuaPenguji || $dr['dosen1'] == $sekretarisPenguji || $dr['dosen1'] == $anggotaPenguji ||
+                        $dr['ketuaPenguji'] == $dosen1 || $dr['ketuaPenguji'] == $ketuaPenguji || $dr['ketuaPenguji'] == $sekretarisPenguji || $dr['ketuaPenguji'] == $anggotaPenguji ||
+                        $dr['sekretarisPenguji'] == $dosen1 || $dr['sekretarisPenguji'] == $ketuaPenguji || $dr['sekretarisPenguji'] == $sekretarisPenguji || $dr['sekretarisPenguji'] == $anggotaPenguji ||
+                        $dr['anggotaPenguji'] == $dosen1 || $dr['anggotaPenguji'] == $ketuaPenguji || $dr['anggotaPenguji'] == $sekretarisPenguji || $dr['anggotaPenguji'] == $anggotaPenguji) {
+                    if ($dr['tanggal'] == $tanggal) {
+                        if ($dr['ruang'] == $ruang) {
+                            if ($dr['durasi'] == $durasi) {
+                                $detailBentrok = $detailBentrok . " karena " . $dr['ruang'] . " dipakai oleh NIM =" . $dr['nim'] . " dosbing1 = " . $dr['dosen1'] . " Ketua Penguji = "
+                                        . $dr['ketuaPenguji'] . " Sekrterais Penguji = " . $dr['sekretarisPenguji'] . " Anggota Penguji = " . $dr['anggotaPenguji'] . " pada tanggal " . $dr['tanggal'] . " Jam = " . $dr['jam'] . "";
+                                $detail = $detailBentrok;
+                            }
+                        } else {
+                            if ($dr['durasi'] == $durasi) {
+                                $detailBentrok = $detailBentrok . " dengan NIM =" . $dr['nim'] . " dosbing1 = " . $dr['dosen1'] . " Ketua Penguji = "
+                                        . $dr['ketuaPenguji'] . " Sekrterais Penguji = " . $dr['sekretarisPenguji'] . " Anggota Penguji = " . $dr['anggotaPenguji'] . " pada tanggal " . $dr['tanggal'] . " Jam = " . $dr['jam'] . " di ruang " . $dr['ruang'] . "";
+                                $detail = $detailBentrok;
+                            }
+                        }
+                    }
+                } else {
+                    if ($dr['tanggal'] == $tanggal) {
+                        if ($dr['ruang'] == $ruang) {
+                            if ($dr['durasi'] == $durasi) {
+                                $detailBentrok = $detailBentrok . " karena " . $dr['ruang'] . " dipakai oleh NIM =" . $dr['nim'] . " dosbing1 = " . $dr['dosen1'] . " Ketua Penguji = "
+                                        . $dr['ketuaPenguji'] . " Sekrterais Penguji = " . $dr['sekretarisPenguji'] . " Anggota Penguji = " . $dr['anggotaPenguji'] . " pada tanggal " . $dr['tanggal'] . " Jam = " . $dr['jam'] . "";
+                                $detail = $detailBentrok;
+                            }
+                        } else {
+//                            if ($dr['durasi'] == $durasi) {
+//                                $detailBentrok = $detailBentrok . " dengan NIM =" . $dr['nim'] . " dosbing1 = " . $dr['dosen1'] . " Ketua Penguji = "
+//                                        . $dr['ketuaPenguji'] . " Sekrterais Penguji = " . $dr['sekretarisPenguji'] . " Anggota Penguji = " . $dr['anggotaPenguji'] . " pada tanggal " . $dr['tanggal'] . " Jam = " . $dr['jam'] . " di ruang " . $dr['ruang'] . "";
+//                                $detail = $detailBentrok;
+//                            }
+                        }
+                    }
+                }
+            } else {
+                if ($dr['dosen1'] == $dosen1 || $dr['dosen1'] == $ketuaPenguji || $dr['dosen1'] == $sekretarisPenguji || $dr['dosen1'] == $anggotaPenguji ||
+                        $dr['ketuaPenguji'] == $dosen1 || $dr['ketuaPenguji'] == $ketuaPenguji || $dr['ketuaPenguji'] == $sekretarisPenguji || $dr['ketuaPenguji'] == $anggotaPenguji ||
+                        $dr['sekretarisPenguji'] == $dosen1 || $dr['sekretarisPenguji'] == $ketuaPenguji || $dr['sekretarisPenguji'] == $sekretarisPenguji || $dr['sekretarisPenguji'] == $anggotaPenguji ||
+                        $dr['anggotaPenguji'] == $dosen1 || $dr['anggotaPenguji'] == $ketuaPenguji || $dr['anggotaPenguji'] == $sekretarisPenguji || $dr['anggotaPenguji'] == $anggotaPenguji) {
+                    if ($dr['tanggal'] == $tanggal) {
+                        if ($dr['ruang'] == $ruang) {
+                            if ($dr['durasi'] == $durasi) {
+                                $detailBentrok = $detailBentrok . " karena " . $dr['ruang'] . " dipakai oleh NIM =" . $dr['nim'] . " dosbing1 = " . $dr['dosen1'] . " Ketua Penguji = "
+                                        . $dr['ketuaPenguji'] . " Sekrterais Penguji = " . $dr['sekretarisPenguji'] . " Anggota Penguji = " . $dr['anggotaPenguji'] . " pada tanggal " . $dr['tanggal'] . " Jam = " . $dr['jam'] . "";
+                                $detail = $detailBentrok;
+                            }
+                        } else {
+                            if ($dr['durasi'] == $durasi) {
+                                $detailBentrok = $detailBentrok . " dengan NIM =" . $dr['nim'] . " dosbing1 = " . $dr['dosen1'] . " Ketua Penguji = "
+                                        . $dr['ketuaPenguji'] . " Sekrterais Penguji = " . $dr['sekretarisPenguji'] . " Anggota Penguji = " . $dr['anggotaPenguji'] . " pada tanggal " . $dr['tanggal'] . " Jam = " . $dr['jam'] . " di ruang " . $dr['ruang'] . "";
+                                $detail = $detailBentrok;
+                            }
+                        }
+                    }
+                } else {
+                    if ($dr['tanggal'] == $tanggal) {
+                        if ($dr['ruang'] == $ruang) {
+                            if ($dr['durasi'] == $durasi) {
+                                $detailBentrok = $detailBentrok . " karena " . $dr['ruang'] . " dipakai oleh NIM =" . $dr['nim'] . " dosbing1 = " . $dr['dosen1'] . " Ketua Penguji = "
+                                        . $dr['ketuaPenguji'] . " Sekrterais Penguji = " . $dr['sekretarisPenguji'] . " Anggota Penguji = " . $dr['anggotaPenguji'] . " pada tanggal " . $dr['tanggal'] . " Jam = " . $dr['jam'] . "";
+                                $detail = $detailBentrok;
+                            }
+                        } else {
+//                            if ($dr['durasi'] == $durasi) {
+//                                $detailBentrok = $detailBentrok . " dengan NIM =" . $dr['nim'] . " dosbing1 = " . $dr['dosen1'] . " Ketua Penguji = "
+//                                        . $dr['ketuaPenguji'] . " Sekrterais Penguji = " . $dr['sekretarisPenguji'] . " Anggota Penguji = " . $dr['anggotaPenguji'] . " pada tanggal " . $dr['tanggal'] . " Jam = " . $dr['jam'] . " di ruang " . $dr['ruang'] . "";
+//                                $detail = $detailBentrok;
+//                            }
+                        }
+                    }
+                }
+            }
+        }
+        return $detail;
+    }
+
+    public function cekBentrokEdit4($nim, $dosen1, $dosen2, $ketuaPenguji, $sekretarisPenguji, $anggotaPenguji, $ruang, $tanggal, $durasi) {//ruang masih belum bisa dipakai
+        $detail = NULL;
+        $dataRuang = $this->Pendadaran_model->cekStatusRuangEdit($tanggal, $durasi);
+        $detailBentrok = "Ada bentrok jadwal pendadaran Mahasiswa";
+        foreach ($dataRuang as $dr) {
+            if ($dr['nim'] == $nim) {
+                if ($dr['dosen1'] == $dosen1 || $dr['dosen1'] == $dosen2 || $dr['dosen1'] == $ketuaPenguji || $dr['dosen1'] == $sekretarisPenguji || $dr['dosen1'] == $anggotaPenguji ||
+                        $dr['dosen2'] == $dosen1 || $dr['dosen2'] == $dosen2 || $dr['dosen2'] == $ketuaPenguji || $dr['dosen2'] == $sekretarisPenguji || $dr['dosen2'] == $anggotaPenguji ||
+                        $dr['ketuaPenguji'] == $dosen1 || $dr['ketuaPenguji'] == $dosen2 || $dr['ketuaPenguji'] == $ketuaPenguji || $dr['ketuaPenguji'] == $sekretarisPenguji || $dr['ketuaPenguji'] == $anggotaPenguji ||
+                        $dr['sekretarisPenguji'] == $dosen1 || $dr['sekretarisPenguji'] == $dosen2 || $dr['sekretarisPenguji'] == $ketuaPenguji || $dr['sekretarisPenguji'] == $sekretarisPenguji || $dr['sekretarisPenguji'] == $anggotaPenguji ||
+                        $dr['anggotaPenguji'] == $dosen1 || $dr['anggotaPenguji'] == $dosen2 || $dr['anggotaPenguji'] == $ketuaPenguji || $dr['anggotaPenguji'] == $sekretarisPenguji || $dr['anggotaPenguji'] == $anggotaPenguji) {
+                    if ($dr['tanggal'] == $tanggal) {
+                        if ($dr['ruang'] == $ruang) {
+                            if ($dr['durasi'] == $durasi) {
+                                $detailBentrok = $detailBentrok . " karena " . $dr['ruang'] . " dipakai oleh NIM =" . $dr['nim'] . " dosbing1 = " . $dr['dosen1'] . " dosbing2 = " . $dr['dosen2'] . " Ketua Penguji = "
+                                        . $dr['ketuaPenguji'] . " Sekrterais Penguji = " . $dr['sekretarisPenguji'] . " Anggota Penguji = " . $dr['anggotaPenguji'] . " pada tanggal " . $dr['tanggal'] . " Jam = " . $dr['durasi'] . "";
+                                $detail = $detailBentrok;
+                            }
+                        } else {
+                            if ($dr['durasi'] == $durasi) {
+                                $detailBentrok = $detailBentrok . " bentrok dengan NIM =" . $dr['nim'] . " dosbing1 = " . $dr['dosen1'] . " dosbing2 = " . $dr['dosen2'] . " Ketua Penguji = "
+                                        . $dr['ketuaPenguji'] . " Sekrterais Penguji = " . $dr['sekretarisPenguji'] . " Anggota Penguji = " . $dr['anggotaPenguji'] . " pada tanggal " . $dr['tanggal'] . " Jam = " . $dr['durasi'] . " ruang = " . $dr['ruang'] . "";
+                                $detail = $detailBentrok;
+                            }
+                        }
+                    }
+                } else {
+                    if ($dr['tanggal'] == $tanggal) {
+                        if ($dr['ruang'] == $ruang) {
+                            if ($dr['durasi'] == $durasi) {
+                                $detailBentrok = $detailBentrok . " karena " . $dr['ruang'] . " dipakai oleh NIM =" . $dr['nim'] . " dosbing1 = " . $dr['dosen1'] . " dosbing2 = " . $dr['dosen2'] . " Ketua Penguji = "
+                                        . $dr['ketuaPenguji'] . " Sekrterais Penguji = " . $dr['sekretarisPenguji'] . " Anggota Penguji = " . $dr['anggotaPenguji'] . " pada tanggal " . $dr['tanggal'] . " Jam = " . $dr['durasi'] . "";
+                                $detail = $detailBentrok;
+                            }
+                        } else {
+//                            if ($dr['durasi'] == $durasi) {
+//                                $detailBentrok = $detailBentrok . " bentrok dengan NIM =" . $dr['nim'] . " dosbing1 = " . $dr['dosen1'] . " dosbing2 = " . $dr['dosen2'] . " Ketua Penguji = "
+//                                        . $dr['ketuaPenguji'] . " Sekrterais Penguji = " . $dr['sekretarisPenguji'] . " Anggota Penguji = " . $dr['anggotaPenguji'] . " pada tanggal " . $dr['tanggal'] . " Jam = " . $dr['durasi'] . " ruang = " . $dr['ruang'] . "";
+//                                $detail = $detailBentrok;
+//                            }
+                        }
+                    }
+                }
+            } else {
+                if ($dr['dosen1'] == $dosen1 || $dr['dosen1'] == $dosen2 || $dr['dosen1'] == $ketuaPenguji || $dr['dosen1'] == $sekretarisPenguji || $dr['dosen1'] == $anggotaPenguji ||
+                        $dr['dosen2'] == $dosen1 || $dr['dosen2'] == $dosen2 || $dr['dosen2'] == $ketuaPenguji || $dr['dosen2'] == $sekretarisPenguji || $dr['dosen2'] == $anggotaPenguji ||
+                        $dr['ketuaPenguji'] == $dosen1 || $dr['ketuaPenguji'] == $dosen2 || $dr['ketuaPenguji'] == $ketuaPenguji || $dr['ketuaPenguji'] == $sekretarisPenguji || $dr['ketuaPenguji'] == $anggotaPenguji ||
+                        $dr['sekretarisPenguji'] == $dosen1 || $dr['sekretarisPenguji'] == $dosen2 || $dr['sekretarisPenguji'] == $ketuaPenguji || $dr['sekretarisPenguji'] == $sekretarisPenguji || $dr['sekretarisPenguji'] == $anggotaPenguji ||
+                        $dr['anggotaPenguji'] == $dosen1 || $dr['anggotaPenguji'] == $dosen2 || $dr['anggotaPenguji'] == $ketuaPenguji || $dr['anggotaPenguji'] == $sekretarisPenguji || $dr['anggotaPenguji'] == $anggotaPenguji) {
+                    if ($dr['tanggal'] == $tanggal) {
+                        if ($dr['ruang'] == $ruang) {
+                            if ($dr['durasi'] == $durasi) {
+                                $detailBentrok = $detailBentrok . " karena " . $dr['ruang'] . " dipakai oleh NIM =" . $dr['nim'] . " dosbing1 = " . $dr['dosen1'] . " dosbing2 = " . $dr['dosen2'] . " Ketua Penguji = "
+                                        . $dr['ketuaPenguji'] . " Sekrterais Penguji = " . $dr['sekretarisPenguji'] . " Anggota Penguji = " . $dr['anggotaPenguji'] . " pada tanggal " . $dr['tanggal'] . " Jam = " . $dr['durasi'] . "";
+                                $detail = $detailBentrok;
+                            }
+                        } else {
+                            if ($dr['durasi'] == $durasi) {
+                                $detailBentrok = $detailBentrok . " bentrok dengan NIM =" . $dr['nim'] . " dosbing1 = " . $dr['dosen1'] . " dosbing2 = " . $dr['dosen2'] . " Ketua Penguji = "
+                                        . $dr['ketuaPenguji'] . " Sekrterais Penguji = " . $dr['sekretarisPenguji'] . " Anggota Penguji = " . $dr['anggotaPenguji'] . " pada tanggal " . $dr['tanggal'] . " Jam = " . $dr['durasi'] . " ruang = " . $dr['ruang'] . "";
+                                $detail = $detailBentrok;
+                            }
+                        }
+                    }
+                } else {
+                    if ($dr['tanggal'] == $tanggal) {
+                        if ($dr['ruang'] == $ruang) {
+                            if ($dr['durasi'] == $durasi) {
+                                $detailBentrok = $detailBentrok . " karena " . $dr['ruang'] . " dipakai oleh NIM =" . $dr['nim'] . " dosbing1 = " . $dr['dosen1'] . " dosbing2 = " . $dr['dosen2'] . " Ketua Penguji = "
+                                        . $dr['ketuaPenguji'] . " Sekrterais Penguji = " . $dr['sekretarisPenguji'] . " Anggota Penguji = " . $dr['anggotaPenguji'] . " pada tanggal " . $dr['tanggal'] . " Jam = " . $dr['durasi'] . "";
+                                $detail = $detailBentrok;
+                            }
+                        } else {
+//                            if ($dr['durasi'] == $durasi) {
+//                                $detailBentrok = $detailBentrok . " bentrok dengan NIM =" . $dr['nim'] . " dosbing1 = " . $dr['dosen1'] . " dosbing2 = " . $dr['dosen2'] . " Ketua Penguji = "
+//                                        . $dr['ketuaPenguji'] . " Sekrterais Penguji = " . $dr['sekretarisPenguji'] . " Anggota Penguji = " . $dr['anggotaPenguji'] . " pada tanggal " . $dr['tanggal'] . " Jam = " . $dr['durasi'] . " ruang = " . $dr['ruang'] . "";
+//                                $detail = $detailBentrok;
+//                            }
+                        }
+                    }
+                }
+            }
+        }
+        return $detail;
     }
 
     public function pdf($id) {
@@ -820,7 +994,7 @@ class Pendadaran extends CI_Controller {
             $baris++;
         }
 
-        $filename = 'Jadwal_Pendadaran_'. date("d-m-Y").'.xlsx';
+        $filename = 'Jadwal_Pendadaran_' . date("d-m-Y") . '.xlsx';
         $object->getActiveSheet()->setTitle("Jadwal Pendadaran");
 
         header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');

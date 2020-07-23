@@ -150,16 +150,17 @@ class Kolokium extends CI_Controller {
                                     . $dr['reviewer'] . " pada tanggal " . $dr['tanggal'] . " Jam = " . $dr['durasi'] . "";
                             $detail = $detailBentrok;
                         } elseif ($dr['ruang'] != $ruang) {
-                            if ($dr['durasi'] == $durasi) {
-                                $detailBentrok = $detailBentrok . " dengan NIM " . $dr['nim'] . " dosbing 1 = " . $dr['dosen1'] . " reviewer = "
-                                        . $dr['reviewer'] . " pada tanggal " . $dr['tanggal'] . " Jam = " . $dr['durasi'] . " di ruang " . $dr['ruang'] . "";
-                                $detail = $detailBentrok;
-                            }
+//                            if ($dr['durasi'] == $durasi) {
+//                                $detailBentrok = $detailBentrok . " dengan NIM " . $dr['nim'] . " dosbing 1 = " . $dr['dosen1'] . " reviewer = "
+//                                        . $dr['reviewer'] . " pada tanggal " . $dr['tanggal'] . " Jam = " . $dr['durasi'] . " di ruang " . $dr['ruang'] . "";
+//                                $detail = $detailBentrok;
+//                            }
                         }
                     }
                 }
             }
-        }return $detail;
+        }
+        return $detail;
     }
 
     public function cekBentrok2($dosen1, $reviewer, $ruang, $tanggal, $durasi) {
@@ -175,7 +176,7 @@ class Kolokium extends CI_Controller {
                                     . $dr['reviewer'] . " pada tanggal " . $dr['tanggal'] . " Jam = " . $dr['durasi'] . "";
                             $detail = $detailBentrok;
                         }
-                    } elseif ($dr['ruang'] != $ruang) {
+                    } else {
                         if ($dr['durasi'] == $durasi) {
                             $detailBentrok = $detailBentrok . " dengan NIM " . $dr['nim'] . " dosbing 1 = " . $dr['dosen1'] . " reviewer = "
                                     . $dr['reviewer'] . " pada tanggal " . $dr['tanggal'] . " Jam = " . $dr['durasi'] . " di ruang " . $dr['ruang'] . "";
@@ -190,17 +191,18 @@ class Kolokium extends CI_Controller {
                             $detailBentrok = $detailBentrok . " karena " . $dr['ruang'] . " dipakai oleh NIM " . $dr['nim'] . " dosbing 1 = " . $dr['dosen1'] . " reviewer = "
                                     . $dr['reviewer'] . " pada tanggal " . $dr['tanggal'] . " Jam = " . $dr['durasi'] . "";
                             $detail = $detailBentrok;
-                        } elseif ($dr['ruang'] != $ruang) {
-                            if ($dr['durasi'] == $durasi) {
-                                $detailBentrok = $detailBentrok . " dengan NIM " . $dr['nim'] . " dosbing 1 = " . $dr['dosen1'] . " reviewer = "
-                                        . $dr['reviewer'] . " pada tanggal " . $dr['tanggal'] . " Jam = " . $dr['durasi'] . " di ruang " . $dr['ruang'] . "";
-                                $detail = $detailBentrok;
-                            }
+                        } else {
+//                            if ($dr['durasi'] == $durasi) {
+//                                $detailBentrok = $detailBentrok . " dengan NIM " . $dr['nim'] . " dosbing 1 = " . $dr['dosen1'] . " reviewer = "
+//                                        . $dr['reviewer'] . " pada tanggal " . $dr['tanggal'] . " Jam = " . $dr['durasi'] . " di ruang " . $dr['ruang'] . "";
+//                                $detail = $detailBentrok;
+//                            }
                         }
                     }
                 }
             }
-        }return $detail;
+        }
+        return $detail;
     }
 
     public function cekInputKolokium($dosen1, $dosen2, $reviewer) {
@@ -273,6 +275,7 @@ class Kolokium extends CI_Controller {
             $this->load->view('templates/footer');
         } else {
             $postData = $this->input->post();
+            $nim = $postData['nim'];
             $dosen1 = $postData['dosen1'];
             $dosen2 = $postData['dosen2'];
             $reviewer = $postData['reviewer'];
@@ -303,9 +306,9 @@ class Kolokium extends CI_Controller {
                     break;
                 default :
                     if ($dosen2 == '') {
-                        $hasil = $this->cekBentrokEdit2($dosen1, $reviewer, $ruang, $tanggal, $durasi);
+                        $hasil = $this->cekBentrokEdit2($nim, $dosen1, $reviewer, $ruang, $tanggal, $durasi);
                     } else {
-                        $hasil = $this->cekBentrokEdit($dosen1, $dosen2, $reviewer, $ruang, $tanggal, $durasi);
+                        $hasil = $this->cekBentrokEdit($nim, $dosen1, $dosen2, $reviewer, $ruang, $tanggal, $durasi);
                     }
                     break;
             }
@@ -323,36 +326,22 @@ class Kolokium extends CI_Controller {
         }
     }
 
-    public function cekBentrokEdit($dosen1, $dosen2, $reviewer, $ruang, $tanggal, $durasi) {
+    public function cekBentrokEdit($nim, $dosen1, $dosen2, $reviewer, $ruang, $tanggal, $durasi) {
         $detail = NULL;
         $dataRuang = $this->Kolokium_model->cekStatusRuangEdit($tanggal, $durasi);
         $detailBentrok = "Ada bentrok jadwal kolokium Mahasiswa";
         foreach ($dataRuang as $dr) {
-            if ($dr['dosen1'] == $dosen1 || $dr['dosen1'] == $dosen2 || $dr['dosen1'] == $reviewer ||
-                    $dr['dosen2'] == $dosen1 || $dr['dosen2'] == $dosen2 || $dr['dosen2'] == $reviewer ||
-                    $dr['reviewer'] == $dosen1 || $dr['reviewer'] == $dosen2 || $dr['reviewer'] == $reviewer) {
-                if ($dr['tanggal'] == $tanggal) {
-                    if ($dr['ruang'] == $ruang) {
-                        if ($dr['durasi'] == $durasi) {
-                            $detailBentrok = $detailBentrok . " karena " . $dr['ruang'] . " dipakai oleh NIM " . $dr['nim'] . " dosbing 1 = " . $dr['dosen1'] . " reviewer = "
-                                    . $dr['reviewer'] . " pada tanggal " . $dr['tanggal'] . " Jam = " . $dr['durasi'] . "";
-                            $detail = $detailBentrok;
-                        }
-                    } elseif ($dr['ruang'] != $ruang) {
-                        if ($dr['durasi'] == $durasi) {
-                            $detailBentrok = $detailBentrok . " dengan NIM " . $dr['nim'] . " dosbing 1 = " . $dr['dosen1'] . " reviewer = "
-                                    . $dr['reviewer'] . " pada tanggal " . $dr['tanggal'] . " Jam = " . $dr['durasi'] . " di ruang " . $dr['ruang'] . "";
-                            $detail = $detailBentrok;
-                        }
-                    }
-                }
-            } else {
-                if ($dr['tanggal'] == $tanggal) {
-                    if ($dr['ruang'] == $ruang) {
-                        if ($dr['durasi'] == $durasi) {
-                            $detailBentrok = $detailBentrok . " karena " . $dr['ruang'] . " dipakai oleh NIM " . $dr['nim'] . " dosbing 1 = " . $dr['dosen1'] . " reviewer = "
-                                    . $dr['reviewer'] . " pada tanggal " . $dr['tanggal'] . " Jam = " . $dr['durasi'] . "";
-                            $detail = $detailBentrok;
+            if ($dr['nim'] == $nim) {
+                if ($dr['dosen1'] == $dosen1 || $dr['dosen1'] == $dosen2 || $dr['dosen1'] == $reviewer ||
+                        $dr['dosen2'] == $dosen1 || $dr['dosen2'] == $dosen2 || $dr['dosen2'] == $reviewer ||
+                        $dr['reviewer'] == $dosen1 || $dr['reviewer'] == $dosen2 || $dr['reviewer'] == $reviewer) {
+                    if ($dr['tanggal'] == $tanggal) {
+                        if ($dr['ruang'] == $ruang) {
+                            if ($dr['durasi'] == $durasi) {
+                                $detailBentrok = $detailBentrok . " karena " . $dr['ruang'] . " dipakai oleh NIM " . $dr['nim'] . " dosbing 1 = " . $dr['dosen1'] . " reviewer = "
+                                        . $dr['reviewer'] . " pada tanggal " . $dr['tanggal'] . " Jam = " . $dr['durasi'] . "";
+                                $detail = $detailBentrok;
+                            }
                         } elseif ($dr['ruang'] != $ruang) {
                             if ($dr['durasi'] == $durasi) {
                                 $detailBentrok = $detailBentrok . " dengan NIM " . $dr['nim'] . " dosbing 1 = " . $dr['dosen1'] . " reviewer = "
@@ -361,39 +350,78 @@ class Kolokium extends CI_Controller {
                             }
                         }
                     }
+                } else {
+                    if ($dr['tanggal'] == $tanggal) {
+                        if ($dr['ruang'] == $ruang) {
+                            if ($dr['durasi'] == $durasi) {
+                                $detailBentrok = $detailBentrok . " karena " . $dr['ruang'] . " dipakai oleh NIM " . $dr['nim'] . " dosbing 1 = " . $dr['dosen1'] . " reviewer = "
+                                        . $dr['reviewer'] . " pada tanggal " . $dr['tanggal'] . " Jam = " . $dr['durasi'] . "";
+                                $detail = $detailBentrok;
+                            } elseif ($dr['ruang'] != $ruang) {
+//                                if ($dr['durasi'] == $durasi) {
+//                                    $detailBentrok = $detailBentrok . " dengan NIM " . $dr['nim'] . " dosbing 1 = " . $dr['dosen1'] . " reviewer = "
+//                                            . $dr['reviewer'] . " pada tanggal " . $dr['tanggal'] . " Jam = " . $dr['durasi'] . " di ruang " . $dr['ruang'] . "";
+//                                    $detail = $detailBentrok;
+//                                }
+                            }
+                        }
+                    }
+                }
+            } else {
+                if ($dr['dosen1'] == $dosen1 || $dr['dosen1'] == $dosen2 || $dr['dosen1'] == $reviewer ||
+                        $dr['dosen2'] == $dosen1 || $dr['dosen2'] == $dosen2 || $dr['dosen2'] == $reviewer ||
+                        $dr['reviewer'] == $dosen1 || $dr['reviewer'] == $dosen2 || $dr['reviewer'] == $reviewer) {
+                    if ($dr['tanggal'] == $tanggal) {
+                        if ($dr['ruang'] == $ruang) {
+                            if ($dr['durasi'] == $durasi) {
+                                $detailBentrok = $detailBentrok . " karena " . $dr['ruang'] . " dipakai oleh NIM " . $dr['nim'] . " dosbing 1 = " . $dr['dosen1'] . " reviewer = "
+                                        . $dr['reviewer'] . " pada tanggal " . $dr['tanggal'] . " Jam = " . $dr['durasi'] . "";
+                                $detail = $detailBentrok;
+                            }
+                        } elseif ($dr['ruang'] != $ruang) {
+                            if ($dr['durasi'] == $durasi) {
+                                $detailBentrok = $detailBentrok . " dengan NIM " . $dr['nim'] . " dosbing 1 = " . $dr['dosen1'] . " reviewer = "
+                                        . $dr['reviewer'] . " pada tanggal " . $dr['tanggal'] . " Jam = " . $dr['durasi'] . " di ruang " . $dr['ruang'] . "";
+                                $detail = $detailBentrok;
+                            }
+                        }
+                    }
+                } else {
+                    if ($dr['tanggal'] == $tanggal) {
+                        if ($dr['ruang'] == $ruang) {
+                            if ($dr['durasi'] == $durasi) {
+                                $detailBentrok = $detailBentrok . " karena " . $dr['ruang'] . " dipakai oleh NIM " . $dr['nim'] . " dosbing 1 = " . $dr['dosen1'] . " reviewer = "
+                                        . $dr['reviewer'] . " pada tanggal " . $dr['tanggal'] . " Jam = " . $dr['durasi'] . "";
+                                $detail = $detailBentrok;
+                            } elseif ($dr['ruang'] != $ruang) {
+//                                if ($dr['durasi'] == $durasi) {
+//                                    $detailBentrok = $detailBentrok . " dengan NIM " . $dr['nim'] . " dosbing 1 = " . $dr['dosen1'] . " reviewer = "
+//                                            . $dr['reviewer'] . " pada tanggal " . $dr['tanggal'] . " Jam = " . $dr['durasi'] . " di ruang " . $dr['ruang'] . "";
+//                                    $detail = $detailBentrok;
+//                                }
+                            }
+                        }
+                    }
                 }
             }
-        }return $detail;
+        }
+        return $detail;
     }
 
-    public function cekBentrokEdit2($dosen1, $reviewer, $ruang, $tanggal, $durasi) {
+    public function cekBentrokEdit2($nim, $dosen1, $reviewer, $ruang, $tanggal, $durasi) {
         $detail = NULL;
         $dataRuang = $this->Kolokium_model->cekStatusRuangEdit($tanggal, $durasi);
         $detailBentrok = "Ada bentrok jadwal kolokium Mahasiswa";
         foreach ($dataRuang as $dr) {
-            if ($dr['dosen1'] == $dosen1 || $dr['dosen1'] == $reviewer || $dr['reviewer'] == $dosen1 || $dr['reviewer'] == $reviewer) {
-                if ($dr['tanggal'] == $tanggal) {
-                    if ($dr['ruang'] == $ruang) {
-                        if ($dr['durasi'] == $durasi) {
-                            $detailBentrok = $detailBentrok . " karena " . $dr['ruang'] . " dipakai oleh NIM " . $dr['nim'] . " dosbing 1 = " . $dr['dosen1'] . " reviewer = "
-                                    . $dr['reviewer'] . " pada tanggal " . $dr['tanggal'] . " Jam = " . $dr['durasi'] . "";
-                            $detail = $detailBentrok;
-                        }
-                    } elseif ($dr['ruang'] != $ruang) {
-                        if ($dr['durasi'] == $durasi) {
-                            $detailBentrok = $detailBentrok . " dengan NIM " . $dr['nim'] . " dosbing 1 = " . $dr['dosen1'] . " reviewer = "
-                                    . $dr['reviewer'] . " pada tanggal " . $dr['tanggal'] . " Jam = " . $dr['durasi'] . " di ruang " . $dr['ruang'] . "";
-                            $detail = $detailBentrok;
-                        }
-                    }
-                }
-            } else {
-                if ($dr['tanggal'] == $tanggal) {
-                    if ($dr['ruang'] == $ruang) {
-                        if ($dr['durasi'] == $durasi) {
-                            $detailBentrok = $detailBentrok . " karena " . $dr['ruang'] . " dipakai oleh NIM " . $dr['nim'] . " dosbing 1 = " . $dr['dosen1'] . " reviewer = "
-                                    . $dr['reviewer'] . " pada tanggal " . $dr['tanggal'] . " Jam = " . $dr['durasi'] . "";
-                            $detail = $detailBentrok;
+            if ($dr['nim'] == $nim) {
+                if ($dr['dosen1'] == $dosen1 || $dr['dosen1'] == $reviewer || $dr['reviewer'] == $dosen1 || $dr['reviewer'] == $reviewer) {
+                    if ($dr['tanggal'] == $tanggal) {
+                        if ($dr['ruang'] == $ruang) {
+                            if ($dr['durasi'] == $durasi) {
+                                $detailBentrok = $detailBentrok . " karena " . $dr['ruang'] . " dipakai oleh NIM " . $dr['nim'] . " dosbing 1 = " . $dr['dosen1'] . " reviewer = "
+                                        . $dr['reviewer'] . " pada tanggal " . $dr['tanggal'] . " Jam = " . $dr['durasi'] . "";
+                                $detail = $detailBentrok;
+                            }
                         } elseif ($dr['ruang'] != $ruang) {
                             if ($dr['durasi'] == $durasi) {
                                 $detailBentrok = $detailBentrok . " dengan NIM " . $dr['nim'] . " dosbing 1 = " . $dr['dosen1'] . " reviewer = "
@@ -402,9 +430,60 @@ class Kolokium extends CI_Controller {
                             }
                         }
                     }
+                } else {
+                    if ($dr['tanggal'] == $tanggal) {
+                        if ($dr['ruang'] == $ruang) {
+                            if ($dr['durasi'] == $durasi) {
+                                $detailBentrok = $detailBentrok . " karena " . $dr['ruang'] . " dipakai oleh NIM " . $dr['nim'] . " dosbing 1 = " . $dr['dosen1'] . " reviewer = "
+                                        . $dr['reviewer'] . " pada tanggal " . $dr['tanggal'] . " Jam = " . $dr['durasi'] . "";
+                                $detail = $detailBentrok;
+                            } elseif ($dr['ruang'] != $ruang) {
+//                                if ($dr['durasi'] == $durasi) {
+//                                    $detailBentrok = $detailBentrok . " dengan NIM " . $dr['nim'] . " dosbing 1 = " . $dr['dosen1'] . " reviewer = "
+//                                            . $dr['reviewer'] . " pada tanggal " . $dr['tanggal'] . " Jam = " . $dr['durasi'] . " di ruang " . $dr['ruang'] . "";
+//                                    $detail = $detailBentrok;
+//                                }
+                            }
+                        }
+                    }
+                }
+            }else{
+                 if ($dr['dosen1'] == $dosen1 || $dr['dosen1'] == $reviewer || $dr['reviewer'] == $dosen1 || $dr['reviewer'] == $reviewer) {
+                    if ($dr['tanggal'] == $tanggal) {
+                        if ($dr['ruang'] == $ruang) {
+                            if ($dr['durasi'] == $durasi) {
+                                $detailBentrok = $detailBentrok . " karena " . $dr['ruang'] . " dipakai oleh NIM " . $dr['nim'] . " dosbing 1 = " . $dr['dosen1'] . " reviewer = "
+                                        . $dr['reviewer'] . " pada tanggal " . $dr['tanggal'] . " Jam = " . $dr['durasi'] . "";
+                                $detail = $detailBentrok;
+                            }
+                        } elseif ($dr['ruang'] != $ruang) {
+                            if ($dr['durasi'] == $durasi) {
+                                $detailBentrok = $detailBentrok . " dengan NIM " . $dr['nim'] . " dosbing 1 = " . $dr['dosen1'] . " reviewer = "
+                                        . $dr['reviewer'] . " pada tanggal " . $dr['tanggal'] . " Jam = " . $dr['durasi'] . " di ruang " . $dr['ruang'] . "";
+                                $detail = $detailBentrok;
+                            }
+                        }
+                    }
+                } else {
+                    if ($dr['tanggal'] == $tanggal) {
+                        if ($dr['ruang'] == $ruang) {
+                            if ($dr['durasi'] == $durasi) {
+                                $detailBentrok = $detailBentrok . " karena " . $dr['ruang'] . " dipakai oleh NIM " . $dr['nim'] . " dosbing 1 = " . $dr['dosen1'] . " reviewer = "
+                                        . $dr['reviewer'] . " pada tanggal " . $dr['tanggal'] . " Jam = " . $dr['durasi'] . "";
+                                $detail = $detailBentrok;
+                            } elseif ($dr['ruang'] != $ruang) {
+//                                if ($dr['durasi'] == $durasi) {
+//                                    $detailBentrok = $detailBentrok . " dengan NIM " . $dr['nim'] . " dosbing 1 = " . $dr['dosen1'] . " reviewer = "
+//                                            . $dr['reviewer'] . " pada tanggal " . $dr['tanggal'] . " Jam = " . $dr['durasi'] . " di ruang " . $dr['ruang'] . "";
+//                                    $detail = $detailBentrok;
+//                                }
+                            }
+                        }
+                    }
                 }
             }
-        }return $detail;
+        }
+        return $detail;
     }
 
     public function pdf($id) {
@@ -541,7 +620,7 @@ class Kolokium extends CI_Controller {
             $baris++;
         }
 
-        $filename = 'Jadwal_Kolokium_'. date("d-m-Y").'.xlsx';
+        $filename = 'Jadwal_Kolokium_' . date("d-m-Y") . '.xlsx';
         $object->getActiveSheet()->setTitle("Jadwal Kolokium");
 
         header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');

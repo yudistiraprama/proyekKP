@@ -76,29 +76,29 @@ class Kolokium_model extends CI_model {
     public function cekStatusKolokium($nim) {
         return $this->db->get_where('kolokium', ['nim' => $nim])->row_array();
     }
-
-    public function cekBentrokKolokiumAll($dosen1, $dosen2, $reviewer) {
-        $this->db->or_where('dosen1', $dosen1);
-        $this->db->or_where('dosen1', $dosen2);
-        $this->db->or_where('dosen1', $reviewer);
-        $this->db->or_where('dosen2', $dosen1);
-        $this->db->or_where('dosen2', $dosen2);
-        $this->db->or_where('dosen2', $reviewer);
-        $this->db->or_where('reviewer', $dosen1);
-        $this->db->or_where('reviewer', $dosen2);
-        $this->db->or_where('reviewer', $reviewer);
-
-        return $this->db->get('kolokium')->result_array();
-    }
-
-    public function cekBentrokKolokiumAll2($dosen1, $reviewer) {
-        $this->db->or_where('dosen1', $dosen1);
-        $this->db->or_where('dosen1', $reviewer);
-        $this->db->or_where('reviewer', $dosen1);
-        $this->db->or_where('reviewer', $reviewer);
-
-        return $this->db->get('kolokium')->result_array();
-    }
+//
+//    public function cekBentrokKolokiumAll($dosen1, $dosen2, $reviewer) {
+//        $this->db->or_where('dosen1', $dosen1);
+//        $this->db->or_where('dosen1', $dosen2);
+//        $this->db->or_where('dosen1', $reviewer);
+//        $this->db->or_where('dosen2', $dosen1);
+//        $this->db->or_where('dosen2', $dosen2);
+//        $this->db->or_where('dosen2', $reviewer);
+//        $this->db->or_where('reviewer', $dosen1);
+//        $this->db->or_where('reviewer', $dosen2);
+//        $this->db->or_where('reviewer', $reviewer);
+//
+//        return $this->db->get('kolokium')->result_array();
+//    }
+//
+//    public function cekBentrokKolokiumAll2($dosen1, $reviewer) {
+//        $this->db->or_where('dosen1', $dosen1);
+//        $this->db->or_where('dosen1', $reviewer);
+//        $this->db->or_where('reviewer', $dosen1);
+//        $this->db->or_where('reviewer', $reviewer);
+//
+//        return $this->db->get('kolokium')->result_array();
+//    }
 
     public function cekStatusRuang($tanggal, $durasi) {
         $this->db->where('tanggal', $tanggal);
