@@ -134,7 +134,6 @@
                     <?php endforeach; ?>
                 </tbody>
             </table>
-            <a href="<?= base_url(); ?>kolokium/excel" class="btn btn-success"><i class="fas fa-file-excel"></i> Cetak Exel</a>
 
             <?= $this->pagination->create_links(); ?>
 

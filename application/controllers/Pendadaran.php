@@ -400,7 +400,7 @@ class Pendadaran extends CI_Controller {
         $data['ruang'] = $this->db->get('ruangan')->result_array();
         $data['pendadaran'] = $this->Pendadaran_model->getPendadaranByID($id);
         $data['dosen'] = $this->Dosen_model->getAllDosen();
-        $data['pendadaran']['tanggal']= format_back($data['pendadaran']['tanggal']);
+        $data['pendadaran']['tanggal'] = format_back($data['pendadaran']['tanggal']);
 
         $this->form_validation->set_rules('nama', 'Nama Mahasiswa', 'required');
         $this->form_validation->set_rules('nim', 'NIM Mahasiswa', 'required|numeric');
@@ -436,47 +436,47 @@ class Pendadaran extends CI_Controller {
                 case 0:
                     $this->session->set_userdata('id', $id);
                     $this->session->set_flashdata('rks', 'Reviewer tidak bisa menjadi Ketua Penguji dan Sekretaris Penguji disaat bersama');
-                    redirect('pendadaran/edit/'.$this->session->userdata('id'));
+                    redirect('pendadaran/edit/' . $this->session->userdata('id'));
                     break;
                 case 1:
                     $this->session->set_userdata('id', $id);
                     $this->session->set_flashdata('rka', 'Reviewer tidak bisa menjadi Ketua Penguji dan Anggota Penguji disaat bersama');
-                    redirect('pendadaran/edit/'.$this->session->userdata('id'));
+                    redirect('pendadaran/edit/' . $this->session->userdata('id'));
                     break;
                 case 2:
                     $this->session->set_userdata('id', $id);
                     $this->session->set_flashdata('rksa', 'Reviewer tidak bisa menjadi Ketua Penguji, Sekretaris Penguji, dan Anggota Penguji disaat bersama');
-                    redirect('pendadaran/edit/'.$this->session->userdata('id'));
+                    redirect('pendadaran/edit/' . $this->session->userdata('id'));
                     break;
                 case 3:
                     $this->session->set_userdata('id', $id);
                     $this->session->set_flashdata('rks', 'Reviewer tidak bisa menjadi Ketua Penguji dan Sekretaris Penguji disaat bersama');
-                    redirect('pendadaran/edit/'.$this->session->userdata('id'));
+                    redirect('pendadaran/edit/' . $this->session->userdata('id'));
                     break;
                 case 4:
                     $this->session->set_userdata('id', $id);
                     $this->session->set_flashdata('rsa', 'Reviewer tidak bisa menjadi Sekretaris Penguji dan Anggota Penguji disaat bersama');
-                    redirect('pendadaran/edit/'.$this->session->userdata('id'));
+                    redirect('pendadaran/edit/' . $this->session->userdata('id'));
                     break;
                 case 5:
                     $this->session->set_userdata('id', $id);
                     $this->session->set_flashdata('rksa', 'Reviewer tidak bisa menjadi Ketua Penguji, Sekretaris Penguji, dan Anggota Penguji disaat bersama');
-                    redirect('pendadaran/edit/'.$this->session->userdata('id'));
+                    redirect('pendadaran/edit/' . $this->session->userdata('id'));
                     break;
                 case 6:
                     $this->session->set_userdata('id', $id);
                     $this->session->set_flashdata('rka', 'Reviewer tidak bisa menjadi Ketua Penguji dan Anggota Penguji disaat bersama');
-                    redirect('pendadaran/edit/'.$this->session->userdata('id'));
+                    redirect('pendadaran/edit/' . $this->session->userdata('id'));
                     break;
                 case 7:
                     $this->session->set_userdata('id', $id);
                     $this->session->set_flashdata('rka', 'Reviewer tidak bisa menjadi Sekretaris Penguji dan Anggota Penguji disaat bersama');
-                    redirect('pendadaran/edit/'.$this->session->userdata('id'));
+                    redirect('pendadaran/edit/' . $this->session->userdata('id'));
                     break;
                 case 8:
                     $this->session->set_userdata('id', $id);
                     $this->session->set_flashdata('rksa', 'Reviewer tidak bisa menjadi Ketua Penguji, Sekretaris Penguji, dan Anggota Penguji disaat bersama');
-                    redirect('pendadaran/edit/'.$this->session->userdata('id'));
+                    redirect('pendadaran/edit/' . $this->session->userdata('id'));
                     break;
                 default:
 //                    if ($dosen2 == '' && $anggotaPenguji == '') {
@@ -494,9 +494,9 @@ class Pendadaran extends CI_Controller {
             if ($hasil != NULL) {
                 $this->session->set_userdata('id', $id);
                 $this->session->set_flashdata('bentrok', $hasil);
-                redirect('pendadaran/edit/'.$this->session->userdata('id'));
+                redirect('pendadaran/edit/' . $this->session->userdata('id'));
             } else {
-           
+
                 $this->Pendadaran_model->editJadwalPendadaran();
                 $this->session->set_flashdata('flash', 'Diubah');
                 redirect('pendadaran');
@@ -681,7 +681,6 @@ class Pendadaran extends CI_Controller {
             }
         }return $detail;
     }
-    
 
     public function pdf($id) {
         $this->load->library('dompdf_gen');
@@ -733,13 +732,89 @@ class Pendadaran extends CI_Controller {
     }
 
     public function report() {
-        $data['judul'] = 'Report  Jadwal Pendadaran';
-        $data['bulan'] = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember',];
-        $data['ruang'] = $this->db->get('ruangan')->result_array();
-        $data['dosen'] = $this->Dosen_model->getAllDosen();
-        $this->load->view('templates/header', $data);
-        $this->load->view('pendadaran/report');
-        $this->load->view('templates/footer');
+        if ($this->input->post() == NULL) {
+            $data['judul'] = 'Report Jadwal Pendadaran';
+            $data['bulan'] = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember',];
+            $data['ruang'] = $this->db->get('ruangan')->result_array();
+            $data['dosen'] = $this->Dosen_model->getAllDosen();
+            $data['pendadaran'] = NULL;
+            $data['jumlahData'] = 0;
+            $this->load->view('templates/header', $data);
+            $this->load->view('pendadaran/report', $data);
+            $this->load->view('templates/footer');
+        } else {
+            $data['judul'] = 'Report Jadwal Pendadaran';
+            $data['bulan'] = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember',];
+            $data['ruang'] = $this->db->get('ruangan')->result_array();
+            $data['dosen'] = $this->Dosen_model->getAllDosen();
+            $data['pendadaran'] = $this->Pendadaran_model->getPendadaranReport();
+            $data['jumlahData'] = $this->Pendadaran_model->getJumlahReport();
+            if ($data['pendadaran'] == NULL) {
+                $this->session->set_flashdata('report', 'Data Mahasiwa Tidak Ada');
+                redirect('pendadaran/report');
+            }
+            $this->load->view('templates/header', $data);
+            $this->load->view('pendadaran/report', $data);
+            $this->load->view('templates/footer');
+        }
+    }
+
+    public function excel() {
+        $data['mahasiswa'] = $this->Pendadaran_model->getPendadaranReport();
+        require (APPPATH . 'PHPExcel-1.8/Classes/PHPExcel.php');
+        require (APPPATH . 'PHPExcel-1.8/Classes/PHPExcel/Writer/Excel2007.php');
+
+        $object = new PHPExcel;
+        $object->getProperties()->setCreator("Informatika");
+        $object->getProperties()->setLastModifiedBy("Informatika");
+        $object->getProperties()->setTitle("Jadwal Pendadaran");
+
+        $object->setActiveSheetIndex(0);
+
+        $object->getActiveSheet()->setCellValue('A1', 'NO');
+        $object->getActiveSheet()->setCellValue('B1', 'NIM');
+        $object->getActiveSheet()->setCellValue('C1', 'NAMA');
+        $object->getActiveSheet()->setCellValue('D1', 'DOSEN PEMBIMBING 1');
+        $object->getActiveSheet()->setCellValue('E1', 'DOSEN PEMBIMBING 2');
+        $object->getActiveSheet()->setCellValue('F1', 'JUDUL TUGAS AKHIR');
+        $object->getActiveSheet()->setCellValue('G1', 'REVIEWER');
+        $object->getActiveSheet()->setCellValue('H1', 'KETUA PENGUJI');
+        $object->getActiveSheet()->setCellValue('I1', 'SEKRETARIS PENGUJI');
+        $object->getActiveSheet()->setCellValue('J1', 'TANGGAL');
+        $object->getActiveSheet()->setCellValue('K1', 'JAM');
+        $object->getActiveSheet()->setCellValue('L1', 'RUANGAN');
+        $object->getActiveSheet()->setCellValue('M1', 'KETERANGAN');
+
+        $baris = 2;
+        $no = 1;
+
+        foreach ($data['mahasiswa'] as $mhs) {
+            $object->getActiveSheet()->setCellValue('A' . $baris, $no++);
+            $object->getActiveSheet()->setCellValue('B' . $baris, $mhs['nim']);
+            $object->getActiveSheet()->setCellValue('C' . $baris, $mhs['nama']);
+            $object->getActiveSheet()->setCellValue('D' . $baris, $mhs['dosen1']);
+            $object->getActiveSheet()->setCellValue('E' . $baris, $mhs['dosen2']);
+            $object->getActiveSheet()->setCellValue('F' . $baris, $mhs['judul']);
+            $object->getActiveSheet()->setCellValue('G' . $baris, $mhs['reviewer']);
+            $object->getActiveSheet()->setCellValue('H' . $baris, $mhs['ketuaPenguji']);
+            $object->getActiveSheet()->setCellValue('I' . $baris, $mhs['sekretarisPenguji']);
+            $object->getActiveSheet()->setCellValue('J' . $baris, $mhs['tanggal']);
+            $object->getActiveSheet()->setCellValue('K' . $baris, $mhs['durasi']);
+            $object->getActiveSheet()->setCellValue('L' . $baris, $mhs['ruang']);
+            $object->getActiveSheet()->setCellValue('M' . $baris, $mhs['keterangan']);
+
+            $baris++;
+        }
+
+        $filename = 'Jadwal_Pendadaran.xlsx';
+        $object->getActiveSheet()->setTitle("Jadwal Pendadaran");
+
+        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        header('Content-Disposition: attachment;filename=' . $filename);
+        header('Cache-Control: max-age=0');
+
+        $writer = PHPExcel_IOFactory::createwriter($object, 'Excel2007');
+        $writer->save('php://output');
     }
 
 }

@@ -119,7 +119,6 @@ class Kolokium extends CI_Controller {
         }
     }
 
-
     public function cekBentrok($dosen1, $dosen2, $reviewer, $ruang, $tanggal, $durasi) {
         $detail = NULL;
         $dataRuang = $this->Kolokium_model->cekStatusRuang($tanggal, $durasi);
@@ -143,7 +142,7 @@ class Kolokium extends CI_Controller {
                         }
                     }
                 }
-            }  else {
+            } else {
                 if ($dr['tanggal'] == $tanggal) {
                     if ($dr['ruang'] == $ruang) {
                         if ($dr['durasi'] == $durasi) {
@@ -465,26 +464,30 @@ class Kolokium extends CI_Controller {
             $data['bulan'] = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember',];
             $data['ruang'] = $this->db->get('ruangan')->result_array();
             $data['dosen'] = $this->Dosen_model->getAllDosen();
+            $data['kolokium'] = NULL;
+            $data['jumlahData'] = 0;
+            $this->load->view('templates/header', $data);
+            $this->load->view('kolokium/report');
+            $this->load->view('templates/footer');
+        } else {
+            $data['judul'] = 'Report Jadwal Kolokium';
+            $data['bulan'] = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember',];
+            $data['ruang'] = $this->db->get('ruangan')->result_array();
+            $data['dosen'] = $this->Dosen_model->getAllDosen();
+            $data['kolokium'] = $this->Kolokium_model->getKolokiumReport();
+            $data['jumlahData'] = $this->Kolokium_model->getJumlahReport();
+            if ($data['kolokium'] == NULL) {
+                $this->session->set_flashdata('report', 'Data Mahasiwa Tidak Ada');
+                redirect('kolokium/report');
+            }
             $this->load->view('templates/header', $data);
             $this->load->view('kolokium/report');
             $this->load->view('templates/footer');
         }
     }
 
-    public function hasilReport() {
-        $data['judul'] = "Report Jadwal Kolokium";
-        $this->load->model('Kolokium_model', 'kolokium');
-
-        $data['kolokium'] = $this->Kolokium_model->getKolokiumReport();
-        $data['jumlahData'] = $this->Kolokium_model->getJumlahReport();
-        $this->load->view('templates/header', $data);
-        $this->load->view('kolokium/hasilReport', $data);
-        $this->load->view('templates/footer');
-        $this->load->view('templates/footer');
-    }
-
     public function excel() {
-        $data['mahasiswa'] = $this->Kolokium_model->getAllKolokium();
+        $data['mahasiswa'] = $this->Kolokium_model->getKolokiumReport();
         require (APPPATH . 'PHPExcel-1.8/Classes/PHPExcel.php');
         require (APPPATH . 'PHPExcel-1.8/Classes/PHPExcel/Writer/Excel2007.php');
 
