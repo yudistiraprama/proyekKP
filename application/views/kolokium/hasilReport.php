@@ -1,9 +1,10 @@
+<?php var_dump($kolokium); ?>
 <div class="container">
     <div class="row">
         <div class="col-md-16">
             <h3 class="mt-3">Report Jadwal Kolokium</h3>
             
-            <h7>Jumlah Data : -</h7>
+            <h7>Jumlah Data : <?= $jumlahData; ?></h7>
 
             <table class="table" border="1">
                 <thead class="thead-dark">

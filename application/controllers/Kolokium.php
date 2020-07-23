@@ -76,22 +76,22 @@ class Kolokium extends CI_Controller {
                     case 0:
                         $this->session->set_userdata('nim', $nim);
                         $this->session->set_flashdata('samaSemua', 'Dosen Pembimbing 1, 2, maupun reviewer tidak boleh sama');
-                        redirect('kolokium/tambah/'.$this->session->userdata('nim'));
+                        redirect('kolokium/tambah/' . $this->session->userdata('nim'));
                         break;
                     case 1:
                         $this->session->set_userdata('nim', $nim);
                         $this->session->set_flashdata('dosenReviewerSama', 'Dosen pembimbing tidak boleh sama dengan Dosen reviewer');
-                        redirect('kolokium/tambah/'.$this->session->userdata('nim'));
+                        redirect('kolokium/tambah/' . $this->session->userdata('nim'));
                         break;
                     case 2:
                         $this->session->set_userdata('nim', $nim);
                         $this->session->set_flashdata('dosen2Sama', 'Dosen pembimbing 2 tidak boleh sama dengan Dosen reviewer');
-                        redirect('kolokium/tambah/'.$this->session->userdata('nim'));
+                        redirect('kolokium/tambah/' . $this->session->userdata('nim'));
                         break;
                     case 3:
                         $this->session->set_userdata('nim', $nim);
                         $this->session->set_flashdata('dosen1Sama', 'Dosen pembimbing 1 tidak boleh sama dengan Dosen pembimbing 2');
-                        redirect('kolokium/tambah/'.$this->session->userdata('nim'));
+                        redirect('kolokium/tambah/' . $this->session->userdata('nim'));
                         break;
                     default :
                         if ($dosen2 == '') {
@@ -105,7 +105,7 @@ class Kolokium extends CI_Controller {
                     var_dump($tanggal);
                     $this->session->set_userdata('nim', $nim);
                     $this->session->set_flashdata('bentrok', $hasil);
-                    redirect('kolokium/tambah/'.$this->session->userdata('nim'));
+                    redirect('kolokium/tambah/' . $this->session->userdata('nim'));
                 } else {
                     var_dump($tanggal);
                     $this->Kolokium_model->tambahJadwalKolokium();
@@ -357,22 +357,22 @@ class Kolokium extends CI_Controller {
                 case 0:
                     $this->session->set_userdata('id', $id);
                     $this->session->set_flashdata('samaSemua', 'Dosen Pembimbing 1, 2, maupun reviewer tidak boleh sama');
-                    redirect('kolokium/edit/'.$this->session->userdata('id'));
+                    redirect('kolokium/edit/' . $this->session->userdata('id'));
                     break;
                 case 1:
                     $this->session->set_userdata('id', $id);
                     $this->session->set_flashdata('dosenReviewerSama', 'Dosen pembimbing tidak boleh sama dengan Dosen reviewer');
-                   redirect('kolokium/edit/'.$this->session->userdata('id'));
+                    redirect('kolokium/edit/' . $this->session->userdata('id'));
                     break;
                 case 2:
                     $this->session->set_userdata('id', $id);
                     $this->session->set_flashdata('dosen2Sama', 'Dosen pembimbing 2 tidak boleh sama dengan Dosen reviewer');
-                    redirect('kolokium/edit/'.$this->session->userdata('id'));
+                    redirect('kolokium/edit/' . $this->session->userdata('id'));
                     break;
                 case 3:
                     $this->session->set_userdata('id', $id);
                     $this->session->set_flashdata('dosen1Sama', 'Dosen pembimbing 1 tidak boleh sama dengan Dosen pembimbing 2');
-                    redirect('kolokium/edit/'.$this->session->userdata('id'));
+                    redirect('kolokium/edit/' . $this->session->userdata('id'));
                     break;
                 default :
                     if ($dosen2 == '') {
@@ -386,7 +386,7 @@ class Kolokium extends CI_Controller {
 //                    var_dump($hasil);
                 $this->session->set_userdata('id', $id);
                 $this->session->set_flashdata('bentrok', $hasil);
-                redirect('kolokium/edit/'.$this->session->userdata('id'));
+                redirect('kolokium/edit/' . $this->session->userdata('id'));
             } else {
 //                    var_dump($hasil);
                 $this->Kolokium_model->editJadwalKolokium();
@@ -395,7 +395,6 @@ class Kolokium extends CI_Controller {
             }
         }
     }
-
 
     public function cekBentrokEdit($dosen1, $dosen2, $reviewer, $ruang, $tanggal, $durasi) {
         $detail = NULL;
@@ -549,8 +548,10 @@ class Kolokium extends CI_Controller {
         $this->load->model('Kolokium_model', 'kolokium');
 
         $data['kolokium'] = $this->Kolokium_model->getKolokiumReport();
+        $data['jumlahData'] = $this->Kolokium_model->getJumlahReport();
         $this->load->view('templates/header', $data);
         $this->load->view('kolokium/hasilReport', $data);
+        $this->load->view('templates/footer');
         $this->load->view('templates/footer');
     }
 

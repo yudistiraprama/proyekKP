@@ -118,18 +118,57 @@ class Kolokium_model extends CI_model {
         $dosen1 = $postData['dosen1'];
         $dosen2 = $postData['dosen2'];
         $reviewer = $postData['reviewer'];
-        $ketuaPenguji = $postData['dosen1'];
-        
-        $this->db->like('tanggal', $bln);
-        $this->db->like('tanggal', $dosen1);
-        $this->db->like('tanggal', $dosen2);
-        $this->db->like('tanggal', $reviewer);
-        $this->db->like('tanggal', $ketuaPenguji);
-        return $this->db->get('kolokium')->result_array();
+
+        if ($bln != NULL && $dosen1 == NULL && $dosen2 == NULL && $reviewer == NULL) {
+            $this->db->like('tanggal', $bln);
+            return $this->db->get('kolokium')->result_array();
+        } else if ($bln == NULL && $dosen1 != NULL && $dosen2 == NULL && $reviewer == NULL) {
+            $this->db->like('dosen1', $dosen1);
+            return $this->db->get('kolokium')->result_array();
+        } else if ($bln == NULL && $dosen1 == NULL && $dosen2 != NULL && $reviewer == NULL) {
+            $this->db->like('dosen2', $dosen2);
+            return $this->db->get('kolokium')->result_array();
+        } elseif ($bln == NULL && $dosen1 == NULL && $dosen2 == NULL && $reviewer != NULL) {
+            $this->db->like('reviewer', $reviewer);
+            return $this->db->get('kolokium')->result_array();
+        } elseif ($bln != NULL && $dosen1 != NULL && $dosen2 == NULL && $reviewer == NULL) {
+            $sql = "SELECT * FROM kolokium WHERE tanggal LIKE '%" . $bln . "%' AND dosen1 ='" . $dosen1 . "'";
+            return $this->db->query($sql)->result_array();
+        } elseif ($bln != NULL && $dosen1 == NULL && $dosen2 != NULL && $reviewer == NULL) {
+            $sql = "SELECT * FROM kolokium WHERE tanggal LIKE '%" . $bln . "%' AND dosen2 ='" . $dosen2 . "'";
+            return $this->db->query($sql)->result_array();
+        } elseif ($bln != NULL && $dosen1 == NULL && $dosen2 == NULL && $reviewer != NULL) {
+            $sql = "SELECT * FROM kolokium WHERE tanggal LIKE '%" . $bln . "%' AND reviewer ='" . $reviewer . "'";
+            return $this->db->query($sql)->result_array();
+        } elseif ($bln != NULL && $dosen1 != NULL && $dosen2 != NULL && $reviewer == NULL) {
+            $sql = "SELECT * FROM kolokium WHERE tanggal LIKE '%" . $bln . "%' AND dosen1 ='" . $dosen1 . "' AND dosen2 ='" . $dosen2 . "'";
+            return $this->db->query($sql)->result_array();
+        } elseif ($bln != NULL && $dosen1 != NULL && $dosen2 == NULL && $reviewer != NULL) {
+            $sql = "SELECT * FROM kolokium WHERE tanggal LIKE '%" . $bln . "%' AND dosen1 ='" . $dosen1 . "' AND reviewer ='" . $reviewer . "'";
+            return $this->db->query($sql)->result_array();
+        } elseif ($bln != NULL && $dosen1 == NULL && $dosen2 != NULL && $reviewer != NULL) {
+            $sql = "SELECT * FROM kolokium WHERE tanggal LIKE '%" . $bln . "%' AND dosen2 ='" . $dosen2 . "' AND reviewer ='" . $reviewer . "'";
+            return $this->db->query($sql)->result_array();
+        } elseif ($bln == NULL && $dosen1 != NULL && $dosen2 != NULL && $reviewer == NULL) {
+            $sql = "SELECT * FROM kolokium WHERE dosen1 ='" . $dosen1 . "' AND dosen2 ='" . $dosen2 . "'";
+            return $this->db->query($sql)->result_array();
+        } elseif ($bln == NULL && $dosen1 != NULL && $dosen2 == NULL && $reviewer != NULL) {
+            $sql = "SELECT * FROM kolokium WHERE dosen1 ='" . $dosen1 . "' AND reviewer ='" . $reviewer . "'";
+            return $this->db->query($sql)->result_array();
+        } elseif ($bln == NULL && $dosen1 == NULL && $dosen2 != NULL && $reviewer != NULL) {
+            $sql = "SELECT * FROM kolokium WHERE dosen2 ='" . $dosen2 . "' AND reviewer ='" . $reviewer . "'";
+            return $this->db->query($sql)->result_array();
+        } elseif ($bln == NULL && $dosen1 != NULL && $dosen2 != NULL && $reviewer != NULL) {
+            $sql = "SELECT * FROM kolokium WHERE dosen1 ='" . $dosen1 . "' AND dosen2 ='" . $dosen2 . "'AND reviewer ='" . $reviewer . "'";
+            return $this->db->query($sql)->result_array();
+        } else {
+            $sql = "SELECT * FROM kolokium WHERE tanggal LIKE '%" . $bln . "%' AND dosen1 ='" . $dosen1 . "'AND dosen2 ='" . $dosen2 . "'AND reviewer ='" . $reviewer . "'";
+            return $this->db->query($sql)->result_array();
+        }
     }
-    
-    public function getJumlahReport(){
-        
+
+    public function getJumlahReport() {
+        return count($this->getKolokiumReport());
     }
 
 }
