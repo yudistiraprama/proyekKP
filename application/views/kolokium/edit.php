@@ -1,5 +1,4 @@
 <div class="container">
-    <?php var_dump($kolokium['tanggal']);?>
     <?php if ($this->session->flashdata('bentrok')): ?>
         <div class="row mt-3">
             <div class="col-md-10">
