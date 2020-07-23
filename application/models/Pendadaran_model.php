@@ -172,7 +172,7 @@ class Pendadaran_model extends CI_model {
     }
 
     public function cekStatusRuangEdit($durasi, $tanggal) {
-        $this->db->or_where('ruang', $ruang);
+        $this->db->or_where('tanggal', $tanggal);
         $this->db->or_where('durasi', $durasi);
         return $this->db->get('pendadaran')->result_array();
     }
