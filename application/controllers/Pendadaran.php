@@ -112,7 +112,7 @@ class Pendadaran extends CI_Controller {
                     case 7:$this->session->set_userdata('nim', $nim);
                         $this->session->set_flashdata('rka', 'Reviewer tidak bisa menjadi Sekretaris Penguji dan Anggota Penguji disaat bersama');
                         redirect('pendadaran/tambah/' . $this->session->userdata('nim'));
-                        break;  
+                        break;
                     case 8:$this->session->set_userdata('nim', $nim);
                         $this->session->set_flashdata('rksa', 'Reviewer tidak bisa menjadi Ketua Penguji, Sekretaris Penguji, dan Anggota Penguji disaat bersama');
                         redirect('pendadaran/tambah/' . $this->session->userdata('nim'));
@@ -127,7 +127,7 @@ class Pendadaran extends CI_Controller {
                         } elseif ($dosen2 != '' && $anggotaPenguji != '') {
                             $hasil = $this->cekBentrok4($dosen1, $dosen2, $ketuaPenguji, $sekretarisPenguji, $anggotaPenguji, $ruang, $tanggal, $durasi);
                         }
-                         
+
                         break;
                 }
                 if ($hasil != NULL) {
@@ -208,7 +208,7 @@ class Pendadaran extends CI_Controller {
                                     . $dr['ketuaPenguji'] . " Sekrterais Penguji = " . $dr['sekretarisPenguji'] . " pada tanggal " . $dr['tanggal'] . " Jam = " . $dr['durasi'] . "";
                             $detail = $detailBentrok;
                         }
-                    } else{
+                    } else {
                         if ($dr['durasi'] == $durasi) {
                             $detailBentrok = $detailBentrok . " dengan NIM =" . $dr['nim'] . " dosbing1 = " . $dr['dosen1'] . " Ketua Penguji = "
                                     . $dr['ketuaPenguji'] . " Sekrterais Penguji = " . $dr['sekretarisPenguji'] . " pada tanggal " . $dr['tanggal'] . " Jam = " . $dr['durasi'] . " di ruang " . $dr['ruang'] . "";
@@ -909,6 +909,7 @@ class Pendadaran extends CI_Controller {
         if ($this->input->post() == NULL) {
             $data['judul'] = 'Report Jadwal Pendadaran';
             $data['bulan'] = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember',];
+            $data['jam'] = ['07.00-08.00', '08.00-09.00', '09.00-10.00', '10.00-11.00', '11.00-12.00', '12.00-13.00', '13.00-14.00', '14.00-15.00', '15.00-16.00', '16.00-17.00'];
             $data['ruang'] = $this->db->get('ruangan')->result_array();
             $data['dosen'] = $this->Dosen_model->getAllDosen();
             $data['pendadaran'] = NULL;
@@ -919,6 +920,7 @@ class Pendadaran extends CI_Controller {
         } else {
             $data['judul'] = 'Report Jadwal Pendadaran';
             $data['bulan'] = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember',];
+            $data['jam'] = ['07.00-08.00', '08.00-09.00', '09.00-10.00', '10.00-11.00', '11.00-12.00', '12.00-13.00', '13.00-14.00', '14.00-15.00', '15.00-16.00', '16.00-17.00'];
             $data['ruang'] = $this->db->get('ruangan')->result_array();
             $data['dosen'] = $this->Dosen_model->getAllDosen();
 
@@ -930,7 +932,9 @@ class Pendadaran extends CI_Controller {
                 'dosen2' => $postData['dosen2'],
                 'reviewer' => $postData['reviewer'],
                 'ketuaPenguji' => $postData['ketuaPenguji'],
-                'sekretarisPenguji' => $postData['sekretarisPenguji']
+                'sekretarisPenguji' => $postData['sekretarisPenguji'],
+                'jam' => $postData['jam'],
+                'ruang' => $postData['ruang']
             );
 
             $this->session->set_userdata($dataPendadaran);

@@ -95,11 +95,10 @@
                         <div class="form-group">
                             <label for="ketuaPenguji">Ketua Penguji</label>
                             <select class="form-control" id="ketua" name="ketuaPenguji">
+                                <option value="">-</option>
                                 <?php foreach ($dosen as $ds): ?>
                                     <?php if ($ds['nama'] != $mahasiswa['dosen2'] && $ds['nama'] != $mahasiswa['dosen1']): ?>
-
                                         <option value="<?= $ds['nama']; ?>"><?= $ds['nama']; ?></option>
-
                                     <?php endif; ?>
                                 <?php endforeach; ?>
                             </select>
@@ -108,11 +107,10 @@
                         <div class="form-group">
                             <label for="sekretarisPenguji">Sekretaris Penguji</label>
                             <select class="form-control" id="sekretarisPenguji" name="sekretarisPenguji">
+                                <option value="">-</option>
                                 <?php foreach ($dosen as $ds): ?>
                                     <?php if ($ds['nama'] != $mahasiswa['dosen2'] && $ds['nama'] != $mahasiswa['dosen1']): ?>
-
                                         <option value="<?= $ds['nama']; ?>"><?= $ds['nama']; ?></option>
-
                                     <?php endif; ?>
                                 <?php endforeach; ?>
                             </select>

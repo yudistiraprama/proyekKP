@@ -77,6 +77,7 @@
                         <div class="form-group">
                             <label for="dosen1">Dosen Pembimbing 1</label>
                             <select class="form-control" id="dosen1" name="dosen1">
+                                <option value="">-</option>
                                 <?php foreach ($dosen as $ds): ?>
                                     <?php if ($ds['nama'] == $kolokium['dosen1']): ?>
                                         <option value="<?= $ds['nama']; ?>"selected><?= $ds['nama']; ?></option>
@@ -107,6 +108,7 @@
                         <div class="form-group">
                             <label for="reviewer">Reviewer</label>
                             <select class="form-control" id="reviewer" name="reviewer">
+                                <option value="">-</option>
                                 <?php foreach ($dosen as $ds): ?>
                                     <?php if ($ds['nama'] == $kolokium['reviewer']): ?>
                                         <option value="<?= $ds['nama']; ?>"selected><?= $ds['nama']; ?></option>

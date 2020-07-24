@@ -77,7 +77,8 @@
                         </div>
                         <div class="form-group">
                             <label for="judul">Dosen Pembimbing 1</label>
-                            <select class="form-control" id="dosen1" name="dosen1">                              
+                            <select class="form-control" id="dosen1" name="dosen1">  
+                                <option value="">-</option>
                                 <?php foreach ($dosen as $ds): ?>
                                     <option value="<?= $ds['nama']; ?>"><?= $ds['nama']; ?></option>
                                 <?php endforeach; ?>
@@ -100,7 +101,8 @@
                         </div>
                         <div class="form-group">
                             <label for="reviewer">Reviewer</label>
-                            <select class="form-control" id="reviewer" name="reviewer">                               
+                            <select class="form-control" id="reviewer" name="reviewer">     
+                                <option value="">-</option>
                                 <?php foreach ($dosen as $ds): ?>
                                     <option value="<?= $ds['nama']; ?>"><?= $ds['nama']; ?></option>
                                 <?php endforeach; ?>

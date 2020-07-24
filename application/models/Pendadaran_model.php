@@ -191,6 +191,8 @@ class Pendadaran_model extends CI_model {
         $reviewer = $this->session->userdata('reviewer');
         $ketuaPenguji = $this->session->userdata('ketuaPenguji');
         $sekretarisPenguji = $this->session->userdata('sekretarisPenguji');
+        $jam = $this->session->userdata('jam');
+        $ruang = $this->session->userdata('ruang');
 
         if ($bln != NULL && $dosen1 == NULL && $dosen2 == NULL && $reviewer == NULL && $ketuaPenguji == NULL && $sekretarisPenguji == NULL) {
             $this->db->like('tanggal', $bln);
