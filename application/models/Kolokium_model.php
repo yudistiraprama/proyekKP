@@ -114,9 +114,8 @@ class Kolokium_model extends CI_model {
     }
 
     public function getKolokiumReport($statement) {
-      var_dump($statement);
-        $query=" SELECT * FROM kolokium WHERE nim ".$statement;
-        
+        $query = " SELECT * FROM kolokium WHERE " . $statement;
+
         return $this->db->query($query)->result_array();
 
 //        $bln = $postData['bulan'];
@@ -256,7 +255,7 @@ class Kolokium_model extends CI_model {
 //        }
     }
 
-    public function getJumlahReport($statment) {
+    public function getJumlahReport($statement) {
         return count($this->getKolokiumReport($statement));
     }
 

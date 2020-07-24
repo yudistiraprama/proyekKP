@@ -909,7 +909,7 @@ class Pendadaran extends CI_Controller {
         if ($this->input->post() == NULL) {
             $data['judul'] = 'Report Jadwal Pendadaran';
             $data['bulan'] = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember',];
-            $data['jam'] = ['07.00-08.00', '08.00-09.00', '09.00-10.00', '10.00-11.00', '11.00-12.00', '12.00-13.00', '13.00-14.00', '14.00-15.00', '15.00-16.00', '16.00-17.00'];
+            $data['jam'] = ['07.00-09.00', '09.00-11.00', '11.00-13.00', '13.00-15.00', '15.00-17.00'];
             $data['ruang'] = $this->db->get('ruangan')->result_array();
             $data['dosen'] = $this->Dosen_model->getAllDosen();
             $data['pendadaran'] = NULL;
@@ -920,27 +920,58 @@ class Pendadaran extends CI_Controller {
         } else {
             $data['judul'] = 'Report Jadwal Pendadaran';
             $data['bulan'] = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember',];
-            $data['jam'] = ['07.00-08.00', '08.00-09.00', '09.00-10.00', '10.00-11.00', '11.00-12.00', '12.00-13.00', '13.00-14.00', '14.00-15.00', '15.00-16.00', '16.00-17.00'];
+            $data['jam'] = ['07.00-09.00', '09.00-11.00', '11.00-13.00', '13.00-15.00', '15.00-17.00'];
             $data['ruang'] = $this->db->get('ruangan')->result_array();
             $data['dosen'] = $this->Dosen_model->getAllDosen();
 
             $postData = $this->input->post();
 
-            $dataPendadaran = array(
-                'bulan' => $postData['bulan'],
-                'dosen1' => $postData['dosen1'],
-                'dosen2' => $postData['dosen2'],
-                'reviewer' => $postData['reviewer'],
-                'ketuaPenguji' => $postData['ketuaPenguji'],
-                'sekretarisPenguji' => $postData['sekretarisPenguji'],
-                'jam' => $postData['jam'],
-                'ruang' => $postData['ruang']
-            );
+            $statement = '';
+            if ($postData['bulan'] != '' && $statement == '') {
+                $statement = $statement . " tanggal LIKE '%" . $postData['bulan'] . "%'";
+            } elseif ($postData['bulan'] != '' && $statement != '') {
+                $statement = $statement . " AND tanggal LIKE '%" . $postData['bulan'] . "%'";
+            }
+            if ($postData['dosen1'] != '' && $statement == '') {
+                $statement = $statement . " dosen1 = '" . $postData['dosen1'] . "'";
+            } elseif ($postData['dosen1'] != '' && $statement != '') {
+                $statement = $statement . " AND dosen1 = '" . $postData['dosen1'] . "'";
+            }
+            if ($postData['dosen2'] != '' && $statement == '') {
+                $statement = $statement . " dosen2='" . $postData['dosen2'] . "'";
+            } elseif ($postData['dosen2'] != '' && $statement != '') {
+                $statement = $statement . " AND dosen2='" . $postData['dosen2'] . "'";
+            }
+            if ($postData['reviewer'] != '' && $statement == '') {
+                $statement = $statement . " reviewer = '" . $postData['reviewer'] . "'";
+            } elseif ($postData['reviewer'] != '' && $statement != '') {
+                $statement = $statement . " AND reviewer = '" . $postData['reviewer'] . "'";
+            }
+            if ($postData['ketuaPenguji'] != '' && $statement == '') {
+                $statement = $statement . " ketuaPenguji = '" . $postData['ketuaPenguji'] . "'";
+            } elseif ($postData['ketuaPenguji'] != '' && $statement != '') {
+                $statement = $statement . " AND ketuaPenguji = '" . $postData['ketuaPenguji'] . "'";
+            }
+            if ($postData['sekretarisPenguji'] != '' && $statement == '') {
+                $statement = $statement . " sekretarisPenguji = '" . $postData['sekretarisPenguji'] . "'";
+            } elseif ($postData['sekretarisPenguji'] != '' && $statement != '') {
+                $statement = $statement . " AND sekretarisPenguji = '" . $postData['sekretarisPenguji'] . "'";
+            }
+            if ($postData['jam'] != '' && $statement == '') {
+                $statement = $statement . " durasi = '" . $postData['jam'] . "'";
+            } elseif ($postData['jam'] != '' && $statement != '') {
+                $statement = $statement . " AND durasi = '" . $postData['jam'] . "'";
+            }
+            if ($postData['ruang'] != '' && $statement == '') {
+                $statement = $statement . " ruang = '" . $postData['ruang'] . "'";
+            } elseif ($postData['ruang'] != '' && $statement != '') {
+                $statement = $statement . " AND ruang = '" . $postData['ruang'] . "'";
+            }
 
-            $this->session->set_userdata($dataPendadaran);
-
-            $data['pendadaran'] = $this->Pendadaran_model->getPendadaranReport();
-            $data['jumlahData'] = $this->Pendadaran_model->getJumlahReport();
+            $this->session->set_userdata('statement', $statement);
+            $data['statement'] = $statement;
+            $data['pendadaran'] = $this->Pendadaran_model->getPendadaranReport($statement);
+            $data['jumlahData'] = $this->Pendadaran_model->getJumlahReport($statement);
             if ($data['pendadaran'] == NULL) {
                 $this->session->set_flashdata('reportPendadaran', 'Data Mahasiwa Tidak Ada');
                 redirect('pendadaran/report');
@@ -952,7 +983,8 @@ class Pendadaran extends CI_Controller {
     }
 
     public function excel() {
-        $data['mahasiswa'] = $this->Pendadaran_model->getPendadaranReport();
+        $statement = $this->session->userdata('statement');
+        $data['mahasiswa'] = $this->Pendadaran_model->getPendadaranReport($statement);
         require (APPPATH . 'PHPExcel-1.8/Classes/PHPExcel.php');
         require (APPPATH . 'PHPExcel-1.8/Classes/PHPExcel/Writer/Excel2007.php');
 

@@ -11,7 +11,6 @@
             </div>
         </div>
     <?php endif; ?>
-<?php var_dump($statement);?>
     <?php if ($kolokium == null): ?>
         <div class="row mt-3">
             <div class="col">

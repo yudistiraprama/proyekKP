@@ -177,7 +177,10 @@ class Pendadaran_model extends CI_model {
         return $this->db->get('pendadaran')->result_array();
     }
 
-    public function getPendadaranReport() {
+    public function getPendadaranReport($statement) {
+        $query = " SELECT * FROM pendadaran WHERE " . $statement;
+
+        return $this->db->query($query)->result_array();
 
 //        $bln = $postData['bulan'];
 //        $dosen1 = $postData['dosen1'];
@@ -185,89 +188,152 @@ class Pendadaran_model extends CI_model {
 //        $reviewer = $postData['reviewer'];
 //        $ketuaPenguji = $postData['ketuaPenguji'];
 //        $sekretarisPenguji = $postData['sekretarisPenguji'];
-        $bln = $this->session->userdata('bulan');
-        $dosen1 = $this->session->userdata('dosen1');
-        $dosen2 = $this->session->userdata('dosen2');
-        $reviewer = $this->session->userdata('reviewer');
-        $ketuaPenguji = $this->session->userdata('ketuaPenguji');
-        $sekretarisPenguji = $this->session->userdata('sekretarisPenguji');
-        $jam = $this->session->userdata('jam');
-        $ruang = $this->session->userdata('ruang');
-
-        if ($bln != NULL && $dosen1 == NULL && $dosen2 == NULL && $reviewer == NULL && $ketuaPenguji == NULL && $sekretarisPenguji == NULL) {
-            $this->db->like('tanggal', $bln);
-            return $this->db->get('pendadaran')->result_array();
-        } else if ($bln == NULL && $dosen1 != NULL && $dosen2 == NULL && $reviewer == NULL && $ketuaPenguji == NULL && $sekretarisPenguji == NULL) {
-            $this->db->like('dosen1', $dosen1);
-            return $this->db->get('pendadaran')->result_array();
-        } else if ($bln == NULL && $dosen1 == NULL && $dosen2 != NULL && $reviewer == NULL && $ketuaPenguji == NULL && $sekretarisPenguji == NULL) {
-            $this->db->like('dosen2', $dosen2);
-            return $this->db->get('pendadaran')->result_array();
-        } elseif ($bln == NULL && $dosen1 == NULL && $dosen2 == NULL && $reviewer != NULL && $ketuaPenguji == NULL && $sekretarisPenguji == NULL) {
-            $this->db->like('reviewer', $reviewer);
-            return $this->db->get('pendadaran')->result_array();
-        } elseif ($bln == NULL && $dosen1 == NULL && $dosen2 == NULL && $reviewer == NULL && $ketuaPenguji != NULL && $sekretarisPenguji == NULL) {
-            $this->db->like('ketuaPenguji', $ketuaPenguji);
-            return $this->db->get('pendadaran')->result_array();
-        } elseif ($bln == NULL && $dosen1 == NULL && $dosen2 == NULL && $reviewer == NULL && $ketuaPenguji == NULL && $sekretarisPenguji != NULL) {
-            $this->db->like('sekretarisPenguji', $sekretarisPenguji);
-            return $this->db->get('pendadaran')->result_array();
-        } elseif ($bln != NULL && $dosen1 != NULL && $dosen2 == NULL && $reviewer == NULL && $ketuaPenguji == NULL && $sekretarisPenguji == NULL) {
-            $sql = "SELECT * FROM pendadaran WHERE tanggal LIKE '%" . $bln . "%' AND dosen1 ='" . $dosen1 . "'";
-            return $this->db->query($sql)->result_array();
-        } elseif ($bln != NULL && $dosen1 == NULL && $dosen2 != NULL && $reviewer == NULL && $ketuaPenguji == NULL && $sekretarisPenguji == NULL) {
-            $sql = "SELECT * FROM pendadaran WHERE tanggal LIKE '%" . $bln . "%' AND dosen2 ='" . $dosen2 . "'";
-            return $this->db->query($sql)->result_array();
-        } elseif ($bln != NULL && $dosen1 == NULL && $dosen2 == NULL && $reviewer != NULL && $ketuaPenguji == NULL && $sekretarisPenguji == NULL) {
-            $sql = "SELECT * FROM pendadaran WHERE tanggal LIKE '%" . $bln . "%' AND reviewer ='" . $reviewer . "'";
-            return $this->db->query($sql)->result_array();
-        } elseif ($bln != NULL && $dosen1 == NULL && $dosen2 == NULL && $reviewer == NULL && $ketuaPenguji != NULL && $sekretarisPenguji == NULL) {
-            $sql = "SELECT * FROM pendadaran WHERE tanggal LIKE '%" . $bln . "%' AND ketuaPenguji ='" . $ketuaPenguji . "'";
-            return $this->db->query($sql)->result_array();
-        } elseif ($bln != NULL && $dosen1 == NULL && $dosen2 == NULL && $reviewer == NULL && $ketuaPenguji == NULL && $sekretarisPenguji != NULL) {
-            $sql = "SELECT * FROM pendadaran WHERE tanggal LIKE '%" . $bln . "%' AND reviewer ='" . $reviewer . "'";
-            return $this->db->query($sql)->result_array();
-        } elseif ($bln != NULL && $dosen1 != NULL && $dosen2 != NULL && $reviewer == NULL && $ketuaPenguji == NULL && $sekretarisPenguji != NULL) {
-            $sql = "SELECT * FROM pendadaran WHERE tanggal LIKE '%" . $bln . "%' AND dosen1 ='" . $dosen1 . "' AND dosen2 ='" . $dosen2 . "'";
-            return $this->db->query($sql)->result_array();
-        } elseif ($bln != NULL && $dosen1 != NULL && $dosen2 == NULL && $reviewer != NULL && $ketuaPenguji == NULL && $sekretarisPenguji != NULL) {
-            $sql = "SELECT * FROM pendadaran WHERE tanggal LIKE '%" . $bln . "%' AND dosen1 ='" . $dosen1 . "' AND reviewer ='" . $reviewer . "'";
-            return $this->db->query($sql)->result_array();
-        } elseif ($bln != NULL && $dosen1 != NULL && $dosen2 == NULL && $reviewer == NULL && $ketuaPenguji != NULL && $sekretarisPenguji == NULL) {
-            $sql = "SELECT * FROM pendadaran WHERE tanggal LIKE '%" . $bln . "%' AND dosen1 ='" . $dosen1 . "' AND ketuaPenguji ='" . $ketuaPenguji . "'";
-            return $this->db->query($sql)->result_array();
-        } elseif ($bln != NULL && $dosen1 != NULL && $dosen2 == NULL && $reviewer == NULL && $ketuaPenguji == NULL && $sekretarisPenguji != NULL) {
-            $sql = "SELECT * FROM pendadaran WHERE tanggal LIKE '%" . $bln . "%' AND dosen1 ='" . $dosen1 . "' AND sekretarisPenguji ='" . $sekretarisPenguji . "'";
-            return $this->db->query($sql)->result_array();
-        } elseif ($bln != NULL && $dosen1 == NULL && $dosen2 != NULL && $reviewer != NULL && $ketuaPenguji == NULL && $sekretarisPenguji != NULL) {
-            $sql = "SELECT * FROM pendadaran WHERE tanggal LIKE '%" . $bln . "%' AND dosen2 ='" . $dosen2 . "' AND reviewer ='" . $reviewer . "'";
-            return $this->db->query($sql)->result_array();
-        } elseif ($bln != NULL && $dosen1 == NULL && $dosen2 != NULL && $reviewer == NULL && $ketuaPenguji != NULL && $sekretarisPenguji == NULL) {
-            $sql = "SELECT * FROM pendadaran WHERE tanggal LIKE '%" . $bln . "%' AND dosen2 ='" . $dosen2 . "' AND ketuaPenguji ='" . $ketuaPenguji . "'";
-            return $this->db->query($sql)->result_array();
-        } elseif ($bln != NULL && $dosen1 == NULL && $dosen2 != NULL && $reviewer == NULL && $ketuaPenguji == NULL && $sekretarisPenguji != NULL) {
-            $sql = "SELECT * FROM pendadaran WHERE tanggal LIKE '%" . $bln . "%' AND dosen2 ='" . $dosen2 . "' AND sekretarisPenguji ='" . $sekretarisPenguji . "'";
-            return $this->db->query($sql)->result_array();
-        } elseif ($bln == NULL && $dosen1 != NULL && $dosen2 != NULL && $reviewer == NULL && $ketuaPenguji == NULL && $sekretarisPenguji != NULL) {
-            $sql = "SELECT * FROM pendadaran WHERE dosen1 ='" . $dosen1 . "' AND dosen2 ='" . $dosen2 . "'";
-            return $this->db->query($sql)->result_array();
-        } elseif ($bln == NULL && $dosen1 != NULL && $dosen2 == NULL && $reviewer != NULL && $ketuaPenguji == NULL && $sekretarisPenguji != NULL) {
-            $sql = "SELECT * FROM pendadaran WHERE dosen1 ='" . $dosen1 . "' AND reviewer ='" . $reviewer . "'";
-            return $this->db->query($sql)->result_array();
-        } elseif ($bln == NULL && $dosen1 == NULL && $dosen2 != NULL && $reviewer != NULL && $ketuaPenguji == NULL && $sekretarisPenguji != NULL) {
-            $sql = "SELECT * FROM pendadaran WHERE dosen2 ='" . $dosen2 . "' AND reviewer ='" . $reviewer . "'";
-            return $this->db->query($sql)->result_array();
-        } elseif ($bln == NULL && $dosen1 != NULL && $dosen2 != NULL && $reviewer != NULL && $ketuaPenguji == NULL && $sekretarisPenguji != NULL) {
-            $sql = "SELECT * FROM pendadaran WHERE dosen1 ='" . $dosen1 . "' AND dosen2 ='" . $dosen2 . "'AND reviewer ='" . $reviewer . "'";
-            return $this->db->query($sql)->result_array();
-        } else {
-            $sql = "SELECT * FROM pendadaran WHERE tanggal LIKE '%" . $bln . "%' AND dosen1 ='" . $dosen1 . "'AND dosen2 ='" . $dosen2 . "'AND reviewer ='" . $reviewer . "'AND ketuaPenguji = '" . $reviewer . "'AND sekretarisPenguji = '" . $reviewer . "'";
-            return $this->db->query($sql)->result_array();
-        }
+//        $bln = $this->session->userdata('bulan');
+//        $dosen1 = $this->session->userdata('dosen1');
+//        $dosen2 = $this->session->userdata('dosen2');
+//        $reviewer = $this->session->userdata('reviewer');
+//        $ketuaPenguji = $this->session->userdata('ketuaPenguji');
+//        $sekretarisPenguji = $this->session->userdata('sekretarisPenguji');
+//        $jam = $this->session->userdata('jam');
+//        $ruang = $this->session->userdata('ruang');
+//
+//        if ($bln != NULL && $dosen1 == NULL && $dosen2 == NULL && $reviewer == NULL && $ketuaPenguji == NULL && $sekretarisPenguji == NULL && $jam == NULL && $ruang == NULL) {
+//            $this->db->like('tanggal', $bln);
+//            return $this->db->get('pendadaran')->result_array();
+//        } else if ($bln == NULL && $dosen1 != NULL && $dosen2 == NULL && $reviewer == NULL && $ketuaPenguji == NULL && $sekretarisPenguji == NULL && $jam == NULL && $ruang == NULL) {
+//            $this->db->like('dosen1', $dosen1);
+//            return $this->db->get('pendadaran')->result_array();
+//        } else if ($bln == NULL && $dosen1 == NULL && $dosen2 != NULL && $reviewer == NULL && $ketuaPenguji == NULL && $sekretarisPenguji == NULL && $jam == NULL && $ruang == NULL) {
+//            $this->db->like('dosen2', $dosen2);
+//            return $this->db->get('pendadaran')->result_array();
+//        } elseif ($bln == NULL && $dosen1 == NULL && $dosen2 == NULL && $reviewer != NULL && $ketuaPenguji == NULL && $sekretarisPenguji == NULL && $jam == NULL && $ruang == NULL) {
+//            $this->db->like('reviewer', $reviewer);
+//            return $this->db->get('pendadaran')->result_array();
+//        } elseif ($bln == NULL && $dosen1 == NULL && $dosen2 == NULL && $reviewer == NULL && $ketuaPenguji != NULL && $sekretarisPenguji == NULL && $jam == NULL && $ruang == NULL) {
+//            $this->db->like('ketuaPenguji', $ketuaPenguji);
+//            return $this->db->get('pendadaran')->result_array();
+//        } elseif ($bln == NULL && $dosen1 == NULL && $dosen2 == NULL && $reviewer == NULL && $ketuaPenguji == NULL && $sekretarisPenguji != NULL && $jam == NULL && $ruang == NULL) {
+//            $this->db->like('sekretarisPenguji', $sekretarisPenguji);
+//            return $this->db->get('pendadaran')->result_array();
+//        } elseif ($bln == NULL && $dosen1 == NULL && $dosen2 == NULL && $reviewer == NULL && $ketuaPenguji == NULL && $sekretarisPenguji == NULL && $jam != NULL && $ruang == NULL) {
+//            $this->db->like('durasi', $jam);
+//            return $this->db->get('pendadaran')->result_array();
+//        } elseif ($bln == NULL && $dosen1 == NULL && $dosen2 == NULL && $reviewer == NULL && $ketuaPenguji == NULL && $sekretarisPenguji == NULL && $jam == NULL && $ruang != NULL) {
+//            $this->db->like('ruangan', $ruang);
+//            return $this->db->get('pendadaran')->result_array();
+//        } elseif ($bln != NULL && $dosen1 != NULL && $dosen2 == NULL && $reviewer == NULL && $ketuaPenguji == NULL && $sekretarisPenguji == NULL && $jam == NULL && $ruang == NULL) {
+//            $sql = "SELECT * FROM pendadaran WHERE tanggal LIKE '%" . $bln . "%' AND dosen1 ='" . $dosen1 . "'";
+//            return $this->db->query($sql)->result_array();
+//        } elseif ($bln != NULL && $dosen1 == NULL && $dosen2 != NULL && $reviewer == NULL && $ketuaPenguji == NULL && $sekretarisPenguji == NULL && $jam == NULL && $ruang == NULL) {
+//            $sql = "SELECT * FROM pendadaran WHERE tanggal LIKE '%" . $bln . "%' AND dosen2 ='" . $dosen2 . "'";
+//            return $this->db->query($sql)->result_array();
+//        } elseif ($bln != NULL && $dosen1 == NULL && $dosen2 == NULL && $reviewer != NULL && $ketuaPenguji == NULL && $sekretarisPenguji == NULL && $jam == NULL && $ruang == NULL) {
+//            $sql = "SELECT * FROM pendadaran WHERE tanggal LIKE '%" . $bln . "%' AND reviewer ='" . $reviewer . "'";
+//            return $this->db->query($sql)->result_array();
+//        } elseif ($bln != NULL && $dosen1 == NULL && $dosen2 == NULL && $reviewer == NULL && $ketuaPenguji != NULL && $sekretarisPenguji == NULL && $jam == NULL && $ruang == NULL) {
+//            $sql = "SELECT * FROM pendadaran WHERE tanggal LIKE '%" . $bln . "%' AND ketuaPenguji ='" . $ketuaPenguji . "'";
+//            return $this->db->query($sql)->result_array();
+//        } elseif ($bln != NULL && $dosen1 == NULL && $dosen2 == NULL && $reviewer == NULL && $ketuaPenguji == NULL && $sekretarisPenguji != NULL && $jam == NULL && $ruang == NULL) {
+//            $sql = "SELECT * FROM pendadaran WHERE tanggal LIKE '%" . $bln . "%' AND reviewer ='" . $reviewer . "'";
+//            return $this->db->query($sql)->result_array();
+//        } elseif ($bln != NULL && $dosen1 == NULL && $dosen2 == NULL && $reviewer == NULL && $ketuaPenguji == NULL && $sekretarisPenguji == NULL && $jam != NULL && $ruang == NULL) {
+//            $sql = "SELECT * FROM pendadaran WHERE tanggal LIKE '%" . $bln . "%' AND durasi ='" . $jam . "'";
+//            return $this->db->query($sql)->result_array();
+//        } elseif ($bln != NULL && $dosen1 == NULL && $dosen2 == NULL && $reviewer == NULL && $ketuaPenguji == NULL && $sekretarisPenguji == NULL && $jam == NULL && $ruang != NULL) {
+//            $sql = "SELECT * FROM pendadaran WHERE tanggal LIKE '%" . $bln . "%' AND ruangan ='" . $ruang . "'";
+//            return $this->db->query($sql)->result_array();
+//        } elseif ($bln != NULL && $dosen1 != NULL && $dosen2 != NULL && $reviewer == NULL && $ketuaPenguji == NULL && $sekretarisPenguji != NULL && $jam == NULL && $ruang == NULL) {
+//            $sql = "SELECT * FROM pendadaran WHERE tanggal LIKE '%" . $bln . "%' AND dosen1 ='" . $dosen1 . "' AND dosen2 ='" . $dosen2 . "'";
+//            return $this->db->query($sql)->result_array();
+//        } elseif ($bln != NULL && $dosen1 != NULL && $dosen2 == NULL && $reviewer != NULL && $ketuaPenguji == NULL && $sekretarisPenguji != NULL && $jam == NULL && $ruang == NULL) {
+//            $sql = "SELECT * FROM pendadaran WHERE tanggal LIKE '%" . $bln . "%' AND dosen1 ='" . $dosen1 . "' AND reviewer ='" . $reviewer . "'";
+//            return $this->db->query($sql)->result_array();
+//        } elseif ($bln != NULL && $dosen1 != NULL && $dosen2 == NULL && $reviewer == NULL && $ketuaPenguji != NULL && $sekretarisPenguji == NULL && $jam == NULL && $ruang == NULL) {
+//            $sql = "SELECT * FROM pendadaran WHERE tanggal LIKE '%" . $bln . "%' AND dosen1 ='" . $dosen1 . "' AND ketuaPenguji ='" . $ketuaPenguji . "'";
+//            return $this->db->query($sql)->result_array();
+//        } elseif ($bln != NULL && $dosen1 != NULL && $dosen2 == NULL && $reviewer == NULL && $ketuaPenguji == NULL && $sekretarisPenguji != NULL && $jam == NULL && $ruang == NULL) {
+//            $sql = "SELECT * FROM pendadaran WHERE tanggal LIKE '%" . $bln . "%' AND dosen1 ='" . $dosen1 . "' AND sekretarisPenguji ='" . $sekretarisPenguji . "'";
+//            return $this->db->query($sql)->result_array();
+//        } elseif ($bln != NULL && $dosen1 != NULL && $dosen2 == NULL && $reviewer == NULL && $ketuaPenguji == NULL && $sekretarisPenguji == NULL && $jam != NULL && $ruang == NULL) {
+//            $sql = "SELECT * FROM pendadaran WHERE tanggal LIKE '%" . $bln . "%' AND dosen1 ='" . $dosen1 . "' AND durasi ='" . $jam . "'";
+//            return $this->db->query($sql)->result_array();
+//        } elseif ($bln != NULL && $dosen1 != NULL && $dosen2 == NULL && $reviewer == NULL && $ketuaPenguji == NULL && $sekretarisPenguji == NULL && $jam == NULL && $ruang != NULL) {
+//            $sql = "SELECT * FROM pendadaran WHERE tanggal LIKE '%" . $bln . "%' AND dosen1 ='" . $dosen1 . "' AND ruangan ='" . $ruang . "'";
+//            return $this->db->query($sql)->result_array();
+//        } elseif ($bln != NULL && $dosen1 != NULL && $dosen2 != NULL && $reviewer != NULL && $ketuaPenguji == NULL && $sekretarisPenguji == NULL && $jam == NULL && $ruang == NULL) {
+//            $sql = "SELECT * FROM pendadaran WHERE tanggal LIKE '%" . $bln . "%' AND dosen1 ='" . $dosen1 . "%' AND dosen2 ='" . $dosen2 . "' AND reviewer ='" . $reviewer . "'";
+//            return $this->db->query($sql)->result_array();
+//        } elseif ($bln != NULL && $dosen1 != NULL && $dosen2 != NULL && $reviewer == NULL && $ketuaPenguji != NULL && $sekretarisPenguji == NULL && $jam == NULL && $ruang == NULL) {
+//            $sql = "SELECT * FROM pendadaran WHERE tanggal LIKE '%" . $bln . "%' AND dosen1 ='" . $dosen1 . "%' AND dosen2 ='" . $dosen2 . "' AND ketuaPenguji ='" . $ketuaPenguji . "'";
+//            return $this->db->query($sql)->result_array();
+//        } elseif ($bln != NULL && $dosen1 != NULL && $dosen2 != NULL && $reviewer == NULL && $ketuaPenguji == NULL && $sekretarisPenguji != NULL && $jam == NULL && $ruang == NULL) {
+//            $sql = "SELECT * FROM pendadaran WHERE tanggal LIKE '%" . $bln . "%' AND dosen1 ='" . $dosen1 . "%' AND dosen2 ='" . $dosen2 . "' AND sekretarisPenguji ='" . $sekretarisPenguji . "'";
+//            return $this->db->query($sql)->result_array();
+//        } elseif ($bln != NULL && $dosen1 != NULL && $dosen2 != NULL && $reviewer == NULL && $ketuaPenguji == NULL && $sekretarisPenguji == NULL && $jam != NULL && $ruang == NULL) {
+//            $sql = "SELECT * FROM pendadaran WHERE tanggal LIKE '%" . $bln . "%' AND dosen1 ='" . $dosen1 . "%' AND dosen2 ='" . $dosen2 . "' AND durasi ='" . $jam . "'";
+//            return $this->db->query($sql)->result_array();
+//        } elseif ($bln != NULL && $dosen1 != NULL && $dosen2 != NULL && $reviewer == NULL && $ketuaPenguji == NULL && $sekretarisPenguji == NULL && $jam == NULL && $ruang != NULL) {
+//            $sql = "SELECT * FROM pendadaran WHERE tanggal LIKE '%" . $bln . "%' AND dosen1 ='" . $dosen1 . "%' AND dosen2 ='" . $dosen2 . "' AND ruangan ='" . $ruang . "'";
+//            return $this->db->query($sql)->result_array();
+//        } elseif ($bln != NULL && $dosen1 != NULL && $dosen2 != NULL && $reviewer != NULL && $ketuaPenguji != NULL && $sekretarisPenguji == NULL && $jam == NULL && $ruang == NULL) {
+//            $sql = "SELECT * FROM pendadaran WHERE tanggal LIKE '%" . $bln . "%' AND dosen1 ='" . $dosen1 . "%' AND dosen2 ='" . $dosen2 . "' AND reviewer ='" . $reviewer . "' AND ketuaPenguji ='" . $ketuaPenguji . "'";
+//            return $this->db->query($sql)->result_array();
+//        } elseif ($bln != NULL && $dosen1 != NULL && $dosen2 != NULL && $reviewer != NULL && $ketuaPenguji == NULL && $sekretarisPenguji != NULL && $jam == NULL && $ruang == NULL) {
+//            $sql = "SELECT * FROM pendadaran WHERE tanggal LIKE '%" . $bln . "%' AND dosen1 ='" . $dosen1 . "%' AND dosen2 ='" . $dosen2 . "' AND reviewer ='" . $reviewer . "' AND sekretarisPenguji ='" . $sekretarisPenguji . "'";
+//            return $this->db->query($sql)->result_array();
+//        } elseif ($bln != NULL && $dosen1 != NULL && $dosen2 != NULL && $reviewer != NULL && $ketuaPenguji == NULL && $sekretarisPenguji == NULL && $jam != NULL && $ruang == NULL) {
+//            $sql = "SELECT * FROM pendadaran WHERE tanggal LIKE '%" . $bln . "%' AND dosen1 ='" . $dosen1 . "%' AND dosen2 ='" . $dosen2 . "' AND reviewer ='" . $reviewer . "' AND durasi ='" . $jam . "'";
+//            return $this->db->query($sql)->result_array();
+//        } elseif ($bln != NULL && $dosen1 != NULL && $dosen2 != NULL && $reviewer != NULL && $ketuaPenguji == NULL && $sekretarisPenguji == NULL && $jam == NULL && $ruang != NULL) {
+//            $sql = "SELECT * FROM pendadaran WHERE tanggal LIKE '%" . $bln . "%' AND dosen1 ='" . $dosen1 . "%' AND dosen2 ='" . $dosen2 . "' AND reviewer ='" . $reviewer . "' AND ruangan ='" . $ruang . "'";
+//            return $this->db->query($sql)->result_array();
+//        } elseif ($bln != NULL && $dosen1 != NULL && $dosen2 != NULL && $reviewer != NULL && $ketuaPenguji != NULL && $sekretarisPenguji != NULL && $jam == NULL && $ruang == NULL) {
+//            $sql = "SELECT * FROM pendadaran WHERE tanggal LIKE '%" . $bln . "%' AND dosen1 ='" . $dosen1 . "%' AND dosen2 ='" . $dosen2 . "' AND reviewer ='" . $reviewer . "' AND ketuaPenguji ='" . $ketuaPenguji . "' AND sekretarisPenguji ='" . $sekretarisPenguji . "'";
+//            return $this->db->query($sql)->result_array();
+//        } elseif ($bln != NULL && $dosen1 != NULL && $dosen2 != NULL && $reviewer != NULL && $ketuaPenguji != NULL && $sekretarisPenguji == NULL && $jam != NULL && $ruang == NULL) {
+//            $sql = "SELECT * FROM pendadaran WHERE tanggal LIKE '%" . $bln . "%' AND dosen1 ='" . $dosen1 . "%' AND dosen2 ='" . $dosen2 . "' AND reviewer ='" . $reviewer . "' AND ketuaPenguji ='" . $ketuaPenguji . "' AND durasi ='" . $jam . "'";
+//            return $this->db->query($sql)->result_array();
+//        } elseif ($bln != NULL && $dosen1 != NULL && $dosen2 != NULL && $reviewer != NULL && $ketuaPenguji != NULL && $sekretarisPenguji == NULL && $jam == NULL && $ruang != NULL) {
+//            $sql = "SELECT * FROM pendadaran WHERE tanggal LIKE '%" . $bln . "%' AND dosen1 ='" . $dosen1 . "%' AND dosen2 ='" . $dosen2 . "' AND reviewer ='" . $reviewer . "' AND ketuaPenguji ='" . $ketuaPenguji . "' AND ruangan ='" . $ruang . "'";
+//            return $this->db->query($sql)->result_array();
+//        
+//            
+//            
+//        } elseif ($bln != NULL && $dosen1 == NULL && $dosen2 != NULL && $reviewer != NULL && $ketuaPenguji == NULL && $sekretarisPenguji != NULL && $jam == NULL && $ruang == NULL) {
+//            $sql = "SELECT * FROM pendadaran WHERE tanggal LIKE '%" . $bln . "%' AND dosen2 ='" . $dosen2 . "' AND reviewer ='" . $reviewer . "'";
+//            return $this->db->query($sql)->result_array();
+//        } elseif ($bln != NULL && $dosen1 == NULL && $dosen2 != NULL && $reviewer == NULL && $ketuaPenguji != NULL && $sekretarisPenguji == NULL && $jam == NULL && $ruang == NULL) {
+//            $sql = "SELECT * FROM pendadaran WHERE tanggal LIKE '%" . $bln . "%' AND dosen2 ='" . $dosen2 . "' AND ketuaPenguji ='" . $ketuaPenguji . "'";
+//            return $this->db->query($sql)->result_array();
+//        } elseif ($bln != NULL && $dosen1 == NULL && $dosen2 != NULL && $reviewer == NULL && $ketuaPenguji == NULL && $sekretarisPenguji != NULL && $jam == NULL && $ruang == NULL) {
+//            $sql = "SELECT * FROM pendadaran WHERE tanggal LIKE '%" . $bln . "%' AND dosen2 ='" . $dosen2 . "' AND sekretarisPenguji ='" . $sekretarisPenguji . "'";
+//            return $this->db->query($sql)->result_array();
+//        } elseif ($bln != NULL && $dosen1 == NULL && $dosen2 != NULL && $reviewer == NULL && $ketuaPenguji == NULL && $sekretarisPenguji == NULL && $jam != NULL && $ruang == NULL) {
+//            $sql = "SELECT * FROM pendadaran WHERE tanggal LIKE '%" . $bln . "%' AND dosen2 ='" . $dosen2 . "' AND durasi ='" . $jam . "'";
+//            return $this->db->query($sql)->result_array();
+//        } elseif ($bln != NULL && $dosen1 == NULL && $dosen2 != NULL && $reviewer == NULL && $ketuaPenguji == NULL && $sekretarisPenguji == NULL && $jam == NULL && $ruang != NULL) {
+//            $sql = "SELECT * FROM pendadaran WHERE tanggal LIKE '%" . $bln . "%' AND dosen2 ='" . $dosen2 . "' AND ruangan ='" . $ruang . "'";
+//            return $this->db->query($sql)->result_array();
+//        } elseif ($bln == NULL && $dosen1 != NULL && $dosen2 != NULL && $reviewer == NULL && $ketuaPenguji == NULL && $sekretarisPenguji != NULL) {
+//            $sql = "SELECT * FROM pendadaran WHERE dosen1 ='" . $dosen1 . "' AND dosen2 ='" . $dosen2 . "'";
+//            return $this->db->query($sql)->result_array();
+//        } elseif ($bln == NULL && $dosen1 != NULL && $dosen2 == NULL && $reviewer != NULL && $ketuaPenguji == NULL && $sekretarisPenguji != NULL) {
+//            $sql = "SELECT * FROM pendadaran WHERE dosen1 ='" . $dosen1 . "' AND reviewer ='" . $reviewer . "'";
+//            return $this->db->query($sql)->result_array();
+//        } elseif ($bln == NULL && $dosen1 == NULL && $dosen2 != NULL && $reviewer != NULL && $ketuaPenguji == NULL && $sekretarisPenguji != NULL) {
+//            $sql = "SELECT * FROM pendadaran WHERE dosen2 ='" . $dosen2 . "' AND reviewer ='" . $reviewer . "'";
+//            return $this->db->query($sql)->result_array();
+//        } elseif ($bln == NULL && $dosen1 != NULL && $dosen2 != NULL && $reviewer != NULL && $ketuaPenguji == NULL && $sekretarisPenguji != NULL) {
+//            $sql = "SELECT * FROM pendadaran WHERE dosen1 ='" . $dosen1 . "' AND dosen2 ='" . $dosen2 . "'AND reviewer ='" . $reviewer . "'";
+//            return $this->db->query($sql)->result_array();
+//        } else {
+//            $sql = "SELECT * FROM pendadaran WHERE tanggal LIKE '%" . $bln . "%' AND dosen1 ='" . $dosen1 . "'AND dosen2 ='" . $dosen2 . "'AND reviewer ='" . $reviewer . "'AND ketuaPenguji = '" . $reviewer . "'AND sekretarisPenguji = '" . $reviewer . "'";
+//            return $this->db->query($sql)->result_array();
+//        }
     }
 
-    public function getJumlahReport() {
-        return count($this->getPendadaranReport());
+    public function getJumlahReport($statement) {
+        return count($this->getPendadaranReport($statement));
     }
 
 }

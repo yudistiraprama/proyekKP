@@ -91,7 +91,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="ruang">Ruangan</label>
-                                    <select class="form-control" id="reviewer" name="reviewer">
+                                    <select class="form-control" id="ruang" name="ruang">
                                         <option value="">-</option>
                                         <?php foreach ($ruangan as $ds): ?>
                                             <option value="<?= $ds['nama']; ?>"><?= $ds['nama']; ?></option>
@@ -217,7 +217,7 @@
                                     <select class="form-control" id="ruang" name="ruang">
                                         <option value="">-</option>
                                         <?php foreach ($ruang as $ds): ?>
-                                            <?php if ($ds['nama'] == $postData['reviewer']): ?>
+                                            <?php if ($ds['nama'] == $postData['ruangan']): ?>
                                                 <option value="<?= $ds['nama']; ?>"selected><?= $ds['nama'] ?></option>
                                             <?php else: ?>
                                                 <option value="<?= $ds['nama'] ?>"><?= $ds['nama']; ?></option>
@@ -230,7 +230,7 @@
                     </table>
                     <a href="<?= base_url() ?>pendadaran" class="btn btn-primary"><i class="fas fa-arrow-left"></i> Kembali</a>
                     <button type="submit" name="cari" class="btn btn-warning"><i class="fas fa-search"></i> Cari</button>   
-                    <a href="<?= base_url(); ?>pendadaran/excel" class="btn btn-success float-right"><i class="fas fa-file-excel"></i> Cetak Exel</a>
+                    <a href="<?= base_url(); ?>pendadaran/excel" class="btn btn-success"><i class="fas fa-file-excel"></i> Cetak Exel</a>
                 </form>
             </div>
         </div>

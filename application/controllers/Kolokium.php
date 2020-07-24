@@ -558,40 +558,39 @@ class Kolokium extends CI_Controller {
 
             $postData = $this->input->post();
 
-//            $dataKolokium = array(
-//                'bulan' => $postData['bulan'],
-//                'dosen1' => $postData['dosen1'],
-//                'dosen2' => $postData['dosen2'],
-//                'reviewer' => $postData['reviewer'],
-//                'jam' => $postData['jam'],
-//                'ruang' => $postData['ruang']
-//            );
-//
-//            $this->session->set_userdata('bulan', $postData['bulan']);
-//            $this->session->set_userdata('dosen1', $postData['dosen1']);
-//            $this->session->set_userdata('dosen2', $postData['dosen2']);
-//            $this->session->set_userdata('reviewer', $postData['reviewer']);
-//            $this->session->set_userdata('jam', $postData['jam']);
-//            $this->session->set_userdata('ruang', $postData['ruang']);
-            $statement = "";
-            if ($postData['bulan'] != '') {
-                $statement = $statement . " AND tanggal LIKE '" . $postData['bulan'] . "'";
+            $statement = '';
+            if ($postData['bulan'] != '' && $statement == '') {
+                $statement = $statement . " tanggal LIKE '%" . $postData['bulan'] . "%'";
+            } elseif ($postData['bulan'] != '' && $statement != '') {
+                $statement = $statement . " AND tanggal LIKE '%" . $postData['bulan'] . "%'";
             }
-            if ($postData['dosen1'] != '') {
+            if ($postData['dosen1'] != '' && $statement == '') {
+                $statement = $statement . " dosen1 = '" . $postData['dosen1'] . "'";
+            } elseif ($postData['dosen1'] != '' && $statement != '') {
                 $statement = $statement . " AND dosen1 = '" . $postData['dosen1'] . "'";
             }
-            if ($postData['dosen2'] != '') {
+            if ($postData['dosen2'] != '' && $statement == '') {
+                $statement = $statement . " dosen2='" . $postData['dosen2'] . "'";
+            } elseif ($postData['dosen2'] != '' && $statement != '') {
                 $statement = $statement . " AND dosen2='" . $postData['dosen2'] . "'";
             }
-            if ($postData['reviewer'] != '') {
+            if ($postData['reviewer'] != '' && $statement == '') {
+                $statement = $statement . " reviewer = '" . $postData['reviewer'] . "'";
+            } elseif ($postData['reviewer'] != '' && $statement != '') {
                 $statement = $statement . " AND reviewer = '" . $postData['reviewer'] . "'";
             }
-            if ($postData['jam'] != '') {
+            if ($postData['jam'] != '' && $statement == '') {
+                $statement = $statement . " durasi = '" . $postData['jam'] . "'";
+            } elseif ($postData['jam'] != '' && $statement != '') {
                 $statement = $statement . " AND durasi = '" . $postData['jam'] . "'";
             }
-            if ($postData['ruang'] != '') {
+            if ($postData['ruang'] != '' && $statement == '') {
+                $statement = $statement . " ruang = '" . $postData['ruang'] . "'";
+            } elseif ($postData['ruang'] != '' && $statement != '') {
                 $statement = $statement . " AND ruang = '" . $postData['ruang'] . "'";
             }
+
+            $this->session->set_userdata('statement', $statement);
             $data['statement'] = $statement;
             $data['kolokium'] = $this->Kolokium_model->getKolokiumReport($statement);
             $data['jumlahData'] = $this->Kolokium_model->getJumlahReport($statement);
@@ -606,7 +605,8 @@ class Kolokium extends CI_Controller {
     }
 
     public function excel() {
-        $data['mahasiswa'] = $this->Kolokium_model->getKolokiumReport();
+        $statement = $this->session->userdata('statement');
+        $data['mahasiswa'] = $this->Kolokium_model->getKolokiumReport($statement);
         require (APPPATH . 'PHPExcel-1.8/Classes/PHPExcel.php');
         require (APPPATH . 'PHPExcel-1.8/Classes/PHPExcel/Writer/Excel2007.php');
 
