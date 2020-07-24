@@ -11,7 +11,7 @@
             </div>
         </div>
     <?php endif; ?>
-
+<?php var_dump($statement);?>
     <?php if ($kolokium == null): ?>
         <div class="row mt-3">
             <div class="col">
@@ -70,7 +70,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="ruang">Ruangan</label>
-                                    <select class="form-control" id="reviewer" name="reviewer">
+                                    <select class="form-control" id="ruang" name="ruang">
                                         <option value="">-</option>
                                         <?php foreach ($ruang as $ds): ?>
                                             <option value="<?= $ds['nama']; ?>"><?= $ds['nama']; ?></option>

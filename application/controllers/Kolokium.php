@@ -447,8 +447,8 @@ class Kolokium extends CI_Controller {
                         }
                     }
                 }
-            }else{
-                 if ($dr['dosen1'] == $dosen1 || $dr['dosen1'] == $reviewer || $dr['reviewer'] == $dosen1 || $dr['reviewer'] == $reviewer) {
+            } else {
+                if ($dr['dosen1'] == $dosen1 || $dr['dosen1'] == $reviewer || $dr['reviewer'] == $dosen1 || $dr['reviewer'] == $reviewer) {
                     if ($dr['tanggal'] == $tanggal) {
                         if ($dr['ruang'] == $ruang) {
                             if ($dr['durasi'] == $durasi) {
@@ -558,19 +558,43 @@ class Kolokium extends CI_Controller {
 
             $postData = $this->input->post();
 
-            $dataKolokium = array(
-                'bulan' => $postData['bulan'],
-                'dosen1' => $postData['dosen1'],
-                'dosen2' => $postData['dosen2'],
-                'reviewer' => $postData['reviewer'],
-                'jam' => $postData['jam'],
-                'ruang' => $postData['ruang']
-            );
-
-            $this->session->set_userdata($dataKolokium);
-
-            $data['kolokium'] = $this->Kolokium_model->getKolokiumReport();
-            $data['jumlahData'] = $this->Kolokium_model->getJumlahReport();
+//            $dataKolokium = array(
+//                'bulan' => $postData['bulan'],
+//                'dosen1' => $postData['dosen1'],
+//                'dosen2' => $postData['dosen2'],
+//                'reviewer' => $postData['reviewer'],
+//                'jam' => $postData['jam'],
+//                'ruang' => $postData['ruang']
+//            );
+//
+//            $this->session->set_userdata('bulan', $postData['bulan']);
+//            $this->session->set_userdata('dosen1', $postData['dosen1']);
+//            $this->session->set_userdata('dosen2', $postData['dosen2']);
+//            $this->session->set_userdata('reviewer', $postData['reviewer']);
+//            $this->session->set_userdata('jam', $postData['jam']);
+//            $this->session->set_userdata('ruang', $postData['ruang']);
+            $statement = "";
+            if ($postData['bulan'] != '') {
+                $statement = $statement . " AND tanggal LIKE '" . $postData['bulan'] . "'";
+            }
+            if ($postData['dosen1'] != '') {
+                $statement = $statement . " AND dosen1 = '" . $postData['dosen1'] . "'";
+            }
+            if ($postData['dosen2'] != '') {
+                $statement = $statement . " AND dosen2='" . $postData['dosen2'] . "'";
+            }
+            if ($postData['reviewer'] != '') {
+                $statement = $statement . " AND reviewer = '" . $postData['reviewer'] . "'";
+            }
+            if ($postData['jam'] != '') {
+                $statement = $statement . " AND durasi = '" . $postData['jam'] . "'";
+            }
+            if ($postData['ruang'] != '') {
+                $statement = $statement . " AND ruang = '" . $postData['ruang'] . "'";
+            }
+            $data['statement'] = $statement;
+            $data['kolokium'] = $this->Kolokium_model->getKolokiumReport($statement);
+            $data['jumlahData'] = $this->Kolokium_model->getJumlahReport($statement);
             if ($data['kolokium'] == NULL) {
                 $this->session->set_flashdata('reportKolokium', 'Data Mahasiwa Tidak Ada');
                 redirect('kolokium/report');
