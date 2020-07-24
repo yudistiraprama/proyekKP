@@ -5,6 +5,7 @@ class Kolokium extends CI_Controller {
     public function __construct() {
         parent::__construct();
         $this->load->model('Kolokium_model');
+        $this->load->model('Pendadaran_model');
         $this->load->model('Mahasiswa_model');
         $this->load->model('Dosen_model');
         $this->load->library('form_validation');
@@ -239,9 +240,15 @@ class Kolokium extends CI_Controller {
         }
     }
 
-    public function hapus($id) {
-        $this->Kolokium_model->hapusJadwalKolokium($id);
-        $this->session->set_flashdata('flash', 'Dihapus');
+   public function hapus($id) {
+        $data['kolokium'] = $this->Kolokium_model->getKolokiumByID($id);
+        $pendadaran = $this->Pendadaran_model->getPendadaranByNIM($data['kolokium']['nim']);
+        if ($pendadaran != null) {
+            $this->session->set_flashdata('gagal', 'Telah terdaftar untuk pendadaran');
+        } else {
+            $this->Kolokium_model->hapusJadwalKolokium($id);
+            $this->session->set_flashdata('flash', 'Dihapus');
+        }
         redirect('kolokium');
     }
 

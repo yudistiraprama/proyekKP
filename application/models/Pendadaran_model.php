@@ -34,6 +34,10 @@ class Pendadaran_model extends CI_model {
         $this->db->delete('pendadaran');
     }
 
+    public function getPendadaranByNIM($nim) {
+        return $this->db->get_where('pendadaran', ['nim' => $nim])->row_array();
+    }
+
     public function getPendadaranByID($id) {
         return $this->db->get_where('pendadaran', ['id' => $id])->row_array();
     }
