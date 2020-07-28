@@ -112,147 +112,18 @@ class Kolokium_model extends CI_model {
         $this->db->or_where('durasi', $durasi);
         return $this->db->get('kolokium')->result_array();
     }
+    
+    public function cekStatusRuangEdit2($tanggal,$durasi,$ruang){
+        $this->db->where('tanggal',$tanggal);
+        $this->db->where('durasi',$durasi);
+        $this->db->where('ruang',$ruang);
+        return $this->db->get('kolokium')->result_array();
+    }
 
     public function getKolokiumReport($statement) {
         $query = " SELECT * FROM kolokium WHERE " . $statement;
 
         return $this->db->query($query)->result_array();
-
-//        $bln = $postData['bulan'];
-//        $dosen1 = $postData['dosen1'];
-//        $dosen2 = $postData['dosen2'];
-//        $reviewer = $postData['reviewer'];
-//
-//        if ($bln != NULL && $dosen1 == NULL && $dosen2 == NULL && $reviewer == NULL && $jam == NULL && $ruang == NULL) {
-//            $this->db->like('tanggal', $bln);
-//            return $this->db->get('kolokium')->result_array();
-//        } else if ($bln == NULL && $dosen1 != NULL && $dosen2 == NULL && $reviewer == NULL && $jam == NULL && $ruang == NULL) {
-//            $this->db->like('dosen1', $dosen1);
-//            return $this->db->get('kolokium')->result_array();
-//        } else if ($bln == NULL && $dosen1 == NULL && $dosen2 != NULL && $reviewer == NULL && $jam == NULL && $ruang == NULL) {
-//            $this->db->like('dosen2', $dosen2);
-//            return $this->db->get('kolokium')->result_array();
-//        } elseif ($bln == NULL && $dosen1 == NULL && $dosen2 == NULL && $reviewer != NULL && $jam == NULL && $ruang == NULL) {
-//            $this->db->like('reviewer', $reviewer);
-//            return $this->db->get('kolokium')->result_array();
-//        } elseif ($bln == NULL && $dosen1 == NULL && $dosen2 == NULL && $reviewer == NULL && $jam != NULL && $ruang == NULL) {
-//            $this->db->like('durasi', $jam);
-//            return $this->db->get('kolokium')->result_array();
-//        } elseif ($bln == NULL && $dosen1 == NULL && $dosen2 == NULL && $reviewer == NULL && $jam == NULL && $ruang != NULL) {
-//            $this->db->like('ruangan', $ruang);
-//            return $this->db->get('kolokium')->result_array();
-//        } elseif ($bln != NULL && $dosen1 != NULL && $dosen2 == NULL && $reviewer == NULL && $jam == NULL && $ruang == NULL) {
-//            $sql = "SELECT * FROM kolokium WHERE tanggal LIKE '%" . $bln . "%' AND dosen1 ='" . $dosen1 . "'";
-//            return $this->db->query($sql)->result_array();
-//        } elseif ($bln != NULL && $dosen1 == NULL && $dosen2 != NULL && $reviewer == NULL && $jam == NULL && $ruang == NULL) {
-//            $sql = "SELECT * FROM kolokium WHERE tanggal LIKE '%" . $bln . "%' AND dosen2 ='" . $dosen2 . "'";
-//            return $this->db->query($sql)->result_array();
-//        } elseif ($bln != NULL && $dosen1 == NULL && $dosen2 == NULL && $reviewer != NULL && $jam == NULL && $ruang == NULL) {
-//            $sql = "SELECT * FROM kolokium WHERE tanggal LIKE '%" . $bln . "%' AND reviewer ='" . $reviewer . "'";
-//            return $this->db->query($sql)->result_array();
-//        } elseif ($bln != NULL && $dosen1 == NULL && $dosen2 == NULL && $reviewer == NULL && $jam != NULL && $ruang == NULL) {
-//            $sql = "SELECT * FROM kolokium WHERE tanggal LIKE '%" . $bln . "%' AND durasi ='" . $jam . "'";
-//            return $this->db->query($sql)->result_array();
-//        } elseif ($bln != NULL && $dosen1 == NULL && $dosen2 == NULL && $reviewer == NULL && $jam == NULL && $ruang != NULL) {
-//            $sql = "SELECT * FROM kolokium WHERE tanggal LIKE '%" . $bln . "%' AND ruangan ='" . $ruang . "'";
-//            return $this->db->query($sql)->result_array();
-//        } elseif ($bln != NULL && $dosen1 != NULL && $dosen2 != NULL && $reviewer == NULL && $jam == NULL && $ruang == NULL) {
-//            $sql = "SELECT * FROM kolokium WHERE tanggal LIKE '%" . $bln . "%' AND dosen1 ='" . $dosen1 . "' AND dosen2 ='" . $dosen2 . "'";
-//            return $this->db->query($sql)->result_array();
-//        } elseif ($bln != NULL && $dosen1 != NULL && $dosen2 == NULL && $reviewer != NULL && $jam == NULL && $ruang == NULL) {
-//            $sql = "SELECT * FROM kolokium WHERE tanggal LIKE '%" . $bln . "%' AND dosen1 ='" . $dosen1 . "' AND reviewer ='" . $reviewer . "'";
-//            return $this->db->query($sql)->result_array();
-//        } elseif ($bln != NULL && $dosen1 != NULL && $dosen2 == NULL && $reviewer == NULL && $jam != NULL && $ruang == NULL) {
-//            $sql = "SELECT * FROM kolokium WHERE tanggal LIKE '%" . $bln . "%' AND dosen1 ='" . $dosen1 . "' AND durasi ='" . $jam . "'";
-//            return $this->db->query($sql)->result_array();
-//        } elseif ($bln != NULL && $dosen1 != NULL && $dosen2 == NULL && $reviewer == NULL && $jam == NULL && $ruang != NULL) {
-//            $sql = "SELECT * FROM kolokium WHERE tanggal LIKE '%" . $bln . "%' AND dosen1 ='" . $dosen1 . "' AND ruangan ='" . $ruang . "'";
-//            return $this->db->query($sql)->result_array();
-//        } elseif ($bln != NULL && $dosen1 == NULL && $dosen2 != NULL && $reviewer != NULL && $jam == NULL && $ruang == NULL) {
-//            $sql = "SELECT * FROM kolokium WHERE tanggal LIKE '%" . $bln . "%' AND dosen2 ='" . $dosen2 . "' AND reviewer ='" . $reviewer . "'";
-//            return $this->db->query($sql)->result_array();
-//        } elseif ($bln != NULL && $dosen1 == NULL && $dosen2 != NULL && $reviewer == NULL && $jam != NULL && $ruang == NULL) {
-//            $sql = "SELECT * FROM kolokium WHERE tanggal LIKE '%" . $bln . "%' AND dosen2 ='" . $dosen2 . "' AND durasi ='" . $jam . "'";
-//            return $this->db->query($sql)->result_array();
-//        } elseif ($bln != NULL && $dosen1 == NULL && $dosen2 != NULL && $reviewer == NULL && $jam == NULL && $ruang != NULL) {
-//            $sql = "SELECT * FROM kolokium WHERE tanggal LIKE '%" . $bln . "%' AND dosen2 ='" . $dosen2 . "' AND ruangan ='" . $ruang . "'";
-//            return $this->db->query($sql)->result_array();
-//        } elseif ($bln != NULL && $dosen1 == NULL && $dosen2 == NULL && $reviewer != NULL && $jam != NULL && $ruang == NULL) {
-//            $sql = "SELECT * FROM kolokium WHERE tanggal LIKE '%" . $bln . "%' AND reviewer ='" . $reviewer . "' AND durasi ='" . $jam . "'";
-//            return $this->db->query($sql)->result_array();
-//        } elseif ($bln != NULL && $dosen1 == NULL && $dosen2 == NULL && $reviewer != NULL && $jam == NULL && $ruang != NULL) {
-//            $sql = "SELECT * FROM kolokium WHERE tanggal LIKE '%" . $bln . "%' AND reviewer ='" . $reviewer . "' AND ruangan ='" . $ruang . "'";
-//            return $this->db->query($sql)->result_array();
-//        } elseif ($bln != NULL && $dosen1 == NULL && $dosen2 == NULL && $reviewer == NULL && $jam != NULL && $ruang != NULL) {
-//            $sql = "SELECT * FROM kolokium WHERE tanggal LIKE '%" . $bln . "%' AND ruangan ='" . $reviewer . "' AND durasi ='" . $jam . "'";
-//            return $this->db->query($sql)->result_array();
-//        } elseif ($bln == NULL && $dosen1 != NULL && $dosen2 != NULL && $reviewer == NULL && $jam == NULL && $ruang == NULL) {
-//            $sql = "SELECT * FROM kolokium WHERE dosen1 ='" . $dosen1 . "' AND dosen2 ='" . $dosen2 . "'";
-//            return $this->db->query($sql)->result_array();
-//        } elseif ($bln == NULL && $dosen1 != NULL && $dosen2 == NULL && $reviewer != NULL && $jam == NULL && $ruang == NULL) {
-//            $sql = "SELECT * FROM kolokium WHERE dosen1 ='" . $dosen1 . "' AND reviewer ='" . $reviewer . "'";
-//            return $this->db->query($sql)->result_array();
-//        } elseif ($bln == NULL && $dosen1 != NULL && $dosen2 == NULL && $reviewer == NULL && $jam != NULL && $ruang == NULL) {
-//            $sql = "SELECT * FROM kolokium WHERE dosen1 ='" . $dosen1 . "' AND durasi ='" . $jam . "'";
-//            return $this->db->query($sql)->result_array();
-//        } elseif ($bln == NULL && $dosen1 != NULL && $dosen2 == NULL && $reviewer == NULL && $jam == NULL && $ruang != NULL) {
-//            $sql = "SELECT * FROM kolokium WHERE dosen1 ='" . $dosen1 . "' AND ruangan ='" . $ruang . "'";
-//            return $this->db->query($sql)->result_array();
-//        } elseif ($bln == NULL && $dosen1 == NULL && $dosen2 != NULL && $reviewer != NULL && $jam == NULL && $ruang == NULL) {
-//            $sql = "SELECT * FROM kolokium WHERE dosen2 ='" . $dosen2 . "' AND reviewer ='" . $reviewer . "'";
-//            return $this->db->query($sql)->result_array();
-//        } elseif ($bln == NULL && $dosen1 == NULL && $dosen2 != NULL && $reviewer == NULL && $jam != NULL && $ruang == NULL) {
-//            $sql = "SELECT * FROM kolokium WHERE dosen2 ='" . $dosen2 . "' AND durasi ='" . $jam . "'";
-//            return $this->db->query($sql)->result_array();
-//        } elseif ($bln == NULL && $dosen1 == NULL && $dosen2 != NULL && $reviewer == NULL && $jam == NULL && $ruang != NULL) {
-//            $sql = "SELECT * FROM kolokium WHERE dosen2 ='" . $dosen2 . "' AND ruangan ='" . $ruang . "'";
-//            return $this->db->query($sql)->result_array();
-//        } elseif ($bln == NULL && $dosen1 == NULL && $dosen2 == NULL && $reviewer != NULL && $jam != NULL && $ruang == NULL) {
-//            $sql = "SELECT * FROM kolokium WHERE reviewer ='" . $reviewer . "' AND durasi ='" . $jam . "'";
-//            return $this->db->query($sql)->result_array();
-//        } elseif ($bln == NULL && $dosen1 == NULL && $dosen2 == NULL && $reviewer != NULL && $jam == NULL && $ruang != NULL) {
-//            $sql = "SELECT * FROM kolokium WHERE reviewer ='" . $reviewer . "' AND ruangan ='" . $ruang . "'";
-//            return $this->db->query($sql)->result_array();
-//        } elseif ($bln == NULL && $dosen1 == NULL && $dosen2 == NULL && $reviewer == NULL && $jam != NULL && $ruang != NULL) {
-//            $sql = "SELECT * FROM kolokium WHERE durasi ='" . $jam . "' AND ruang ='" . $ruang . "'";
-//            return $this->db->query($sql)->result_array();
-//        } elseif ($bln == NULL && $dosen1 != NULL && $dosen2 != NULL && $reviewer != NULL && $jam == NULL && $ruang == NULL) {
-//            $sql = "SELECT * FROM kolokium WHERE dosen1 ='" . $dosen1 . "' AND dosen2 ='" . $dosen2 . "'AND reviewer ='" . $reviewer . "'";
-//            return $this->db->query($sql)->result_array();
-//        } elseif ($bln == NULL && $dosen1 != NULL && $dosen2 != NULL && $reviewer == NULL && $jam != NULL && $ruang == NULL) {
-//            $sql = "SELECT * FROM kolokium WHERE dosen1 ='" . $dosen1 . "' AND dosen2 ='" . $dosen2 . "'AND durasi ='" . $jam . "'";
-//            return $this->db->query($sql)->result_array();
-//        } elseif ($bln == NULL && $dosen1 != NULL && $dosen2 != NULL && $reviewer == NULL && $jam == NULL && $ruang != NULL) {
-//            $sql = "SELECT * FROM kolokium WHERE dosen1 ='" . $dosen1 . "' AND dosen2 ='" . $dosen2 . "'AND ruangan ='" . $ruang . "'";
-//            return $this->db->query($sql)->result_array();
-//        } elseif ($bln == NULL && $dosen1 == NULL && $dosen2 != NULL && $reviewer != NULL && $jam != NULL && $ruang == NULL) {
-//            $sql = "SELECT * FROM kolokium WHERE dosen2 ='" . $dosen2 . "' AND reviewer ='" . $reviewer . "'AND durasi ='" . $jam . "'";
-//            return $this->db->query($sql)->result_array();
-//        } elseif ($bln == NULL && $dosen1 == NULL && $dosen2 != NULL && $reviewer != NULL && $jam == NULL && $ruang != NULL) {
-//            $sql = "SELECT * FROM kolokium WHERE dosen2 ='" . $dosen2 . "' AND reviewer ='" . $reviewer . "'AND ruangan ='" . $ruang . "'";
-//            return $this->db->query($sql)->result_array();
-//        } elseif ($bln == NULL && $dosen1 == NULL && $dosen2 == NULL && $reviewer != NULL && $jam != NULL && $ruang != NULL) {
-//            $sql = "SELECT * FROM kolokium WHERE reviewer ='" . $reviewer . "' AND durasi ='" . $jam . "'AND ruangan ='" . $ruang . "'";
-//            return $this->db->query($sql)->result_array();
-//        } elseif ($bln != NULL && $dosen1 != NULL && $dosen2 != NULL && $reviewer != NULL && $jam == NULL && $ruang == NULL) {
-//            $sql = "SELECT * FROM kolokium WHERE tanggal ='" . $bln . "' AND dosen1 ='" . $dosen1 . "'AND dosen2 ='" . $dosen2 . "' AND reviewer ='" . $reviewer . "'";
-//            return $this->db->query($sql)->result_array();
-//        } elseif ($bln != NULL && $dosen1 != NULL && $dosen2 != NULL && $reviewer == NULL && $jam == NULL && $ruang != NULL) {
-//            $sql = "SELECT * FROM kolokium WHERE tanggal ='" . $bln . "' AND dosen1 ='" . $dosen1 . "'AND dosen2 ='" . $dosen2 . "' AND ruangan ='" . $ruang . "'";
-//            return $this->db->query($sql)->result_array();
-//        } elseif ($bln != NULL && $dosen1 != NULL && $dosen2 != NULL && $reviewer == NULL && $jam != NULL && $ruang == NULL) {
-//            $sql = "SELECT * FROM kolokium WHERE tanggal ='" . $bln . "' AND dosen1 ='" . $dosen1 . "'AND dosen2 ='" . $dosen2 . "' AND durasi ='" . $jam . "'";
-//            return $this->db->query($sql)->result_array();
-//        } elseif ($bln != NULL && $dosen1 != NULL && $dosen2 != NULL && $reviewer != NULL && $jam != NULL && $ruang == NULL) {
-//            $sql = "SELECT * FROM kolokium WHERE tanggal ='" . $bln . "' AND dosen1 ='" . $dosen1 . "'AND dosen2 ='" . $dosen2 . "' AND reviewer ='" . $reviewer . "'AND durasi ='" . $jam . "'";
-//            return $this->db->query($sql)->result_array();
-//        } elseif ($bln != NULL && $dosen1 != NULL && $dosen2 != NULL && $reviewer != NULL && $jam == NULL && $ruang != NULL) {
-//            $sql = "SELECT * FROM kolokium WHERE tanggal ='" . $bln . "' AND dosen1 ='" . $dosen1 . "'AND dosen2 ='" . $dosen2 . "' AND reviewer ='" . $reviewer . "'AND ruangan ='" . $ruang . "'";
-//            return $this->db->query($sql)->result_array();
-//        } else {
-//            $sql = "SELECT * FROM kolokium WHERE tanggal LIKE '%" . $bln . "%' AND dosen1 ='" . $dosen1 . "'AND dosen2 ='" . $dosen2 . "'AND reviewer ='" . $reviewer . "'AND durasi ='" . $jam . "'AND ruangan ='" . $ruang . "'";
-//            return $this->db->query($sql)->result_array();
-//        }
     }
 
     public function getJumlahReport($statement) {
