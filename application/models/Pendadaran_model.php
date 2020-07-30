@@ -83,9 +83,9 @@ class Pendadaran_model extends CI_model {
         return $this->db->get_where('pendadaran', ['nim' => $nim])->row_array();
     }
 
-    public function cekStatusRuang($tanggal, $durasi) {
+    public function cekStatusRuang($tanggal) {
         $this->db->where('tanggal', $tanggal);
-        $this->db->where('durasi', $durasi);
+//        $this->db->where('durasi', $durasi);
         return $this->db->get('pendadaran')->result_array();
     }
 
@@ -98,6 +98,11 @@ class Pendadaran_model extends CI_model {
     public function cekStatusRuangEdit2($tanggal,$durasi,$ruang){
         $this->db->where('tanggal',$tanggal);
         $this->db->where('durasi',$durasi);
+        $this->db->where('ruang',$ruang);
+        return $this->db->get('pendadaran')->result_array();
+    }
+    public function cekStatusRuangEdit3($tanggal,$ruang){
+        $this->db->where('tanggal',$tanggal);
         $this->db->where('ruang',$ruang);
         return $this->db->get('pendadaran')->result_array();
     }

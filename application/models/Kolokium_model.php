@@ -101,9 +101,9 @@ class Kolokium_model extends CI_model {
 //        return $this->db->get('kolokium')->result_array();
 //    }
 
-    public function cekStatusRuang($tanggal, $durasi) {
+    public function cekStatusRuang($tanggal) {
         $this->db->where('tanggal', $tanggal);
-        $this->db->where('durasi', $durasi);
+//        $this->db->where('durasi', $durasi);
         return $this->db->get('kolokium')->result_array();
     }
 
@@ -116,6 +116,12 @@ class Kolokium_model extends CI_model {
     public function cekStatusRuangEdit2($tanggal,$durasi,$ruang){
         $this->db->where('tanggal',$tanggal);
         $this->db->where('durasi',$durasi);
+        $this->db->where('ruang',$ruang);
+        return $this->db->get('kolokium')->result_array();
+    }
+    
+    public function cekStatusRuangEdit3($tanggal,$ruang){
+        $this->db->where('tanggal',$tanggal);
         $this->db->where('ruang',$ruang);
         return $this->db->get('kolokium')->result_array();
     }
