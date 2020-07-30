@@ -419,12 +419,15 @@ class Kolokium extends CI_Controller {
             if ($dr['nim'] == $nim) {
                 if ($dr['tanggal'] == $tanggal && $dr['durasi'] == $durasi) {
                     if ($dataRuang2 != NULL) {
-                        foreach($dataRuang2 as $dr2){
-                            $detailBentrok = $detailBentrok . " dengan NIM " . $dr2['nim'] . " dosbing 1 = " . $dr2['dosen1'] . " dosbing 2 = " . $dr2['dosen2'] . " reviewer = "
-                                    . $dr2['reviewer'] . " pada tanggal " . $dr2['tanggal'] . " Jam = " . $dr2['durasi'] . " di ruang " . $dr2['ruang'] . "";
-                            $detail = $detailBentrok;
+                        foreach ($dataRuang2 as $dr2) {
+                            $durasiPendadaranCut = substr($dr2['durasi'], 0, 2);
+                            $durasiPendadaranInt = (int) $durasiPendadaranCut;
+                            if ($durasiPendadaranInt == $durasiInt || $durasiPendadaranInt - 1 == $durasiInt || $durasiPendadaranInt + 1 == $durasiInt) {
+                                $detailBentrok = $detailBentrok . " dengan NIM " . $dr2['nim'] . " dosbing 1 = " . $dr2['dosen1'] . " dosbing 2 = " . $dr2['dosen2'] . " reviewer = "
+                                        . $dr2['reviewer'] . " pada tanggal " . $dr2['tanggal'] . " Jam = " . $dr2['durasi'] . " di ruang " . $dr2['ruang'] . "";
+                                $detail = $detailBentrok;
+                            }
                         }
-                        return $detail;
                     }
                 }
             } elseif ($dr['dosen1'] == $dosen1 || $dr['dosen1'] == $dosen2 || $dr['dosen1'] == $reviewer ||
@@ -525,12 +528,12 @@ class Kolokium extends CI_Controller {
             if ($dr['nim'] == $nim) {
                 if ($dr['tanggal'] == $tanggal && $dr['durasi'] == $durasi) {
                     if ($dataRuang2 != NULL) {
-                        foreach($dataRuang2 as $dr2){
+                        foreach ($dataRuang2 as $dr2) {
                             $detailBentrok = $detailBentrok . " dengan NIM " . $dr2['nim'] . " dosbing 1 = " . $dr2['dosen1'] . " dosbing 2 = " . $dr2['dosen2'] . " reviewer = "
                                     . $dr2['reviewer'] . " pada tanggal " . $dr2['tanggal'] . " Jam = " . $dr2['durasi'] . " di ruang " . $dr2['ruang'] . "";
                             $detail = $detailBentrok;
                         }
-                        
+
                         return $detail;
                     }
                 }
@@ -571,12 +574,14 @@ class Kolokium extends CI_Controller {
                     if ($durasiInt2 == $durasiInt || $durasiInt2 - 1 == $durasiInt || $durasiInt2 + 1 == $durasiInt) {
                         if ($dataPendadaran2 != NULL) {
                             foreach ($dataPendadaran2 as $dp2) {
-                                $detailBentrok2 = $detailBentrok2 . " bentrok dengan NIM =" . $dp2['nim'] . " dosbing1 = " . $dp2['dosen1'] . " dosbing2 = " . $dp2['dosen2'] . " Ketua Penguji = "
-                                        . $dp2['ketuaPenguji'] . " Sekrterais Penguji = " . $dp2['sekretarisPenguji'] . " Anggota Penguji = " . $dp2['anggotaPenguji'] . " pada tanggal " . $dp2['tanggal'] . " Jam = " . $dp2['durasi'] . " ruang = " . $dp2['ruang'] . "";
-                                $detail = $detailBentrok2;
+                                $durasiPendadaranCut = substr($dr2['durasi'], 0, 2);
+                                $durasiPendadaranInt = (int) $durasiPendadaranCut;
+                                if ($durasiPendadaranInt == $durasiInt || $durasiPendadaranInt - 1 == $durasiInt || $durasiPendadaranInt + 1 == $durasiInt) {
+                                    $detailBentrok = $detailBentrok . " dengan NIM " . $dr2['nim'] . " dosbing 1 = " . $dr2['dosen1'] . " dosbing 2 = " . $dr2['dosen2'] . " reviewer = "
+                                            . $dr2['reviewer'] . " pada tanggal " . $dr2['tanggal'] . " Jam = " . $dr2['durasi'] . " di ruang " . $dr2['ruang'] . "";
+                                    $detail = $detailBentrok;
+                                }
                             }
-
-                            return $detail;
                         }
                     }
                 }

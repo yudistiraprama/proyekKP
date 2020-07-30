@@ -726,11 +726,14 @@ class Pendadaran extends CI_Controller {
             if ($dk['tanggal'] == $tanggal && $durasiInt3 == $durasiInt2 || $durasiInt3 + 1 == $durasiInt2 || $durasiInt3 - 1 == $durasiInt2) {
                 if ($dataKolokium2 != null) {
                     foreach ($dataKolokium2 as $dk2) {
-                        $detailBentrok2 = $detailBentrok2 . " dengan mahasiswa NIM " . $dk2['nim'] . " dosbing 1 =" . $dk2['dosen1'] .
-                                " dosbing 2 =" . $dk2['dosen2'] . " reviewer = " . $dk2['reviewer'] . " tanggal = " . $dk2['tanggal'] . " Jam = " . $dk2['durasi'] . "";
-                        $detail = $detailBentrok2;
+                        $durasiKolokiumCut = substr($dk2['durasi'], 0, 2);
+                        $durasiKolokiumInt = (int) $durasiKolokiumCut;
+                        if ($durasiKolokiumInt == $durasiInt2 || $durasiKolokiumInt + 1 == $durasiInt2 || $durasiKolokiumInt - 1 == $durasiInt2) {
+                            $detailBentrok2 = $detailBentrok2 . " dengan mahasiswa NIM " . $dk2['nim'] . " dosbing 1 =" . $dk2['dosen1'] .
+                                    " dosbing 2 =" . $dk2['dosen2'] . " reviewer = " . $dk2['reviewer'] . " tanggal = " . $dk2['tanggal'] . " Jam = " . $dk2['durasi'] . "";
+                            $detail = $detailBentrok2;
+                        }
                     }
-                    return $detail;
                 }
             } elseif ($dk['dosen1'] == $dosen1 || $dk['dosen1'] == $dosen2 || $dk['dosen1'] == $ketuaPenguji || $dk['dosen1'] == $sekretarisPenguji ||
                     $dk['dosen2'] == $dosen1 || $dk['dosen2'] == $dosen2 || $dk['dosen2'] == $ketuaPenguji || $dk['dosen2'] == $sekretarisPenguji ||
@@ -834,11 +837,14 @@ class Pendadaran extends CI_Controller {
                 if ($durasiInt3 == $durasiInt2 || $durasiInt3 + 1 == $durasiInt2 || $durasiInt3 - 1 == $durasiInt2) {
                     if ($dataKolokium2 != null) {
                         foreach ($dataKolokium2 as $dk2) {
-                            $detailBentrok2 = $detailBentrok2 . " dengan mahasiswa NIM " . $dk2['nim'] . " dosbing 1 =" . $dk2['dosen1'] .
-                                    " dosbing 2 =" . $dk2['dosen2'] . " reviewer = " . $dk2['reviewer'] . " tanggal = " . $dk2['tanggal'] . " Jam = " . $dk2['durasi'] . "";
-                            $detail = $detailBentrok2;
+                            $durasiKolokiumCut = substr($dk2['durasi'], 0, 2);
+                            $durasiKolokiumInt = (int) $durasiKolokiumCut;
+                            if ($durasiKolokiumInt == $durasiInt2 || $durasiKolokiumInt + 1 == $durasiInt2 || $durasiKolokiumInt - 1 == $durasiInt2) {
+                                $detailBentrok2 = $detailBentrok2 . " dengan mahasiswa NIM " . $dk2['nim'] . " dosbing 1 =" . $dk2['dosen1'] .
+                                        " dosbing 2 =" . $dk2['dosen2'] . " reviewer = " . $dk2['reviewer'] . " tanggal = " . $dk2['tanggal'] . " Jam = " . $dk2['durasi'] . "";
+                                $detail = $detailBentrok2;
+                            }
                         }
-                        return $detail;
                     }
                 }
             } elseif ($dk['dosen1'] == $dosen1 || $dk['dosen1'] == $ketuaPenguji || $dk['dosen1'] == $sekretarisPenguji ||
@@ -942,11 +948,14 @@ class Pendadaran extends CI_Controller {
                 if ($durasiInt3 == $durasiInt2 || $durasiInt3 + 1 == $durasiInt2 || $durasiInt3 - 1 == $durasiInt2) {
                     if ($dataKolokium2 != null) {
                         foreach ($dataKolokium2 as $dk2) {
-                            $detailBentrok2 = $detailBentrok2 . " dengan mahasiswa NIM " . $dk2['nim'] . " dosbing 1 =" . $dk2['dosen1'] .
-                                    " dosbing 2 =" . $dk2['dosen2'] . " reviewer = " . $dk2['reviewer'] . " tanggal = " . $dk2['tanggal'] . " Jam = " . $dk2['durasi'] . "";
-                            $detail = $detailBentrok2;
+                            $durasiKolokiumCut = substr($dk2['durasi'], 0, 2);
+                            $durasiKolokiumInt = (int) $durasiKolokiumCut;
+                            if ($durasiKolokiumInt == $durasiInt2 || $durasiKolokiumInt + 1 == $durasiInt2 || $durasiKolokiumInt - 1 == $durasiInt2) {
+                                $detailBentrok2 = $detailBentrok2 . " dengan mahasiswa NIM " . $dk2['nim'] . " dosbing 1 =" . $dk2['dosen1'] .
+                                        " dosbing 2 =" . $dk2['dosen2'] . " reviewer = " . $dk2['reviewer'] . " tanggal = " . $dk2['tanggal'] . " Jam = " . $dk2['durasi'] . "";
+                                $detail = $detailBentrok2;
+                            }
                         }
-                        return $detail;
                     }
                 }
             } elseif ($dk['dosen1'] == $dosen1 || $dk['dosen1'] == $ketuaPenguji || $dk['dosen1'] == $sekretarisPenguji || $dk['dosen1'] == $anggotaPenguji ||
@@ -996,7 +1005,7 @@ class Pendadaran extends CI_Controller {
         $durasiInt = 0;
         $durasiInt2 = (int) $durasiCut2;
         $durasiInt3 = 0;
-        $dataKolokium2 = $this->Kolokium_model->cekStatusRuangEdit3($tanggal,  $ruang);
+        $dataKolokium2 = $this->Kolokium_model->cekStatusRuangEdit3($tanggal, $ruang);
         foreach ($dataRuang as $dr) {
             $durasiCut = substr($dr['durasi'], 0, 2);
             $durasiInt = (int) $durasiCut;
@@ -1052,12 +1061,14 @@ class Pendadaran extends CI_Controller {
                 if ($durasiInt3 == $durasiInt2 || $durasiInt3 + 1 == $durasiInt2 || $durasiInt3 - 1 == $durasiInt2) {
                     if ($dataKolokium2 != null) {
                         foreach ($dataKolokium2 as $dk2) {
-                            $detailBentrok2 = $detailBentrok2 . " dengan mahasiswa NIM " . $dk2['nim'] . " dosbing 1 =" . $dk2['dosen1'] .
-                                    " dosbing 2 =" . $dk2['dosen2'] . " reviewer = " . $dk2['reviewer'] . " tanggal = " . $dk2['tanggal'] . " Jam = " . $dk2['durasi'] . "";
-                            $detail = $detailBentrok2;
-                            return $detail;
+                            $durasiKolokiumCut = substr($dk2['durasi'], 0, 2);
+                            $durasiKolokiumInt = (int) $durasiKolokiumCut;
+                            if ($durasiKolokiumInt == $durasiInt2 || $durasiKolokiumInt + 1 == $durasiInt2 || $durasiKolokiumInt - 1 == $durasiInt2) {
+                                $detailBentrok2 = $detailBentrok2 . " dengan mahasiswa NIM " . $dk2['nim'] . " dosbing 1 =" . $dk2['dosen1'] .
+                                        " dosbing 2 =" . $dk2['dosen2'] . " reviewer = " . $dk2['reviewer'] . " tanggal = " . $dk2['tanggal'] . " Jam = " . $dk2['durasi'] . "";
+                                $detail = $detailBentrok2;
+                            }
                         }
-                        return $detail;
                     }
                 }
             } elseif ($dk['dosen1'] == $dosen1 || $dk['dosen1'] == $dosen2 || $dk['dosen1'] == $ketuaPenguji || $dk['dosen1'] == $sekretarisPenguji || $dk['dosen1'] == $anggotaPenguji ||
@@ -1146,7 +1157,7 @@ class Pendadaran extends CI_Controller {
         if ($this->input->post() == NULL) {
             $data['judul'] = 'Report Jadwal Pendadaran';
             $data['bulan'] = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember',];
-            $data['jam'] = ['07.00-09.00', '09.00-11.00', '11.00-13.00', '13.00-15.00', '15.00-17.00'];
+           $data['jam'] = ['07.00-09.00', '08.00-10.00', '09.00-11.00', '10.00-12.00', '11.00-13.00', '12.00-14.00', '13.00-15.00', '14.00-16.00 ', '15.00-17.00'];
             $data['ruang'] = $this->db->get('ruangan')->result_array();
             $data['dosen'] = $this->Dosen_model->getAllDosen();
             $data['pendadaran'] = NULL;
