@@ -725,6 +725,17 @@ class Kolokium extends CI_Controller {
             }
 
             $this->session->set_userdata('statement', $statement);
+
+            $arraydata = array(
+                'bulan' => $postData['bulan'],
+                'dosen1' => $postData['dosen1'],
+                'dosen2' => $postData['dosen2'],
+                'reviewer' => $postData['reviewer'],
+                'jam' => $postData['jam'],
+                'ruang' => $postData['ruang']
+            );
+            $this->session->set_userdata($arraydata);
+
             $data['statement'] = $statement;
             $data['kolokium'] = $this->Kolokium_model->getKolokiumReport($statement);
             $data['jumlahData'] = $this->Kolokium_model->getJumlahReport($statement);

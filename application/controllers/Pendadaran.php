@@ -1157,7 +1157,7 @@ class Pendadaran extends CI_Controller {
         if ($this->input->post() == NULL) {
             $data['judul'] = 'Report Jadwal Pendadaran';
             $data['bulan'] = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember',];
-           $data['jam'] = ['07.00-09.00', '08.00-10.00', '09.00-11.00', '10.00-12.00', '11.00-13.00', '12.00-14.00', '13.00-15.00', '14.00-16.00 ', '15.00-17.00'];
+            $data['jam'] = ['07.00-09.00', '08.00-10.00', '09.00-11.00', '10.00-12.00', '11.00-13.00', '12.00-14.00', '13.00-15.00', '14.00-16.00 ', '15.00-17.00'];
             $data['ruang'] = $this->db->get('ruangan')->result_array();
             $data['dosen'] = $this->Dosen_model->getAllDosen();
             $data['pendadaran'] = NULL;
@@ -1168,7 +1168,7 @@ class Pendadaran extends CI_Controller {
         } else {
             $data['judul'] = 'Report Jadwal Pendadaran';
             $data['bulan'] = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember',];
-            $data['jam'] = ['07.00-09.00', '09.00-11.00', '11.00-13.00', '13.00-15.00', '15.00-17.00'];
+            $data['jam'] = ['07.00-09.00', '08.00-10.00', '09.00-11.00', '10.00-12.00', '11.00-13.00', '12.00-14.00', '13.00-15.00', '14.00-16.00 ', '15.00-17.00'];
             $data['ruang'] = $this->db->get('ruangan')->result_array();
             $data['dosen'] = $this->Dosen_model->getAllDosen();
 
@@ -1217,6 +1217,19 @@ class Pendadaran extends CI_Controller {
             }
 
             $this->session->set_userdata('statement', $statement);
+
+            $arraydata = array(
+                'bulan' => $postData['bulan'],
+                'dosen1' => $postData['dosen1'],
+                'dosen2' => $postData['dosen2'],
+                'reviewer' => $postData['reviewer'],
+                'ketuaPenguji' => $postData['ketuaPenguji'],
+                'sekretarisPenguji' => $postData['sekretarisPenguji'],
+                'jam' => $postData['jam'],
+                'ruang' => $postData['ruang']
+            );
+            $this->session->set_userdata($arraydata);
+
             $data['statement'] = $statement;
             $data['pendadaran'] = $this->Pendadaran_model->getPendadaranReport($statement);
             $data['jumlahData'] = $this->Pendadaran_model->getJumlahReport($statement);

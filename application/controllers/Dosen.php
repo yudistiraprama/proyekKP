@@ -1,32 +1,31 @@
 <?php
 
-class Dosen extends CI_Controller{
-    public function __construct()
-    {
+class Dosen extends CI_Controller {
+
+    public function __construct() {
         parent::__construct();
         $this->load->model('Dosen_model');
         $this->load->library('form_validation');
     }
 
-    public function index()
-    {
+    public function index() {
         $data['judul'] = "Daftar Dosen";
 
         $this->load->model('Dosen_model', 'dosen');
-        
+
         $this->load->library('pagination');
 
-        if($this->input->post('submit')){
+        if ($this->input->post('submit')) {
             $data['keyword'] = $this->input->post('keyword');
             $this->session->set_userdata('keyword', $data['keyword']);
-        }else{
+        } else {
             $data['keyword'] = $this->session->userdata('keyword');
         }
-        
+
         $this->db->like('nama', $data['keyword']);
         $this->db->or_like('npp', $data['keyword']);
         $this->db->from('dosen');
-        
+
         $config['base_url'] = 'http://localhost/proyekKP/dosen/index';
         $config['total_rows'] = $this->db->count_all_results();
         $data['total_rows'] = $config['total_rows'];
@@ -42,34 +41,41 @@ class Dosen extends CI_Controller{
         $this->load->view('templates/footer');
     }
 
-    public function tambah()
-    {
+    public function tambah() {
         $data['judul'] = "Tambah Data Dosen";
 
         $this->form_validation->set_rules('nama', 'Nama', 'required');
         $this->form_validation->set_rules('npp', 'NPP', 'required');
-        
-        if( $this->form_validation->run() == FALSE ){
+
+        if ($this->form_validation->run() == FALSE) {
             $this->load->view('templates/header', $data);
             $this->load->view('dosen/tambah');
             $this->load->view('templates/footer');
-        }else{
+        } else {
+            $postData = $this->input->post();
+            $dosen = $this->Dosen_model->getAllDosen();
+            foreach ($dosen as $d) {
+                if ($d['nama'] == $postData['nama']) {
+                    $this->session->set_flashdata('flash', 'Dosen dengan nama ' . $postData['nama'] . ' sudah ada');
+                    redirect('dosen/tambah');
+                } elseif ($d['npp'] == $postData['npp']) {
+                    $this->session->set_flashdata('flash', 'Dosen dengan NPP ' . $postData['npp'] . ' sudah ada');
+                    redirect('dosen/tambah');
+                }
+            }
             $this->Dosen_model->tambahDataDosen();
             $this->session->set_flashdata('flash', 'Ditambahkan');
             redirect('dosen');
         }
-        
     }
 
-    public function hapus($id)
-    {
+    public function hapus($id) {
         $this->Dosen_model->hapusDataDosen($id);
         $this->session->set_flashdata('flash', 'Dihapus');
         redirect('dosen');
     }
 
-    public function detail($id)
-    {
+    public function detail($id) {
         $data['judul'] = 'Detail Data Dosen';
         $data['dosen'] = $this->Dosen_model->getDosenByID($id);
         $this->load->view('templates/header', $data);
@@ -77,22 +83,22 @@ class Dosen extends CI_Controller{
         $this->load->view('templates/footer');
     }
 
-    public function edit($id)
-    {
+    public function edit($id) {
         $data['judul'] = "Edit Data Dosen";
         $data['dosen'] = $this->Dosen_model->getDosenByID($id);
 
         $this->form_validation->set_rules('nama', 'Nama', 'required');
-        $this->form_validation->set_rules('nip', 'NIP', 'required');
-        
-        if( $this->form_validation->run() == FALSE ){
+        $this->form_validation->set_rules('npp', 'NPP', 'required');
+
+        if ($this->form_validation->run() == FALSE) {
             $this->load->view('templates/header', $data);
             $this->load->view('dosen/edit', $data);
             $this->load->view('templates/footer');
-        }else{
+        } else {
             $this->Dosen_model->editDataDosen();
             $this->session->set_flashdata('flash', 'Diubah');
             redirect('dosen');
         }
     }
+
 }

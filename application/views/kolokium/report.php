@@ -11,7 +11,7 @@
             </div>
         </div>
     <?php endif; ?>
-    <?php if ($kolokium == null): ?>
+    <?php if ($kolokium == null && $this->session->userdata() == NULL): ?>
         <div class="row mt-3">
             <div class="col">
                 <h3 class="mt-3">Report Jadwal Kolokium</h3>
@@ -81,6 +81,103 @@
                     </table>
                     <a href="<?= base_url() ?>kolokium" class="btn btn-primary"><i class="fas fa-arrow-left"></i> Kembali</a>
                     <button type="submit" name="cari" class="btn btn-warning"><i class="fas fa-search"></i> Cari</button>
+                </form>
+            </div>
+        </div>
+    <?php elseif ($kolokium == null && $this->session->userdata() != NULL): ?>
+        <div class="row mt-3">
+            <div class="col">
+                <h3 class="mt-3">Report Jadwal Kolokium</h3>
+
+                <form action="" method="post">
+                    <table cellpadding="20">
+                        <tr>
+                            <td>
+                                <div class="form-group">
+                                    <label for="bulan">Bulan</label>
+                                    <select class="form-control" id="bulan" name="bulan">
+                                        <option value="">-</option>                            
+                                        <?php foreach ($bulan as $ds): ?>
+                                            <?php if ($ds == $this->session->userdata('bulan')): ?>
+                                                <option value="<?= $ds; ?>"selected><?= $ds ?></option>
+                                            <?php else: ?>
+                                                <option value="<?= $ds ?>"><?= $ds; ?></option>
+                                            <?php endif; ?>
+                                        <?php endforeach; ?>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="dosen1">Dosen Pembimbing 1</label>
+                                    <select class="form-control" id="dosen1" name="dosen1">
+                                        <option value="">-</option>
+                                        <?php foreach ($dosen as $ds): ?>
+                                            <?php if ($ds['nama'] == $this->session->userdata('dosen1')): ?>
+                                                <option value="<?= $ds['nama']; ?>"selected><?= $ds['nama'] ?></option>
+                                            <?php else: ?>
+                                                <option value="<?= $ds['nama'] ?>"><?= $ds['nama']; ?></option>
+                                            <?php endif; ?>
+                                        <?php endforeach; ?>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="dosen2">Dosen Pembimbing 2</label>
+                                    <select class="form-control" id="dosen2" name="dosen2">
+                                        <option value="">-</option>
+                                        <?php foreach ($dosen as $ds): ?>
+                                            <?php if ($ds['nama'] == $this->session->userdata('dosen2')): ?>
+                                                <option value="<?= $ds['nama']; ?>"selected><?= $ds['nama'] ?></option>
+                                            <?php else: ?>
+                                                <option value="<?= $ds['nama'] ?>"><?= $ds['nama']; ?></option>
+                                            <?php endif; ?>
+                                        <?php endforeach; ?>
+                                    </select>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="form-group">
+                                    <label for="reviewer">Reviewer</label>
+                                    <select class="form-control" id="reviewer" name="reviewer">
+                                        <option value="">-</option>
+                                        <?php foreach ($dosen as $ds): ?>
+                                            <?php if ($ds['nama'] == $this->session->userdata('reviewer')): ?>
+                                                <option value="<?= $ds['nama']; ?>"selected><?= $ds['nama'] ?></option>
+                                            <?php else: ?>
+                                                <option value="<?= $ds['nama']; ?>"><?= $ds['nama']; ?></option>
+                                            <?php endif; ?>
+                                        <?php endforeach; ?>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="jam">Jam</label>
+                                    <select class="form-control" id="jam" name="jam">
+                                        <option value="">-</option>
+                                        <?php foreach ($jam as $ds): ?>
+                                            <?php if ($ds == $this->session->userdata('jam')): ?>
+                                                <option value="<?= $ds; ?>"selected><?= $ds ?></option>
+                                            <?php else: ?>
+                                                <option value="<?= $ds; ?>"><?= $ds; ?></option>
+                                            <?php endif; ?>
+                                        <?php endforeach; ?>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="ruang">Ruangan</label>
+                                    <select class="form-control" id="ruang" name="ruang">
+                                        <option value="">-</option>
+                                        <?php foreach ($ruang as $ds): ?>
+                                            <?php if ($ds['nama'] == $this->session->userdata('ruang')): ?>
+                                                <option value="<?= $ds['nama']; ?>"selected><?= $ds['nama'] ?></option>
+                                            <?php else: ?>
+                                                <option value="<?= $ds['nama'] ?>"><?= $ds['nama']; ?></option>
+                                            <?php endif; ?>
+                                        <?php endforeach; ?>
+                                    </select>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                    <a href="<?= base_url() ?>kolokium" class="btn btn-primary"><i class="fas fa-arrow-left"></i> Kembali</a>
+                    <button type="submit" name="cari" class="btn btn-warning"><i class="fas fa-search"></i> Cari</button>   
                 </form>
             </div>
         </div>
@@ -155,7 +252,7 @@
                                     <select class="form-control" id="jam" name="jam">
                                         <option value="">-</option>
                                         <?php foreach ($jam as $ds): ?>
-                                            <?php if ($ds == $postData['durasi']): ?>
+                                            <?php if ($ds == $postData['jam']): ?>
                                                 <option value="<?= $ds; ?>"selected><?= $ds ?></option>
                                             <?php else: ?>
                                                 <option value="<?= $ds; ?>"><?= $ds; ?></option>
@@ -168,7 +265,7 @@
                                     <select class="form-control" id="ruang" name="ruang">
                                         <option value="">-</option>
                                         <?php foreach ($ruang as $ds): ?>
-                                            <?php if ($ds['nama'] == $postData['reviewer']): ?>
+                                            <?php if ($ds['nama'] == $postData['ruang']): ?>
                                                 <option value="<?= $ds['nama']; ?>"selected><?= $ds['nama'] ?></option>
                                             <?php else: ?>
                                                 <option value="<?= $ds['nama'] ?>"><?= $ds['nama']; ?></option>
