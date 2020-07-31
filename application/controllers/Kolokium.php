@@ -314,7 +314,7 @@ class Kolokium extends CI_Controller {
         $data['kolokium'] = $this->Kolokium_model->getKolokiumByID($id);
         $pendadaran = $this->Pendadaran_model->getPendadaranByNIM($data['kolokium']['nim']);
         if ($pendadaran != null) {
-            $this->session->set_flashdata('gagal', 'Telah terdaftar untuk pendadaran');
+            $this->session->set_flashdata('gagal', 'Mahasiswa telah terdaftar untuk pendadaran');
         } else {
             $this->Kolokium_model->hapusJadwalKolokium($id);
             $this->session->set_flashdata('flash', 'Dihapus');
