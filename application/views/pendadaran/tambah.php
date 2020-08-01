@@ -102,7 +102,7 @@
                                     <?php endif; ?>
                                 <?php endforeach; ?>
                             </select>
-                            <small class="form-text text-danger"><?= form_error('ketuaPenguji'); ?></small>
+                            <small class="form-text text-danger">Kolom Ketua Penguji harus diisi.</small>
                         </div>
                         <div class="form-group">
                             <label for="sekretarisPenguji">Sekretaris Penguji</label>
@@ -114,7 +114,7 @@
                                     <?php endif; ?>
                                 <?php endforeach; ?>
                             </select>
-                            <small class="form-text text-danger"><?= form_error('sekretarisPenguji'); ?></small>
+                            <small class="form-text text-danger">Kolom Sekretaris Penguji harus diisi.</small>
                         </div>
 
                         <div class="form-group">
@@ -130,7 +130,7 @@
                         <div class="form-group">
                             <label for="tanggal">Tanggal</label>
                             <input type="date" name="tanggal" class="form-control" id="tanggal">
-                            <small class="form-text text-danger"><?= form_error('tanggal'); ?></small>
+                            <small class="form-text text-danger">Kolom Tanggal harus diisi.</small>
                         </div>
                         <div class="form-group">
                             <label for="durasi">Jam</label>

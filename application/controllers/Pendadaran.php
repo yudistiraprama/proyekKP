@@ -1262,13 +1262,14 @@ class Pendadaran extends CI_Controller {
         $object->getActiveSheet()->setCellValue('D1', 'DOSEN PEMBIMBING 1');
         $object->getActiveSheet()->setCellValue('E1', 'DOSEN PEMBIMBING 2');
         $object->getActiveSheet()->setCellValue('F1', 'JUDUL TUGAS AKHIR');
-        $object->getActiveSheet()->setCellValue('G1', 'REVIEWER');
+        $object->getActiveSheet()->setCellValue('G1', 'REVIEWER KOLOKIUM');
         $object->getActiveSheet()->setCellValue('H1', 'KETUA PENGUJI');
         $object->getActiveSheet()->setCellValue('I1', 'SEKRETARIS PENGUJI');
-        $object->getActiveSheet()->setCellValue('J1', 'TANGGAL');
-        $object->getActiveSheet()->setCellValue('K1', 'JAM');
-        $object->getActiveSheet()->setCellValue('L1', 'RUANGAN');
-        $object->getActiveSheet()->setCellValue('M1', 'KETERANGAN');
+        $object->getActiveSheet()->setCellValue('J1', 'ANGGOTA PENGUJI');
+        $object->getActiveSheet()->setCellValue('K1', 'TANGGAL');
+        $object->getActiveSheet()->setCellValue('L1', 'JAM');
+        $object->getActiveSheet()->setCellValue('M1', 'RUANGAN');
+        $object->getActiveSheet()->setCellValue('N1', 'KETERANGAN');
 
         $baris = 2;
         $no = 1;
@@ -1283,10 +1284,11 @@ class Pendadaran extends CI_Controller {
             $object->getActiveSheet()->setCellValue('G' . $baris, $mhs['reviewer']);
             $object->getActiveSheet()->setCellValue('H' . $baris, $mhs['ketuaPenguji']);
             $object->getActiveSheet()->setCellValue('I' . $baris, $mhs['sekretarisPenguji']);
-            $object->getActiveSheet()->setCellValue('J' . $baris, $mhs['tanggal']);
-            $object->getActiveSheet()->setCellValue('K' . $baris, $mhs['durasi']);
-            $object->getActiveSheet()->setCellValue('L' . $baris, $mhs['ruang']);
-            $object->getActiveSheet()->setCellValue('M' . $baris, $mhs['keterangan']);
+            $object->getActiveSheet()->setCellValue('J' . $baris, $mhs['anggotaPenguji']);
+            $object->getActiveSheet()->setCellValue('K' . $baris, $mhs['tanggal']);
+            $object->getActiveSheet()->setCellValue('L' . $baris, $mhs['durasi']);
+            $object->getActiveSheet()->setCellValue('M' . $baris, $mhs['ruang']);
+            $object->getActiveSheet()->setCellValue('N' . $baris, $mhs['keterangan']);
 
             $baris++;
         }

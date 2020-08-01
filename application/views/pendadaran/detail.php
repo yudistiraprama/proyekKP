@@ -47,7 +47,7 @@
                             </tr>
                             <tr>
                                 <td>
-                                    <p class="card-text">Reviewer:</p>
+                                    <p class="card-text">Reviewer Kolokium:</p>
                                 </td>
                                 <td>
                                     <p class="card-text"><?= $pendadaran['reviewer']; ?></p>
@@ -112,10 +112,17 @@
                         </tbody>
                     </table>
                     <br>
-                    <a href="<?= base_url() ?>pendadaran" class="btn btn-primary float-right"><i class="fas fa-arrow-left"></i> Kembali</a>
-                    <a href="<?= base_url() ?>pendadaran/pdf/<?= $pendadaran['id']; ?>" class="btn btn-danger"><i class="fas fa-file-pdf"></i> Detail</a>
-                    <a href="<?= base_url() ?>pendadaran/undangan/<?= $pendadaran['id']; ?>" class="btn btn-success"><i class="fas fa-file-pdf"></i> Undangan PDF</a>
-                    <a href="<?= base_url() ?>pendadaran/undangantxt/<?= $pendadaran['id']; ?>" class="btn btn-success"><i class="fas fa-file-alt"></i> Undangan TXT</a>
+                    <a href="<?= base_url() ?>pendadaran" class="btn btn-danger float-right"><i class="fas fa-arrow-left"></i> Kembali</a>
+                    <a href="<?= base_url() ?>pendadaran/pdf/<?= $pendadaran['id']; ?>" class="btn btn-primary"><i class="fas fa-file-pdf"></i> Detail</a>
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fas fa-download"></i> Cetak Undangan
+                        </button>
+                        <div class="dropdown-menu">
+                            <a href="<?= base_url() ?>pendadaran/undangan/<?= $pendadaran['id']; ?>" class="dropdown-item"><i class="fas fa-file-pdf"></i> Undangan PDF</a>
+                            <a href="<?= base_url() ?>pendadaran/undangantxt/<?= $pendadaran['id']; ?>" class="dropdown-item"><i class="fas fa-file-alt"></i> Undangan TXT</a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

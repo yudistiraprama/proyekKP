@@ -22,14 +22,19 @@
                         <div class="form-group">
                             <label for="nama">Nama</label>
                             <input type="text" name="nama" class="form-control" id="nama">
-                            <small class="form-text text-danger"><?= form_error('nama'); ?></small>
+                            <small class="form-text text-danger">Kolom Nama harus diisi.</small>
                         </div>
                         <div class="form-group">
                             <label for="npp">NPP</label>
                             <input type="text" name="npp" class="form-control" id="npp">
-                            <small class="form-text text-danger"><?= form_error('npp'); ?></small>
+                            <small class="form-text text-danger">Kolom NPP harus diisi.</small>
                         </div>
-                        <button type="submit" name="tambah" class="btn btn-primary float-right">Tambah Data</button>
+                        <div class="form-group">
+                            <label for="status">Status</label>
+                            <input type="text" name="status" class="form-control" id="status">
+                        </div>
+                        <a href="<?= base_url() ?>dosen" class="btn btn-danger " role="button" ><i class="fas fa-arrow-left"></i> Kembali</a>
+                        <button type="submit" name="tambah" class="btn btn-primary float-right"><i class="fas fa-plus"></i> Tambah Data</button>
                     </form>
                 </div>   
             </div>

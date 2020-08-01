@@ -18,8 +18,12 @@
                             <input type="text" name="npp" class="form-control" id="npp" value="<?= $dosen['npp']; ?>">
                             <small class="form-text text-danger"><?= form_error('npp'); ?></small>
                         </div>
-                        <a href="<?= base_url() ?>dosen" class="btn btn-danger " role="button" >Kembali</a>
-                        <button type="submit" name="tambah" class="btn btn-primary">Edit Data</button>    
+                        <div class="form-group">
+                            <label for="status">Status</label>
+                            <input type="text" name="status" class="form-control" id="status" value="<?= $dosen['status']; ?>">
+                        </div>
+                        <a href="<?= base_url() ?>dosen" class="btn btn-danger " role="button" ><i class="fas fa-arrow-left"></i> Kembali</a>
+                        <button type="submit" name="tambah" class="btn btn-primary float-right"><i class="fas fa-edit"></i> Edit Data</button>    
                     </form>
                 </div>   
             </div>

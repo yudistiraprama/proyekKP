@@ -16,7 +16,7 @@
 
     <div class="row mt-3">
         <div class="col-md-6">
-            <a href="<?= base_url(); ?>dosen/tambah" class="btn btn-primary">Tambah Data Dosen</a>
+            <a href="<?= base_url(); ?>dosen/tambah" class="btn btn-primary"><i class="fas fa-plus"></i> Tambah Data Dosen</a>
         </div>
     </div>
 
@@ -43,6 +43,7 @@
                         <th>No.</th>
                         <th>NPP</th>
                         <th>Nama</th>
+                        <th>Status</th>
                         <th>Opsi</th>
                     </tr>
                 </thead>
@@ -62,6 +63,7 @@
                             <th><?= ++$start; ?></th>
                             <td><?= $d['npp']; ?></td>
                             <td style="text-align:left"><?= $d['nama']; ?></td>
+                            <td><?= $d['status']; ?></td>
                             <td>
                                 <a href="<?= base_url(); ?>dosen/detail/<?= $d['id']; ?>" class="badge badge-primary" >Detail</a> 
                                 <a href="<?= base_url(); ?>dosen/edit/<?= $d['id']; ?>" class="badge badge-success" >Edit</a>

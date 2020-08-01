@@ -6,9 +6,25 @@
                     Detail Data Dosen
                 </div>
                 <div class="card-body">
-                <h5 class="card-title"><?= $dosen['nama']; ?></h5>
-                <p class="card-text"><?= $dosen['npp']; ?></p>
-                <a href="<?= base_url() ?>dosen" class="btn btn-primary float-right"><i class="fas fa-arrow-left"></i> Kembali</a>
+                    <table cellpadding="10">
+                        <tr>
+                            <td>NPP</td>
+                            <td> : </td>
+                            <td><?= $dosen['npp']; ?></td>
+                        </tr>
+                        <tr>
+                            <td>Nama</td>
+                            <td> : </td>
+                            <td><?= $dosen['nama']; ?></td>
+                        </tr>
+                        <tr>
+                            <td>Status</td>
+                            <td> : </td>
+                            <td><?= $dosen['status']; ?></td>
+                        </tr>
+                    </table>
+                    <br>
+                <a href="<?= base_url() ?>dosen" class="btn btn-danger"><i class="fas fa-arrow-left"></i> Kembali</a>
                 </div>
             </div>
         </div>

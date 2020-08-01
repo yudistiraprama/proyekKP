@@ -24,6 +24,7 @@ class Dosen extends CI_Controller {
 
         $this->db->like('nama', $data['keyword']);
         $this->db->or_like('npp', $data['keyword']);
+        $this->db->or_like('status', $data['keyword']);
         $this->db->from('dosen');
 
         $config['base_url'] = 'http://localhost/proyekKP/dosen/index';

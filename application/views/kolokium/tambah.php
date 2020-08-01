@@ -83,7 +83,7 @@
                                     <option value="<?= $ds['nama']; ?>"><?= $ds['nama']; ?></option>
                                 <?php endforeach; ?>
                             </select>
-                            <small class="form-text text-danger"><?= form_error('dosen1'); ?></small>
+                            <small class="form-text text-danger">Kolom Dosen Pembimbing 1 harus diisi.</small>
                         </div>
                         <div class="form-group">
                             <label for="judul">Dosen Pembimbing 2</label>
@@ -97,22 +97,22 @@
                         <div class="form-group">
                             <label for="judul">Judul Tugas Akhir</label>
                             <textarea class="form-control" name="judul" id="judul" rows="3"></textarea>
-                            <small class="form-text text-danger"><?= form_error('judul'); ?></small>
+                            <small class="form-text text-danger">Kolom Judul Tugas Akhir harus diisi.</small>
                         </div>
                         <div class="form-group">
-                            <label for="reviewer">Reviewer</label>
+                            <label for="reviewer">Reviewer Kolokium</label>
                             <select class="form-control" id="reviewer" name="reviewer">     
                                 <option value="">-</option>
                                 <?php foreach ($dosen as $ds): ?>
                                     <option value="<?= $ds['nama']; ?>"><?= $ds['nama']; ?></option>
                                 <?php endforeach; ?>
                             </select>
-                            <small class="form-text text-danger"><?= form_error('reviewer'); ?></small>
+                            <small class="form-text text-danger">Kolom Reviewer Kolokium harus diisi.</small>
                         </div>
                         <div class="form-group">
                             <label for="tanggal">Tanggal</label>
                             <input type="date" name="tanggal" class="form-control" id="tanggal">                        
-                            <small class="form-text text-danger"><?= form_error('tanggal'); ?></small>
+                            <small class="form-text text-danger">Kolom Tanggal harus diisi.</small>
                         </div>
                         <div class="form-group">
                             <label for="durasi">Jam</label>
@@ -134,7 +134,8 @@
                             <label for="keterangan">Keterangan</label>
                             <textarea class="form-control" name="keterangan" id="keterangan" rows="3"></textarea>
                         </div>
-                        <button type="submit" name="tambah" class="btn btn-primary float-right">Tambah Data</button>
+                        <a href="<?= base_url() ?>kolokium" class="btn btn-danger " role="button" ><i class="fas fa-arrow-left"></i> Kembali</a>
+                        <button type="submit" name="tambah" class="btn btn-primary float-right"><i class="fas fa-plus"></i> Tambah Data</button>
                     </form>
                 </div>   
             </div>

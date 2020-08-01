@@ -48,7 +48,7 @@
             <td><?= $kolokium['judul']; ?></td>
         </tr>
         <tr>
-            <td>Reviewer</td>
+            <td>Reviewer Kolokium</td>
             <td>:</td>
             <td><?= $kolokium['reviewer']; ?></td>
         </tr>

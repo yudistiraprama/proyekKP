@@ -86,6 +86,7 @@
                                     <?php endif; ?>
                                 <?php endforeach; ?>
                             </select>
+                            <small class="form-text text-danger">Kolom Dosen Pembimbing 1 harus diisi.</small>
                         </div>
                         <div class="form-group">
                             <label for="dosen2">Dosen Pembimbing 2</label>
@@ -103,10 +104,10 @@
                         <div class="form-group">
                             <label for="judul">Judul Tugas Akhir</label>
                             <textarea class="form-control" name="judul" id="judul" rows="3"><?= $kolokium['judul']; ?></textarea>
-                            <small class="form-text text-danger"><?= form_error('judul'); ?></small>
+                            <small class="form-text text-danger">Kolom Judul Tugas Akhir harus diisi.</small>
                         </div>
                         <div class="form-group">
-                            <label for="reviewer">Reviewer</label>
+                            <label for="reviewer">Reviewer Kolokium</label>
                             <select class="form-control" id="reviewer" name="reviewer">
                                 <option value="">-</option>
                                 <?php foreach ($dosen as $ds): ?>
@@ -117,11 +118,12 @@
                                     <?php endif; ?>
                                 <?php endforeach; ?>
                             </select>
+                            <small class="form-text text-danger">Kolom Reviewer Kolokium harus diisi.</small>
                         </div>
                         <div class="form-group">
                             <label for="tanggal">Tanggal</label>
                             <input type="date" name="tanggal" class="form-control" id="tanggal" value="<?= $kolokium['tanggal']; ?>">
-                            <small class="form-text text-danger"><?= form_error('tanggal'); ?></small>
+                            <small class="form-text text-danger">Kolom Tanggal harus diisi.</small>
                         </div>
                         <div class="form-group">
                             <label for="durasi">Jam</label>
@@ -152,8 +154,8 @@
                             <textarea class="form-control" name="keterangan" id="keterangan" rows="3"><?= $kolokium['keterangan']; ?></textarea>
                         </div>
 
-                        <a href="<?= base_url() ?>kolokium" class="btn btn-danger " role="button" >Kembali</a>
-                        <button type="submit" name="tambah" class="btn btn-primary ">Edit Data</button>
+                        <a href="<?= base_url() ?>kolokium" class="btn btn-danger " role="button" ><i class="fas fa-arrow-left"></i> Kembali</a>
+                        <button type="submit" name="tambah" class="btn btn-primary float-right"><i class="fas fa-edit"></i> Edit Data</button>
 
                     </form>
                 </div>   

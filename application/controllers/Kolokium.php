@@ -768,7 +768,7 @@ class Kolokium extends CI_Controller {
         $object->getActiveSheet()->setCellValue('D1', 'DOSEN PEMBIMBING 1');
         $object->getActiveSheet()->setCellValue('E1', 'DOSEN PEMBIMBING 2');
         $object->getActiveSheet()->setCellValue('F1', 'JUDUL TUGAS AKHIR');
-        $object->getActiveSheet()->setCellValue('G1', 'REVIEWER');
+        $object->getActiveSheet()->setCellValue('G1', 'REVIEWER KOLOKIUM');
         $object->getActiveSheet()->setCellValue('H1', 'TANGGAL');
         $object->getActiveSheet()->setCellValue('I1', 'JAM');
         $object->getActiveSheet()->setCellValue('J1', 'RUANGAN');

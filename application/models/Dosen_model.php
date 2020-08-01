@@ -10,6 +10,7 @@ class Dosen_model extends CI_model {
     public function tambahDataDosen() {
         $data = array(
             'nama' => $this->input->post('nama', true),
+            'status' => $this->input->post('status', true),
             'npp' => $this->input->post('npp', true)
         );
 
@@ -28,6 +29,7 @@ class Dosen_model extends CI_model {
     public function editDataDosen() {
         $data = array(
             'nama' => $this->input->post('nama', true),
+            'status' => $this->input->post('status', true),
             'npp' => $this->input->post('npp', true)
         );
 
@@ -39,6 +41,7 @@ class Dosen_model extends CI_model {
         if ($keyword) {
             $this->db->like('nama', $keyword);
             $this->db->or_like('npp', $keyword);
+            $this->db->or_like('status', $keyword);
         }
         $this->db->order_by('nama', 'ASC');
         return $this->db->get('dosen', $limit, $start)->result_array();

@@ -52,7 +52,7 @@
                                     </select>
                                 </div>
                                 <div class="form-group">
-                                    <label for="reviewer">Reviewer</label>
+                                    <label for="reviewer">Reviewer Kolokium</label>
                                     <select class="form-control" id="reviewer" name="reviewer">
                                         <option value="">-</option>
                                         <?php foreach ($dosen as $ds): ?>
