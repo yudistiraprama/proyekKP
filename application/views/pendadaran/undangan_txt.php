@@ -13,7 +13,7 @@ Nama    : <?= $pendadaran['nama']; ?><?= '' ?>
 Judul   : <?= $pendadaran['judul']; ?><?= '' ?> 
 
 Jadwal ujian pendadaran skripsi akan dilaksanakan pada:
-Tanggal             : <?= $pendadaran['tanggal']; ?><?= '' ?> 
+Tanggal             : <?= format_indo($pendadaran['tanggal']); ?><?= '' ?> 
 Jam                 : <?= $pendadaran['durasi']; ?> WIB<?= '' ?> 
 Dosen Pembimbing 1  : <?= $pendadaran['dosen1']; ?><?= '' ?> 
 Dosen Pembimbing 2  : <?= $pendadaran['dosen2']; ?><?= '' ?> 
@@ -24,6 +24,13 @@ Dosen Penguji       : <?= $pendadaran['ketuaPenguji']; ?><?= '' ?>
 Saya ingin meminta konfirmasi Bapak/Ibu, apakah bisa dilaksanakan sesuai jadwal diatas?
 Atas perhatian dan kerjasama Bapak/Ibu saya ucapkan terima kasih.
 
+
+
+                                        Yogyakarta, <?= $tanggal; ?><?= '' ?>
+                                        
+                                        
+                                        (Wakaprodi)
+                                        <?= $dosen['nama']; ?><?= '' ?>
 <?php else: ?>
 Yth. <?= $pendadaran['dosen1']; ?><?= '' ?> 
      <?= $pendadaran['ketuaPenguji']; ?><?= '' ?> 
@@ -36,7 +43,7 @@ Nama    : <?= $pendadaran['nama']; ?><?= '' ?>
 Judul   : <?= $pendadaran['judul']; ?><?= '' ?> 
 
 Jadwal ujian pendadaran skripsi akan dilaksanakan pada:
-Tanggal             : <?= $pendadaran['tanggal']; ?><?= '' ?> 
+Tanggal             : <?= format_indo($pendadaran['tanggal']); ?><?= '' ?> 
 Jam                 : <?= $pendadaran['durasi']; ?> WIB<?= '' ?> 
 Dosen Pembimbing 1  : <?= $pendadaran['dosen1']; ?><?= '' ?> 
 Dosen Penguji       : <?= $pendadaran['ketuaPenguji']; ?><?= '' ?> 
@@ -45,5 +52,13 @@ Dosen Penguji       : <?= $pendadaran['ketuaPenguji']; ?><?= '' ?>
 
 Saya ingin meminta konfirmasi Bapak/Ibu, apakah bisa dilaksanakan sesuai jadwal diatas?
 Atas perhatian dan kerjasama Bapak/Ibu saya ucapkan terima kasih.
+
+
+
+                                        Yogyakarta, <?= $tanggal; ?><?= '' ?>
+                                        
+                                        
+                                        (Wakaprodi)
+                                        <?= $dosen['nama']; ?><?= '' ?>
 <?php endif; ?>
 

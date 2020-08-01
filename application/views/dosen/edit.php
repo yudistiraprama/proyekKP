@@ -23,7 +23,7 @@
                             <input type="text" name="status" class="form-control" id="status" value="<?= $dosen['status']; ?>">
                         </div>
                         <a href="<?= base_url() ?>dosen" class="btn btn-danger " role="button" ><i class="fas fa-arrow-left"></i> Kembali</a>
-                        <button type="submit" name="tambah" class="btn btn-primary float-right"><i class="fas fa-edit"></i> Edit Data</button>    
+                        <button type="submit" name="tambah" class="btn btn-success float-right"><i class="fas fa-edit"></i> Edit Data</button>    
                     </form>
                 </div>   
             </div>

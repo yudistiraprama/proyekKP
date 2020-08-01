@@ -70,7 +70,7 @@ class Kolokium extends CI_Controller {
                 $dosen2 = $postData['dosen2'];
                 $reviewer = $postData['reviewer'];
                 $ruang = $postData['ruang'];
-                $tanggal = format_indo($postData['tanggal']);
+                $tanggal = $postData['tanggal'];
                 $durasi = $postData['durasi'];
                 $cekDosen = $this->cekInputKolokium($dosen1, $dosen2, $reviewer);
                 switch ($cekDosen) {
@@ -357,7 +357,7 @@ class Kolokium extends CI_Controller {
             $dosen2 = $postData['dosen2'];
             $reviewer = $postData['reviewer'];
             $ruang = $postData['ruang'];
-            $tanggal = format_indo($postData['tanggal']);
+            $tanggal = $postData['tanggal'];
             $durasi = $postData['durasi'];
             $cekDosen = $this->cekInputKolokium($dosen1, $dosen2, $reviewer);
             switch ($cekDosen) {
@@ -641,6 +641,15 @@ class Kolokium extends CI_Controller {
         $this->load->library('dompdf_gen');
         $data['kolokium'] = $this->Kolokium_model->getKolokiumByID($id);
         $mahasiswa = $data['kolokium']['nim'];
+        $dosen = $this->Dosen_model->getAllDosen();
+        foreach ($dosen as $d) {
+            if (strtoupper($d['status']) == 'WAKAPRODI') {
+                $idD = $d['id'];
+                $data['dosen'] = $this->Dosen_model->getDosenById($idD);
+            }
+        }
+        $data['tanggal'] = format_indo(date("Y-m-d"));
+
         $filename = 'Undangan_Kolokium_' . $mahasiswa . '.pdf';
         $this->load->view('kolokium/undangan_pdf', $data);
 
@@ -656,6 +665,14 @@ class Kolokium extends CI_Controller {
 
     public function undangantxt($id) {
         $data['kolokium'] = $this->Kolokium_model->getKolokiumByID($id);
+        $dosen = $this->Dosen_model->getAllDosen();
+        foreach ($dosen as $d) {
+            if (strtoupper($d['status']) == 'WAKAPRODI') {
+                $idD = $d['id'];
+                $data['dosen'] = $this->Dosen_model->getDosenById($idD);
+            }
+        }
+        $data['tanggal'] = format_indo(date("Y-m-d"));
         $mahasiswa = $data['kolokium']['nim'];
         $filename = 'Undangan_Kolokium_' . $mahasiswa . '.txt';
 
@@ -693,10 +710,18 @@ class Kolokium extends CI_Controller {
             $postData = $this->input->post();
 
             $statement = '';
-            if ($postData['bulan'] != '' && $statement == '') {
-                $statement = $statement . " tanggal LIKE '%" . $postData['bulan'] . "%'";
-            } elseif ($postData['bulan'] != '' && $statement != '') {
-                $statement = $statement . " AND tanggal LIKE '%" . $postData['bulan'] . "%'";
+            if ($postData['awal'] != '' && $postData['akhir'] == '' && $statement == '') {
+                $statement = $statement . " tanggal >= '" . $postData['awal'] . "'";
+            } elseif ($postData['awal'] != '' && $postData['akhir'] != '' && $statement == '') {
+                $statement = $statement . " tanggal BETWEEN '" . $postData['awal'] . "' AND '" . $postData['akhir'] . "'";
+            } elseif ($postData['awal'] != '' && $postData['akhir'] == '' && $statement != '') {
+                $statement = $statement . " AND tanggal >= '" . $postData['awal'] . "'";
+            } elseif ($postData['awal'] != '' && $postData['awal'] != '' && $statement != '') {
+                $statement = $statement . " AND tanggal BETWEEN '" . $postData['awal'] . "' AND '" . $postData['akhir'] . "'";
+            } elseif ($postData['awal'] == '' && $postData['akhir'] != '' && $statement == '') {
+                $statement = $statement . " tanggal <= '" . $postData['akhir'] . "'";
+            } elseif ($postData['awal'] == '' && $postData['akhir'] != '' && $statement != '') {
+                $statement = $statement . " AND tanggal <= '" . $postData['akhir'] . "'";
             }
             if ($postData['dosen1'] != '' && $statement == '') {
                 $statement = $statement . " dosen1 = '" . $postData['dosen1'] . "'";
@@ -727,7 +752,8 @@ class Kolokium extends CI_Controller {
             $this->session->set_userdata('statement', $statement);
 
             $arraydata = array(
-                'bulan' => $postData['bulan'],
+                'awal' => $postData['awal'],
+                'akhir' => $postData['akhir'],
                 'dosen1' => $postData['dosen1'],
                 'dosen2' => $postData['dosen2'],
                 'reviewer' => $postData['reviewer'],
@@ -785,7 +811,7 @@ class Kolokium extends CI_Controller {
             $object->getActiveSheet()->setCellValue('E' . $baris, $mhs['dosen2']);
             $object->getActiveSheet()->setCellValue('F' . $baris, $mhs['judul']);
             $object->getActiveSheet()->setCellValue('G' . $baris, $mhs['reviewer']);
-            $object->getActiveSheet()->setCellValue('H' . $baris, $mhs['tanggal']);
+            $object->getActiveSheet()->setCellValue('H' . $baris, format_indo($mhs['tanggal']));
             $object->getActiveSheet()->setCellValue('I' . $baris, $mhs['durasi']);
             $object->getActiveSheet()->setCellValue('J' . $baris, $mhs['ruang']);
             $object->getActiveSheet()->setCellValue('K' . $baris, $mhs['keterangan']);

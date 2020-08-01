@@ -55,7 +55,7 @@
         <tr>
             <td>Tanggal<</td>
             <td>:</td>
-            <td><?= $kolokium['tanggal']; ?></td>
+            <td><?= format_indo($kolokium['tanggal']); ?></td>
         </tr>
         <tr>
             <td>Jam</td>

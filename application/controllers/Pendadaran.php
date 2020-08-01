@@ -75,7 +75,7 @@ class Pendadaran extends CI_Controller {
                 $sekretarisPenguji = $postData['sekretarisPenguji'];
                 $anggotaPenguji = $postData['anggotaPenguji'];
                 $ruang = $postData['ruang'];
-                $tanggal = format_indo($postData['tanggal']);
+                $tanggal = $postData['tanggal'];
                 $durasi = $postData['durasi'];
                 $cekInputDosen = $this->cekInputDosen($reviewer, $ketuaPenguji, $sekretarisPenguji, $anggotaPenguji);
 
@@ -580,7 +580,7 @@ class Pendadaran extends CI_Controller {
             $ketuaPenguji = $postData['ketuaPenguji'];
             $sekretarisPenguji = $postData['sekretarisPenguji'];
             $anggotaPenguji = $postData['anggotaPenguji'];
-            $tanggal = format_indo($postData['tanggal']);
+            $tanggal = $postData['tanggal'];
             $durasi = $postData['durasi'];
             $ruang = $postData['ruang'];
             $cekInputDosen = $this->cekInputDosen($reviewer, $ketuaPenguji, $sekretarisPenguji, $anggotaPenguji);
@@ -1124,6 +1124,14 @@ class Pendadaran extends CI_Controller {
         $this->load->library('dompdf_gen');
         $data['pendadaran'] = $this->Pendadaran_model->getPendadaranById($id);
         $mahasiswa = $data['pendadaran']['nim'];
+        $dosen = $this->Dosen_model->getAllDosen();
+        foreach ($dosen as $d) {
+            if (strtoupper($d['status']) == 'WAKAPRODI') {
+                $idD = $d['id'];
+                $data['dosen'] = $this->Dosen_model->getDosenById($idD);
+            }
+        }
+        $data['tanggal'] = format_indo(date("Y-m-d"));
         $filename = 'Undangan_Pendadaran_' . $mahasiswa . '.pdf';
         $this->load->view('pendadaran/undangan_pdf', $data);
 
@@ -1138,6 +1146,14 @@ class Pendadaran extends CI_Controller {
 
     public function undangantxt($id) {
         $data['pendadaran'] = $this->Pendadaran_model->getPendadaranByID($id);
+        $dosen = $this->Dosen_model->getAllDosen();
+        foreach ($dosen as $d) {
+            if (strtoupper($d['status']) == 'WAKAPRODI') {
+                $idD = $d['id'];
+                $data['dosen'] = $this->Dosen_model->getDosenById($idD);
+            }
+        }
+        $data['tanggal'] = format_indo(date("Y-m-d"));
         $mahasiswa = $data['pendadaran']['nim'];
         $filename = 'Undangan_Pendadaran_' . $mahasiswa . '.txt';
 
@@ -1175,10 +1191,18 @@ class Pendadaran extends CI_Controller {
             $postData = $this->input->post();
 
             $statement = '';
-            if ($postData['bulan'] != '' && $statement == '') {
-                $statement = $statement . " tanggal LIKE '%" . $postData['bulan'] . "%'";
-            } elseif ($postData['bulan'] != '' && $statement != '') {
-                $statement = $statement . " AND tanggal LIKE '%" . $postData['bulan'] . "%'";
+            if ($postData['awal'] != '' && $postData['akhir'] == '' && $statement == '') {
+                $statement = $statement . " tanggal >= '" . $postData['awal'] . "'";
+            } elseif ($postData['awal'] != '' && $postData['akhir'] != '' && $statement == '') {
+                $statement = $statement . " tanggal BETWEEN '" . $postData['awal'] . "' AND '" . $postData['akhir'] . "'";
+            } elseif ($postData['awal'] != '' && $postData['akhir'] == '' && $statement != '') {
+                $statement = $statement . " AND tanggal >= '" . $postData['awal'] . "'";
+            } elseif ($postData['awal'] != '' && $postData['awal'] != '' && $statement != '') {
+                $statement = $statement . " AND tanggal BETWEEN '" . $postData['awal'] . "' AND '" . $postData['akhir'] . "'";
+            } elseif ($postData['awal'] == '' && $postData['akhir'] != '' && $statement == '') {
+                $statement = $statement . " tanggal <= '" . $postData['akhir'] . "'";
+            } elseif ($postData['awal'] == '' && $postData['akhir'] != '' && $statement != '') {
+                $statement = $statement . " AND tanggal <= '" . $postData['akhir'] . "'";
             }
             if ($postData['dosen1'] != '' && $statement == '') {
                 $statement = $statement . " dosen1 = '" . $postData['dosen1'] . "'";
@@ -1219,8 +1243,8 @@ class Pendadaran extends CI_Controller {
             $this->session->set_userdata('statement', $statement);
 
             $arraydata = array(
-                'bulan' => $postData['bulan'],
-                'dosen1' => $postData['dosen1'],
+                'awal' => $postData['awal'],
+                'akhir' => $postData['akhir'],
                 'dosen2' => $postData['dosen2'],
                 'reviewer' => $postData['reviewer'],
                 'ketuaPenguji' => $postData['ketuaPenguji'],
@@ -1285,7 +1309,7 @@ class Pendadaran extends CI_Controller {
             $object->getActiveSheet()->setCellValue('H' . $baris, $mhs['ketuaPenguji']);
             $object->getActiveSheet()->setCellValue('I' . $baris, $mhs['sekretarisPenguji']);
             $object->getActiveSheet()->setCellValue('J' . $baris, $mhs['anggotaPenguji']);
-            $object->getActiveSheet()->setCellValue('K' . $baris, $mhs['tanggal']);
+            $object->getActiveSheet()->setCellValue('K' . $baris, format_indo($mhs['tanggal']));
             $object->getActiveSheet()->setCellValue('L' . $baris, $mhs['durasi']);
             $object->getActiveSheet()->setCellValue('M' . $baris, $mhs['ruang']);
             $object->getActiveSheet()->setCellValue('N' . $baris, $mhs['keterangan']);

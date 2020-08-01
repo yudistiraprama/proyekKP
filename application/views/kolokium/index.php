@@ -1,5 +1,5 @@
 <div class="container">
-    <?php $k = array('bulan', 'dosen1', 'dosen2', 'reviewer', 'jam', 'ruang'); ?>
+    <?php $k = array('awal', 'akhir', 'dosen1', 'dosen2', 'reviewer', 'jam', 'ruang'); ?>
     <?php $this->session->unset_userdata($k); ?>
     <?php if ($this->session->flashdata('flash')): ?>
         <div class="row mt-3">
@@ -90,7 +90,7 @@
                             <th><?= ++$start; ?></th>
                             <td><?= $kol['nim']; ?></td>
                             <td style="text-align:left"><?= $kol['nama']; ?></td>
-                            <td><?= $kol['tanggal']; ?></td>
+                            <td><?= format_indo($kol['tanggal']); ?></td>
                             <td><?= $kol['durasi']; ?></td>
                             <td><?= $kol['ruang']; ?></td>
                             <td>

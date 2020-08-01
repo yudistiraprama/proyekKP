@@ -22,16 +22,22 @@
                     <table cellpadding="20">
                         <tr>
                             <td>
-                                <div class="form-group">
-                                    <label for="bulan">Bulan</label>
-                                    <select class="form-control" id="bulan" name="bulan">
-                                        <option value="">-</option>
-                                        <?php foreach ($bulan as $b): ?>
-                                            <option value="<?= $b; ?>"><?= $b; ?></option>
-                                        <?php endforeach; ?>
-                                    </select>
-                                    <small class="form-text text-danger"><?= form_error('bulan'); ?></small>
-                                </div>
+                                <table>
+                                    <tr>
+                                        <td>
+                                            <div class="form-group">
+                                                <label for="awal">Periode Awal</label>
+                                                <input type="date" name="awal" class="form-control" id="awal">  
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="form-group"> 
+                                                <label for="akhir">Periode Akhir</label>
+                                                <input type="date" name="akhir" class="form-control" id="akhir"> 
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </table>
                                 <div class="form-group">
                                     <label for="dosen1">Dosen Pembimbing 1</label>
                                     <select class="form-control" id="dosen1" name="dosen1">
@@ -115,19 +121,22 @@
                     <table cellpadding="20">
                         <tr>
                             <td>
-                                <div class="form-group">
-                                    <label for="bulan">Bulan</label>
-                                    <select class="form-control" id="bulan" name="bulan">
-                                        <option value="">-</option>                            
-                                        <?php foreach ($bulan as $ds): ?>
-                                            <?php if ($ds == $this->session->userdata('bulan')): ?>
-                                                <option value="<?= $ds; ?>"selected><?= $ds ?></option>
-                                            <?php else: ?>
-                                                <option value="<?= $ds ?>"><?= $ds; ?></option>
-                                            <?php endif; ?>
-                                        <?php endforeach; ?>
-                                    </select>
-                                </div>
+                                <table>
+                                    <tr>
+                                        <td>
+                                            <div class="form-group">
+                                                <label for="awal">Periode Awal</label>
+                                                <input type="date" name="awal" class="form-control" id="awal">  
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="form-group"> 
+                                                <label for="akhir">Periode Akhir</label>
+                                                <input type="date" name="akhir" class="form-control" id="akhir"> 
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </table>
                                 <div class="form-group">
                                     <label for="dosen1">Dosen Pembimbing 1</label>
                                     <select class="form-control" id="dosen1" name="dosen1">
@@ -241,19 +250,22 @@
                     <table cellpadding="20">
                         <tr>
                             <td>
-                                <div class="form-group">
-                                    <label for="bulan">Bulan</label>
-                                    <select class="form-control" id="bulan" name="bulan">
-                                        <option value="">-</option>                            
-                                        <?php foreach ($bulan as $ds): ?>
-                                            <?php if ($ds == $postData['bulan']): ?>
-                                                <option value="<?= $ds; ?>"selected><?= $ds ?></option>
-                                            <?php else: ?>
-                                                <option value="<?= $ds ?>"><?= $ds; ?></option>
-                                            <?php endif; ?>
-                                        <?php endforeach; ?>
-                                    </select>
-                                </div>
+                                <table>
+                                    <tr>
+                                        <td>
+                                            <div class="form-group">
+                                                <label for="awal">Periode Awal</label>
+                                                <input type="date" name="awal" class="form-control" id="awal">  
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="form-group"> 
+                                                <label for="akhir">Periode Akhir</label>
+                                                <input type="date" name="akhir" class="form-control" id="akhir"> 
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </table>
                                 <div class="form-group">
                                     <label for="dosen1">Dosen Pembimbing 1</label>
                                     <select class="form-control" id="dosen1" name="dosen1">
@@ -390,7 +402,7 @@
                                 <th><?= ++$start; ?></th>
                                 <td><?= $pen['nim']; ?></td>
                                 <td style="text-align:left"><?= $pen['nama']; ?></td>
-                                <td><?= $pen['tanggal']; ?></td>
+                                <td><?= format_indo($pen['tanggal']); ?></td>
                                 <td><?= $pen['durasi']; ?></td>
                                 <td><?= $pen['ruang']; ?></td>
                             </tr>

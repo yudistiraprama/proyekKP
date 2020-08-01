@@ -82,7 +82,7 @@
                                     <p class="card-text">Tanggal:</p>
                                 </td>
                                 <td>
-                                    <p class="card-text"><?= $pendadaran['tanggal']; ?></p>
+                                    <p class="card-text"><?= format_indo($pendadaran['tanggal']); ?></p>
                                 </td>
                             </tr>
                             <tr>
@@ -90,7 +90,7 @@
                                     <p class="card-text">Jam:</p>
                                 </td>
                                 <td>
-                                    <p class="card-text"><?= $pendadaran['durasi']; ?>< WIB</p>
+                                    <p class="card-text"><?= $pendadaran['durasi']; ?> WIB</p>
                                 </td>
                             </tr>
                             <tr>

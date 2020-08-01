@@ -57,7 +57,7 @@
                                     <p class="card-text">Tanggal:</p>
                                 </td>
                                 <td>
-                                    <p class="card-text"><?= $kolokium['tanggal']; ?></p>
+                                    <p class="card-text"><?= format_indo($kolokium['tanggal']); ?></p>
                                 </td>
                             </tr>
                             <tr>

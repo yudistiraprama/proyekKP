@@ -7,8 +7,8 @@ class Kolokium_model extends CI_model {
     }
 
     public function tambahJadwalKolokium() {
-        $tanggal = $this->input->post('tanggal', true);
-        $tgl = format_indo($tanggal);
+//        $tanggal = $this->input->post('tanggal', true);
+//        $tgl = format_indo($tanggal);
 
         $data = array(
             'nim' => $this->input->post('nim', true),
@@ -17,7 +17,7 @@ class Kolokium_model extends CI_model {
             'dosen2' => $this->input->post('dosen2', true),
             'judul' => $this->input->post('judul', true),
             'reviewer' => $this->input->post('reviewer', true),
-            'tanggal' => $tgl,
+            'tanggal' => $this->input->post('tanggal', true),
             'durasi' => $this->input->post('durasi', true),
             'ruang' => $this->input->post('ruang', true),
             'keterangan' => $this->input->post('keterangan', true)
@@ -40,8 +40,8 @@ class Kolokium_model extends CI_model {
     }
 
     public function editJadwalKolokium() {
-        $tanggal = $this->input->post('tanggal', true);
-        $tgl = format_indo($tanggal);
+//        $tanggal = $this->input->post('tanggal', true);
+//        $tgl = format_indo($tanggal);
 
         $data = array(
             'nim' => $this->input->post('nim', true),
@@ -50,7 +50,7 @@ class Kolokium_model extends CI_model {
             'dosen2' => $this->input->post('dosen2', true),
             'judul' => $this->input->post('judul', true),
             'reviewer' => $this->input->post('reviewer', true),
-            'tanggal' => $tgl,
+            'tanggal' => $this->input->post('tanggal', true),
             'durasi' => $this->input->post('durasi', true),
             'ruang' => $this->input->post('ruang', true),
             'keterangan' => $this->input->post('keterangan', true)

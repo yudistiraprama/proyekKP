@@ -70,7 +70,7 @@
         <tr>
             <td>Tanggal<</td>
             <td>:</td>
-            <td><?= $pendadaran['tanggal']; ?></td>
+            <td><?= format_indo($pendadaran['tanggal']); ?></td>
         </tr>
         <tr>
             <td>Jam</td>

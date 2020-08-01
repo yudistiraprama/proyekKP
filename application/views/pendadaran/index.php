@@ -90,7 +90,7 @@
                             <th><?= ++$start; ?></th>
                             <td><?= $pen['nim']; ?></td>
                             <td style="text-align:left"><?= $pen['nama']; ?></td>
-                            <td><?= $pen['tanggal']; ?></td>
+                            <td><?= format_indo($pen['tanggal']); ?></td>
                             <td><?= $pen['durasi']; ?></td>
                             <td><?= $pen['ruang']; ?></td>
                             <td>

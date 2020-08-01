@@ -21,6 +21,7 @@
         <h3>
             UNDANGAN UJIAN PENDADARAN SKRIPSI
         </h3>
+        <br><br>
     </center>
     <?php if ($pendadaran['dosen2'] != NULL): ?>
         <table>
@@ -74,7 +75,7 @@
                 <td style="color: white">Yth.</td>  
                 <td>Tanggal</td>
                 <td>:</td>
-                <td><?= $pendadaran['tanggal']; ?></td>
+                <td><?= format_indo($pendadaran['tanggal']); ?></td>
             </tr>
             <tr>
                 <td></td>
@@ -117,6 +118,13 @@
 
         <p>Saya ingin meminta konfirmasi Bapak/Ibu, apakah bisa dilaksanakan sesuai jadwal diatas?<br>
             Atas perhatian dan kerjasama Bapak/Ibu saya ucapkan terima kasih.
+        </p>
+        <br><br><br>
+        <p style="text-align: right">
+            Yogyakarta, <?= $tanggal; ?>
+            <br><br><br>
+            (Wakaprodi)<br>
+            <?= $dosen['nama']; ?>
         </p>
     <?php else: ?>
         <table>
@@ -166,7 +174,7 @@
                 <td style="color: white">Yth.</td>  
                 <td>Tanggal</td>
                 <td>:</td>
-                <td><?= $pendadaran['tanggal']; ?></td>
+                <td><?= format_indo($pendadaran['tanggal']); ?></td>
             </tr>
             <tr>
                 <td></td>
@@ -204,6 +212,13 @@
 
         <p>Saya ingin meminta konfirmasi Bapak/Ibu, apakah bisa dilaksanakan sesuai jadwal diatas?<br>
             Atas perhatian dan kerjasama Bapak/Ibu saya ucapkan terima kasih.
+        </p>
+        <br><br><br>
+        <p style="text-align: right">
+            Yogyakarta, <?= $tanggal; ?>
+            <br><br><br>
+            (Wakaprodi)<br>
+            <?= $dosen['nama']; ?>
         </p>
     <?php endif; ?>
 

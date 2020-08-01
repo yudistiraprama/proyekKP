@@ -23,7 +23,6 @@
         </div>
     <?php endif; ?>
 
-
     <div class="row mt-3">
         <div class="col">
             <div class="card">
@@ -38,7 +37,7 @@
                             <input type="text" name="nim" class="form-control" id="nim" autofocus="">
                             <small class="form-text text-danger"><?= form_error('nim'); ?></small>
                         </div>
-                        <button type="submit" name="inputNim" value="inputNim" class="btn btn-primary float-right">Search</button>
+                        <button type="submit" name="inputNim" value="inputNim" class="btn btn-primary float-right"><i class="fas fa-search"></i> Search</button>
                     </form>
                 </div>   
             </div>
