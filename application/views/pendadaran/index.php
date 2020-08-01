@@ -1,5 +1,5 @@
 <div class="container">
-    <?php $k = array('bulan', 'dosen1', 'dosen2', 'reviewer', 'ketuaPenguji', 'sekretarisPenguji', 'jam', 'ruang'); ?>
+    <?php $k = array('awal', 'akhir', 'dosen1', 'dosen2', 'reviewer', 'ketuaPenguji', 'sekretarisPenguji', 'jam', 'ruang'); ?>
     <?php $this->session->unset_userdata($k); ?>
     <?php if ($this->session->flashdata('flash')): ?>
         <div class="row mt-3">

@@ -1245,6 +1245,7 @@ class Pendadaran extends CI_Controller {
             $arraydata = array(
                 'awal' => $postData['awal'],
                 'akhir' => $postData['akhir'],
+                'dosen1' => $postData['dosen1'],
                 'dosen2' => $postData['dosen2'],
                 'reviewer' => $postData['reviewer'],
                 'ketuaPenguji' => $postData['ketuaPenguji'],
