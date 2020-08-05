@@ -299,7 +299,7 @@
                         </button>
                         <div class="dropdown-menu">
                             <a href="<?= base_url(); ?>kolokium/excel" class="dropdown-item"><i class="fas fa-file-excel"></i> Jadwal Kolokium</a>
-                            <a href="#" class="dropdown-item"><i class="fas fa-file-excel"></i> Rekap Penguji</a>
+                            <a href="<?= base_url(); ?>kolokium/excelDosen" class="dropdown-item"><i class="fas fa-file-excel"></i> Rekap Penguji</a>
                         </div>
                     </div>
                 </form>

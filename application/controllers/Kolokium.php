@@ -794,21 +794,81 @@ class Kolokium extends CI_Controller {
         $object->getProperties()->setLastModifiedBy("Informatika");
         $object->getProperties()->setTitle("Jadwal Kolokium");
 
+        $style_row = array(
+            'alignment' => array(
+                'horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,
+                'vertical' => PHPExcel_Style_Alignment::VERTICAL_CENTER
+            ),
+            'borders' => array(
+                'top' => array('style' => PHPExcel_Style_Border::BORDER_THIN),
+                'right' => array('style' => PHPExcel_Style_Border::BORDER_THIN),
+                'bottom' => array('style' => PHPExcel_Style_Border::BORDER_THIN),
+                'left' => array('style' => PHPExcel_Style_Border::BORDER_THIN)
+            )
+        );
+
+        $style_row_left = array(
+            'alignment' => array(
+                'horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_LEFT,
+                'vertical' => PHPExcel_Style_Alignment::VERTICAL_CENTER
+            ),
+            'borders' => array(
+                'top' => array('style' => PHPExcel_Style_Border::BORDER_THIN),
+                'right' => array('style' => PHPExcel_Style_Border::BORDER_THIN),
+                'bottom' => array('style' => PHPExcel_Style_Border::BORDER_THIN),
+                'left' => array('style' => PHPExcel_Style_Border::BORDER_THIN)
+            )
+        );
+
         $object->setActiveSheetIndex(0);
 
-        $object->getActiveSheet()->setCellValue('A1', 'NO');
-        $object->getActiveSheet()->setCellValue('B1', 'NIM');
-        $object->getActiveSheet()->setCellValue('C1', 'NAMA');
-        $object->getActiveSheet()->setCellValue('D1', 'DOSEN PEMBIMBING 1');
-        $object->getActiveSheet()->setCellValue('E1', 'DOSEN PEMBIMBING 2');
-        $object->getActiveSheet()->setCellValue('F1', 'JUDUL TUGAS AKHIR');
-        $object->getActiveSheet()->setCellValue('G1', 'REVIEWER KOLOKIUM');
-        $object->getActiveSheet()->setCellValue('H1', 'TANGGAL');
-        $object->getActiveSheet()->setCellValue('I1', 'JAM');
-        $object->getActiveSheet()->setCellValue('J1', 'RUANGAN');
-        $object->getActiveSheet()->setCellValue('K1', 'KETERANGAN');
+        $object->getActiveSheet()->setCellValue('A1', 'JADWAL KOLOKIUM PERIODE ' . format_indo($this->session->userdata('awal')) . ' - ' . format_indo($this->session->userdata('akhir')));
+        $object->getActiveSheet()->mergeCells('A1:L1');
+        $object->getActiveSheet()->getStyle('A1')->getFont()->setBold(TRUE);
+        $object->getActiveSheet()->getStyle('A1')->getFont()->setSize(15);
+        $object->getActiveSheet()->getStyle('A1')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+        $object->getActiveSheet()->getStyle('A1')->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
 
-        $baris = 2;
+        $object->getActiveSheet()->setCellValue('A3', 'NO');
+        $object->getActiveSheet()->setCellValue('B3', 'NIM');
+        $object->getActiveSheet()->setCellValue('C3', 'NAMA');
+        $object->getActiveSheet()->setCellValue('D3', 'DOSEN PEMBIMBING 1');
+        $object->getActiveSheet()->setCellValue('E3', 'DOSEN PEMBIMBING 2');
+        $object->getActiveSheet()->setCellValue('F3', 'JUDUL TUGAS AKHIR');
+        $object->getActiveSheet()->setCellValue('G3', 'REVIEWER KOLOKIUM');
+        $object->getActiveSheet()->setCellValue('H3', 'TANGGAL');
+        $object->getActiveSheet()->setCellValue('I3', 'JAM');
+        $object->getActiveSheet()->setCellValue('J3', 'RUANGAN');
+        $object->getActiveSheet()->setCellValue('K3', 'NILAI');
+        $object->getActiveSheet()->setCellValue('L3', 'KETERANGAN');
+
+        $object->getActiveSheet()->getStyle('A3')->applyFromArray($style_row);
+        $object->getActiveSheet()->getStyle('A3')->getFont()->setBold(TRUE);
+        $object->getActiveSheet()->getStyle('B3')->applyFromArray($style_row);
+        $object->getActiveSheet()->getStyle('B3')->getFont()->setBold(TRUE);
+        $object->getActiveSheet()->getStyle('C3')->applyFromArray($style_row);
+        $object->getActiveSheet()->getStyle('C3')->getFont()->setBold(TRUE);
+        $object->getActiveSheet()->getStyle('D3')->applyFromArray($style_row);
+        $object->getActiveSheet()->getStyle('D3')->getFont()->setBold(TRUE);
+        $object->getActiveSheet()->getStyle('E3')->applyFromArray($style_row);
+        $object->getActiveSheet()->getStyle('E3')->getFont()->setBold(TRUE);
+        $object->getActiveSheet()->getStyle('F3')->applyFromArray($style_row);
+        $object->getActiveSheet()->getStyle('F3')->getFont()->setBold(TRUE);
+        $object->getActiveSheet()->getStyle('G3')->applyFromArray($style_row);
+        $object->getActiveSheet()->getStyle('G3')->getFont()->setBold(TRUE);
+        $object->getActiveSheet()->getStyle('H3')->applyFromArray($style_row);
+        $object->getActiveSheet()->getStyle('H3')->getFont()->setBold(TRUE);
+        $object->getActiveSheet()->getStyle('I3')->applyFromArray($style_row);
+        $object->getActiveSheet()->getStyle('I3')->getFont()->setBold(TRUE);
+        $object->getActiveSheet()->getStyle('J3')->applyFromArray($style_row);
+        $object->getActiveSheet()->getStyle('J3')->getFont()->setBold(TRUE);
+        $object->getActiveSheet()->getStyle('K3')->applyFromArray($style_row);
+        $object->getActiveSheet()->getStyle('K3')->getFont()->setBold(TRUE);
+        $object->getActiveSheet()->getStyle('L3')->applyFromArray($style_row);
+        $object->getActiveSheet()->getStyle('L3')->getFont()->setBold(TRUE);
+
+
+        $baris = 4;
         $no = 1;
 
         foreach ($data['mahasiswa'] as $mhs) {
@@ -822,13 +882,198 @@ class Kolokium extends CI_Controller {
             $object->getActiveSheet()->setCellValue('H' . $baris, format_indo($mhs['tanggal']));
             $object->getActiveSheet()->setCellValue('I' . $baris, $mhs['durasi']);
             $object->getActiveSheet()->setCellValue('J' . $baris, $mhs['ruang']);
-            $object->getActiveSheet()->setCellValue('K' . $baris, $mhs['keterangan']);
+            $object->getActiveSheet()->setCellValue('K' . $baris, $mhs['nilai']);
+            $object->getActiveSheet()->setCellValue('L' . $baris, $mhs['keterangan']);
+
+            $object->getActiveSheet()->getStyle('A' . $baris)->applyFromArray($style_row);
+            $object->getActiveSheet()->getStyle('B' . $baris)->applyFromArray($style_row);
+            $object->getActiveSheet()->getStyle('C' . $baris)->applyFromArray($style_row_left);
+            $object->getActiveSheet()->getStyle('D' . $baris)->applyFromArray($style_row_left);
+            $object->getActiveSheet()->getStyle('E' . $baris)->applyFromArray($style_row_left);
+            $object->getActiveSheet()->getStyle('F' . $baris)->applyFromArray($style_row_left);
+            $object->getActiveSheet()->getStyle('G' . $baris)->applyFromArray($style_row_left);
+            $object->getActiveSheet()->getStyle('H' . $baris)->applyFromArray($style_row);
+            $object->getActiveSheet()->getStyle('I' . $baris)->applyFromArray($style_row);
+            $object->getActiveSheet()->getStyle('J' . $baris)->applyFromArray($style_row);
+            $object->getActiveSheet()->getStyle('K' . $baris)->applyFromArray($style_row);
+            $object->getActiveSheet()->getStyle('L' . $baris)->applyFromArray($style_row_left);
 
             $baris++;
         }
 
         $filename = 'Jadwal_Kolokium_' . date("d-m-Y") . '.xlsx';
         $object->getActiveSheet()->setTitle("Jadwal Kolokium");
+
+        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        header('Content-Disposition: attachment;filename=' . $filename);
+        header('Cache-Control: max-age=0');
+
+        $writer = PHPExcel_IOFactory::createwriter($object, 'Excel2007');
+        $writer->save('php://output');
+    }
+
+    public function excelDosen() {
+        $statement = $this->session->userdata('statement');
+        $data['mahasiswa'] = $this->Kolokium_model->getKolokiumReport($statement);
+        $data['dosen'] = $this->Dosen_model->getAllDosen();
+        $indeks = 0;
+        foreach ($data['dosen'] as $d) {
+            $dosenTunggal = 0;
+            $dosen1 = 0;
+            $dosen2 = 0;
+            $reviewer = 0;
+            $penguji = 0;
+            foreach ($data['mahasiswa'] as $mhs) {
+                if ($d['nama'] == $mhs['dosen1'] && $mhs['dosen2'] != NULL) {
+                    $dosen1++;
+                } elseif ($d['nama'] == $mhs['dosen1'] && $mhs['dosen2'] == NULL) {
+                    $dosenTunggal++;
+                }
+                if ($mhs['dosen2'] != NULL && $d['nama'] == $mhs['dosen2']) {
+                    $dosen2++;
+                }
+                if ($d['nama'] == $mhs['reviewer']) {
+                    $reviewer++;
+                }
+                $penguji = $dosenTunggal + $dosen1 + $dosen2 + $reviewer;
+                $dosen = array($d['npp'], $d['nama'], $dosenTunggal, $dosen1, $dosen2, $reviewer, $penguji);
+            }
+            $array[$indeks] = $dosen;
+            $indeks++;
+        }
+
+        require (APPPATH . 'PHPExcel-1.8/Classes/PHPExcel.php');
+        require (APPPATH . 'PHPExcel-1.8/Classes/PHPExcel/Writer/Excel2007.php');
+
+        $object = new PHPExcel;
+        $object->getProperties()->setCreator("Informatika");
+        $object->getProperties()->setLastModifiedBy("Informatika");
+        $object->getProperties()->setTitle("Rekap Penguji Kolokium");
+
+        $style_row = array(
+            'alignment' => array(
+                'horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,
+                'vertical' => PHPExcel_Style_Alignment::VERTICAL_CENTER
+            ),
+            'borders' => array(
+                'top' => array('style' => PHPExcel_Style_Border::BORDER_THIN),
+                'right' => array('style' => PHPExcel_Style_Border::BORDER_THIN),
+                'bottom' => array('style' => PHPExcel_Style_Border::BORDER_THIN),
+                'left' => array('style' => PHPExcel_Style_Border::BORDER_THIN)
+            )
+        );
+
+        $style_row_left = array(
+            'alignment' => array(
+                'horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_LEFT,
+                'vertical' => PHPExcel_Style_Alignment::VERTICAL_CENTER
+            ),
+            'borders' => array(
+                'top' => array('style' => PHPExcel_Style_Border::BORDER_THIN),
+                'right' => array('style' => PHPExcel_Style_Border::BORDER_THIN),
+                'bottom' => array('style' => PHPExcel_Style_Border::BORDER_THIN),
+                'left' => array('style' => PHPExcel_Style_Border::BORDER_THIN)
+            )
+        );
+
+        $object->setActiveSheetIndex(0);
+
+        $object->getActiveSheet()->setCellValue('A1', 'Fakultas');
+        $object->getActiveSheet()->setCellValue('B1', ':');
+        $object->getActiveSheet()->setCellValue('C1', 'Sains dan Teknologi');
+        $object->getActiveSheet()->setCellValue('A2', 'Jurusan');
+        $object->getActiveSheet()->setCellValue('B2', ':');
+        $object->getActiveSheet()->setCellValue('C2', 'Informatika');
+        $object->getActiveSheet()->setCellValue('A3', 'Program Studi');
+        $object->getActiveSheet()->setCellValue('B3', ':');
+        $object->getActiveSheet()->setCellValue('C3', 'Informatika');
+        $object->getActiveSheet()->setCellValue('A4', 'Periode');
+        $object->getActiveSheet()->setCellValue('B4', ':');
+        $object->getActiveSheet()->setCellValue('C4', format_indo($this->session->userdata('awal')) . ' - ' . format_indo($this->session->userdata('akhir')));
+
+        $object->getActiveSheet()->setCellValue('A6', 'NO');
+        $object->getActiveSheet()->mergeCells('A6:A8');
+        $object->getActiveSheet()->getStyle('A6:A8')->applyFromArray($style_row);
+        $object->getActiveSheet()->setCellValue('B6', 'NPP');
+        $object->getActiveSheet()->mergeCells('B6:B8');
+        $object->getActiveSheet()->getStyle('B6:B8')->applyFromArray($style_row);
+        $object->getActiveSheet()->setCellValue('C6', 'NAMA');
+        $object->getActiveSheet()->mergeCells('C6:C8');
+        $object->getActiveSheet()->getStyle('C6:C8')->applyFromArray($style_row);
+        $object->getActiveSheet()->setCellValue('D6', 'BIMBINGAN SKRIPSI');
+        $object->getActiveSheet()->mergeCells('D6:I6');
+        $object->getActiveSheet()->getStyle('D6:I6')->applyFromArray($style_row);
+        $object->getActiveSheet()->setCellValue('D7', 'PEMB.');
+        $object->getActiveSheet()->getStyle('D7')->applyFromArray($style_row);
+        $object->getActiveSheet()->setCellValue('D8', 'TUNGGAL');
+        $object->getActiveSheet()->getStyle('D8')->applyFromArray($style_row);
+        $object->getActiveSheet()->setCellValue('E7', 'PEMB. 1');
+        $object->getActiveSheet()->mergeCells('E7:E8');
+        $object->getActiveSheet()->getStyle('E7:E8')->applyFromArray($style_row);
+        $object->getActiveSheet()->setCellValue('F7', 'PEMB. 2');
+        $object->getActiveSheet()->mergeCells('F7:F8');
+        $object->getActiveSheet()->getStyle('F7:F8')->applyFromArray($style_row);
+        $object->getActiveSheet()->setCellValue('G7', 'PENANDA');
+        $object->getActiveSheet()->getStyle('G7')->applyFromArray($style_row);
+        $object->getActiveSheet()->setCellValue('G8', 'TANGAN');
+        $object->getActiveSheet()->getStyle('G8')->applyFromArray($style_row);
+        $object->getActiveSheet()->setCellValue('H7', 'PMRSK');
+        $object->getActiveSheet()->getStyle('H7')->applyFromArray($style_row);
+        $object->getActiveSheet()->setCellValue('H8', 'ABSTRAK');
+        $object->getActiveSheet()->getStyle('H8')->applyFromArray($style_row);
+        $object->getActiveSheet()->setCellValue('I7', 'PENGUJI');
+        $object->getActiveSheet()->mergeCells('I7:I8');
+        $object->getActiveSheet()->getStyle('I7:I8')->applyFromArray($style_row);
+
+        $baris = 9;
+        $no = 1;
+
+        for ($i = 0; $i < count($array); $i++) {
+            if ($array[$i][6] != 0) {
+                $object->getActiveSheet()->setCellValue('A' . $baris, $no++);
+                $object->getActiveSheet()->setCellValue('B' . $baris, $array[$i][0]);
+                $object->getActiveSheet()->setCellValue('C' . $baris, $array[$i][1]);
+                if ($array[$i][2] == 0) {
+                    $object->getActiveSheet()->setCellValue('D' . $baris);
+                } else {
+                    $object->getActiveSheet()->setCellValue('D' . $baris, $array[$i][2]);
+                }
+                if ($array[$i][3] == 0) {
+                    $object->getActiveSheet()->setCellValue('E' . $baris);
+                } else {
+                    $object->getActiveSheet()->setCellValue('E' . $baris, $array[$i][3]);
+                }
+                if ($array[$i][4] == 0) {
+                    $object->getActiveSheet()->setCellValue('F' . $baris);
+                } else {
+                    $object->getActiveSheet()->setCellValue('F' . $baris, $array[$i][4]);
+                }
+                if ($array[$i][5] == 0) {
+                    $object->getActiveSheet()->setCellValue('G' . $baris);
+                } else {
+                    $object->getActiveSheet()->setCellValue('G' . $baris, $array[$i][5]);
+                }
+                $object->getActiveSheet()->setCellValue('H' . $baris);
+                $object->getActiveSheet()->setCellValue('I' . $baris, $array[$i][6]);
+
+                $object->getActiveSheet()->getStyle('A' . $baris)->applyFromArray($style_row);
+                $object->getActiveSheet()->getStyle('B' . $baris)->applyFromArray($style_row);
+                $object->getActiveSheet()->getStyle('C' . $baris)->applyFromArray($style_row_left);
+                $object->getActiveSheet()->getStyle('D' . $baris)->applyFromArray($style_row);
+                $object->getActiveSheet()->getStyle('E' . $baris)->applyFromArray($style_row);
+                $object->getActiveSheet()->getStyle('F' . $baris)->applyFromArray($style_row);
+                $object->getActiveSheet()->getStyle('G' . $baris)->applyFromArray($style_row);
+                $object->getActiveSheet()->getStyle('H' . $baris)->applyFromArray($style_row);
+                $object->getActiveSheet()->getStyle('I' . $baris)->applyFromArray($style_row);
+
+                $baris++;
+            }
+        }
+        $object->getActiveSheet()->getColumnDimension('A')->setWidth(15);
+        $object->getActiveSheet()->getColumnDimension('C')->setWidth(40);
+
+        $filename = 'Rekap_Penguji_Kolokium_' . date("d-m-Y") . '.xlsx';
+        $object->getActiveSheet()->setTitle("Rekap Penguji Kolokium");
 
         header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
         header('Content-Disposition: attachment;filename=' . $filename);

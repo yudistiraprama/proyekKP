@@ -371,8 +371,8 @@
                             <i class="fas fa-file-excel"></i> Export Excel
                         </button>
                         <div class="dropdown-menu">
-                            <a href="<?= base_url(); ?>pendadaran/excel" class="dropdown-item"><i class="fas fa-file-excel"></i> Jadwal Kolokium</a>
-                            <a href="#" class="dropdown-item"><i class="fas fa-file-excel"></i> Rekap Penguji</a>
+                            <a href="<?= base_url(); ?>pendadaran/excel" class="dropdown-item"><i class="fas fa-file-excel"></i> Jadwal Pendadaran</a>
+                            <a href="<?= base_url(); ?>pendadaran/excelDosen" class="dropdown-item"><i class="fas fa-file-excel"></i> Rekap Penguji</a>
                         </div>
                     </div>
                 </form>
@@ -393,7 +393,7 @@
                             <th scope="col">Tanggal</th>
                             <th scope="col">Jam</th>
                             <th scope="col">Ruangan</th>
-                            <th scope="col">Niali</th>
+                            <th scope="col">Nilai</th>
                         </tr>
                     </thead>
                     <tbody>
