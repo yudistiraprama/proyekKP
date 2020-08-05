@@ -96,7 +96,6 @@
                         <div class="dropdown-menu">
                             <a href="<?= base_url() ?>kolokium/undangan/<?= $kolokium['id']; ?>" class="dropdown-item"><i class="fas fa-file-pdf"></i> Undangan PDF</a>
                             <a href="<?= base_url() ?>kolokium/undangantxt/<?= $kolokium['id']; ?>" class="dropdown-item"><i class="fas fa-file-alt"></i> Undangan TXT</a>
-
                         </div>
                     </div>
                 </div>

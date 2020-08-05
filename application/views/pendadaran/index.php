@@ -41,6 +41,15 @@
     <div class="row mt-3">
         <div class="col-md-10">
             <a href="<?= base_url(); ?>pendadaran/inputNim" class="btn btn-primary"><i class="fas fa-plus"></i> Tambah Jadwal Pendadaran</a>
+            <div class="btn-group">
+                <button type="button" class="btn btn-warning dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <i class="fas fa-history"></i> History
+                </button>
+                <div class="dropdown-menu">
+                    <a href="#" class="dropdown-item"><i class="fas fa-table"></i> Data Pindahan</a>
+                    <a href="#" class="dropdown-item"><i class="fas fa-table"></i> Data Hapus</a>
+                </div>
+            </div>
             <a href="<?= base_url(); ?>pendadaran/report" class="btn btn-success"><i class="fas fa-file-alt"></i> Report</a>
         </div>
     </div>
@@ -71,6 +80,7 @@
                         <th scope="col">Tanggal</th>
                         <th scope="col">Jam</th>
                         <th scope="col">Ruangan</th>
+                        <th scope="col">Nilai</th>
                         <th scope="col">Opsi</th>
                     </tr>
                 </thead>
@@ -87,15 +97,17 @@
 
                     <?php foreach ($pendadaran as $pen) : ?>
                         <tr style="text-align:center">
-                            <th><?= ++$start; ?></th>
-                            <td><?= $pen['nim']; ?></td>
-                            <td style="text-align:left"><?= $pen['nama']; ?></td>
-                            <td><?= format_indo($pen['tanggal']); ?></td>
-                            <td><?= $pen['durasi']; ?></td>
-                            <td><?= $pen['ruang']; ?></td>
-                            <td>
+                            <th style="vertical-align: middle"><?= ++$start; ?></th>
+                            <td style="vertical-align: middle"><?= $pen['nim']; ?></td>
+                            <td style="text-align:left; width: 280px"><?= $pen['nama']; ?></td>
+                            <td style="vertical-align: middle"><?= format_indo($pen['tanggal']); ?></td>
+                            <td style="vertical-align: middle"><?= $pen['durasi']; ?></td>
+                            <td style="vertical-align: middle"><?= $pen['ruang']; ?></td>
+                            <td style="vertical-align: middle"><?= $pen['nilai']; ?></td>
+                            <td style="vertical-align: middle">
                                 <a href="<?= base_url(); ?>pendadaran/detail/<?= $pen['id']; ?>" class="badge badge-primary" >Detail</a> 
                                 <a href="<?= base_url(); ?>pendadaran/edit/<?= $pen['id']; ?>" class="badge badge-success" >Edit</a>
+                                <a href="#" class="badge badge-warning" >Pindah</a>
                                 <a href="<?= base_url(); ?>pendadaran/hapus/<?= $pen['id']; ?>" class="badge badge-danger" onclick="return confirm('Apakah anda yakin menghapus data ini?');">Hapus</a>                
                             </td>
                         </tr>

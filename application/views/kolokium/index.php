@@ -41,6 +41,15 @@
     <div class="row mt-3">
         <div class="col-md-10">
             <a href="<?= base_url(); ?>kolokium/inputNim" class="btn btn-primary"><i class="fas fa-plus"></i> Tambah Jadwal Kolokium</a>
+            <div class="btn-group">
+                <button type="button" class="btn btn-warning dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <i class="fas fa-history"></i> History
+                </button>
+                <div class="dropdown-menu">
+                    <a href="#" class="dropdown-item"><i class="fas fa-table"></i> Data Pindahan</a>
+                    <a href="#" class="dropdown-item"><i class="fas fa-table"></i> Data Hapus</a>
+                </div>
+            </div>
             <a href="<?= base_url(); ?>kolokium/report" class="btn btn-success"><i class="fas fa-file-alt"></i> Report</a>
         </div>
     </div>
@@ -59,7 +68,7 @@
     </div>
 
     <div class="row">
-        <div class="col-md-16">
+        <div class="col-md-12">
             <h7>Jumlah Data : <?= $total_rows; ?></h7>
 
             <table class="table" border="1">
@@ -71,6 +80,7 @@
                         <th scope="col">Tanggal</th>
                         <th scope="col">Jam</th>
                         <th scope="col">Ruangan</th>
+                        <th scope="col">Nilai</th>
                         <th scope="col">Opsi</th>
                     </tr>
                 </thead>
@@ -86,16 +96,18 @@
                     <?php endif; ?>
 
                     <?php foreach ($kolokium as $kol) : ?>
-                        <tr style="text-align:center">
-                            <th><?= ++$start; ?></th>
-                            <td><?= $kol['nim']; ?></td>
-                            <td style="text-align:left"><?= $kol['nama']; ?></td>
-                            <td><?= format_indo($kol['tanggal']); ?></td>
-                            <td><?= $kol['durasi']; ?></td>
-                            <td><?= $kol['ruang']; ?></td>
-                            <td>
+                        <tr style="text-align: center;" >
+                            <th style="vertical-align: middle"><?= ++$start; ?></th>
+                            <td style="vertical-align: middle"><?= $kol['nim']; ?></td>
+                            <td style="text-align:left; width: 280px"><?= $kol['nama']; ?></td>
+                            <td style="vertical-align: middle"><?= format_indo($kol['tanggal']); ?></td>
+                            <td style="vertical-align: middle"><?= $kol['durasi']; ?></td>
+                            <td style="vertical-align: middle"><?= $kol['ruang']; ?></td>
+                            <td style="vertical-align: middle"><?= $kol['nilai']; ?></td>
+                            <td style="vertical-align: middle">
                                 <a href="<?= base_url(); ?>kolokium/detail/<?= $kol['id']; ?>" class="badge badge-primary" >Detail</a> 
                                 <a href="<?= base_url(); ?>kolokium/edit/<?= $kol['id']; ?>" class="badge badge-success" >Edit</a> 
+                                <a href="#" class="badge badge-warning" >Pindah</a>
                                 <a href="<?= base_url(); ?>kolokium/hapus/<?= $kol['id']; ?>" class="badge badge-danger" onclick="return confirm('Apakah anda yakin menghapus data ini?');">Hapus</a>                                       
                             </td>
                         </tr>

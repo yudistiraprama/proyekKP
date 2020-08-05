@@ -366,7 +366,15 @@
                     <a href="<?= base_url() ?>pendadaran" class="btn btn-primary"><i class="fas fa-arrow-left"></i> Kembali</a>
                     <button type="submit" name="cari" class="btn btn-warning"><i class="fas fa-search"></i> Cari</button>   
                     <a href="<?= base_url() ?>pendadaran/refreshReport" class="btn btn-danger"><i class="fa fa-refresh"></i> Refresh</a>
-                    <a href="<?= base_url(); ?>pendadaran/excel" class="btn btn-success"><i class="fas fa-file-excel"></i> Cetak Exel</a>
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fas fa-file-excel"></i> Export Excel
+                        </button>
+                        <div class="dropdown-menu">
+                            <a href="<?= base_url(); ?>pendadaran/excel" class="dropdown-item"><i class="fas fa-file-excel"></i> Jadwal Kolokium</a>
+                            <a href="#" class="dropdown-item"><i class="fas fa-file-excel"></i> Rekap Penguji</a>
+                        </div>
+                    </div>
                 </form>
             </div>
         </div>
@@ -385,6 +393,7 @@
                             <th scope="col">Tanggal</th>
                             <th scope="col">Jam</th>
                             <th scope="col">Ruangan</th>
+                            <th scope="col">Niali</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -401,12 +410,13 @@
                         <?php $start = 0; ?>
                         <?php foreach ($pendadaran as $pen) : ?>
                             <tr style="text-align:center">
-                                <th><?= ++$start; ?></th>
-                                <td><?= $pen['nim']; ?></td>
-                                <td style="text-align:left"><?= $pen['nama']; ?></td>
-                                <td><?= format_indo($pen['tanggal']); ?></td>
-                                <td><?= $pen['durasi']; ?></td>
-                                <td><?= $pen['ruang']; ?></td>
+                                <th style="vertical-align: middle"><?= ++$start; ?></th>
+                                <td style="vertical-align: middle"><?= $pen['nim']; ?></td>
+                                <td style="text-align:left; width: 280px"><?= $pen['nama']; ?></td>
+                                <td style="vertical-align: middle"><?= format_indo($pen['tanggal']); ?></td>
+                                <td style="vertical-align: middle"><?= $pen['durasi']; ?></td>
+                                <td style="vertical-align: middle"><?= $pen['ruang']; ?></td>
+                                <td style="vertical-align: middle"><?= $pen['nilai']; ?></td>
                             </tr>
                         <?php endforeach; ?>
                     </tbody>
