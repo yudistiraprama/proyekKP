@@ -1,3 +1,4 @@
+<?php var_dump($this->session->userdata()); ?>
 <div class="container">
     <?php if ($this->session->flashdata('reportKolokium')): ?>
         <div class="row mt-3">
@@ -105,13 +106,13 @@
                                         <td>
                                             <div class="form-group">
                                                 <label for="awal">Periode Awal</label>
-                                                <input type="date" name="awal" class="form-control" id="awal">  
+                                                <input type="date" name="awal" class="form-control" id="awal" value="<?= $this->session->userdata('awal'); ?>">  
                                             </div>
                                         </td>
                                         <td>
                                             <div class="form-group"> 
                                                 <label for="akhir">Periode Akhir</label>
-                                                <input type="date" name="akhir" class="form-control" id="akhir"> 
+                                                <input type="date" name="akhir" class="form-control" id="akhir" value="<?= $this->session->userdata('akhir'); ?>"> 
                                             </div>
                                         </td>
                                     </tr>
@@ -187,7 +188,8 @@
                         </tr>
                     </table>
                     <a href="<?= base_url() ?>kolokium" class="btn btn-primary"><i class="fas fa-arrow-left"></i> Kembali</a>
-                    <button type="submit" name="cari" class="btn btn-warning"><i class="fas fa-search"></i> Cari</button>   
+                    <button type="submit" name="cari" class="btn btn-warning"><i class="fas fa-search"></i> Cari</button> 
+                    <a href="<?= base_url() ?>kolokium/refreshReport" class="btn btn-danger"><i class="fa fa-refresh"></i> Refresh</a>
                 </form>
             </div>
         </div>
@@ -208,13 +210,13 @@
                                         <td>
                                             <div class="form-group">
                                                 <label for="awal">Periode Awal</label>
-                                                <input type="date" name="awal" class="form-control" id="awal">  
+                                                <input type="date" name="awal" class="form-control" id="awal" value="<?= $this->session->userdata('awal'); ?>">  
                                             </div>
                                         </td>
                                         <td>
                                             <div class="form-group"> 
                                                 <label for="akhir">Periode Akhir</label>
-                                                <input type="date" name="akhir" class="form-control" id="akhir"> 
+                                                <input type="date" name="akhir" class="form-control" id="akhir" value="<?= $this->session->userdata('akhir'); ?>"> 
                                             </div>
                                         </td>
                                     </tr>
@@ -291,6 +293,7 @@
                     </table>
                     <a href="<?= base_url() ?>kolokium" class="btn btn-primary"><i class="fas fa-arrow-left"></i> Kembali</a>
                     <button type="submit" name="cari" class="btn btn-warning"><i class="fas fa-search"></i> Cari</button>   
+                    <a href="<?= base_url() ?>kolokium/refreshReport" class="btn btn-danger"><i class="fa fa-refresh"></i> Refresh</a>
                     <a href="<?= base_url(); ?>kolokium/excel" class="btn btn-success"><i class="fas fa-file-excel"></i> Cetak Exel</a>
                 </form>
             </div>

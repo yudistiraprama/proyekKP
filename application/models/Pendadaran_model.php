@@ -94,21 +94,22 @@ class Pendadaran_model extends CI_model {
         $this->db->or_where('durasi', $durasi);
         return $this->db->get('pendadaran')->result_array();
     }
-    
-    public function cekStatusRuangEdit2($tanggal,$durasi,$ruang){
-        $this->db->where('tanggal',$tanggal);
-        $this->db->where('durasi',$durasi);
-        $this->db->where('ruang',$ruang);
+
+    public function cekStatusRuangEdit2($tanggal, $durasi, $ruang) {
+        $this->db->where('tanggal', $tanggal);
+        $this->db->where('durasi', $durasi);
+        $this->db->where('ruang', $ruang);
         return $this->db->get('pendadaran')->result_array();
     }
-    public function cekStatusRuangEdit3($tanggal,$ruang){
-        $this->db->where('tanggal',$tanggal);
-        $this->db->where('ruang',$ruang);
+
+    public function cekStatusRuangEdit3($tanggal, $ruang) {
+        $this->db->where('tanggal', $tanggal);
+        $this->db->where('ruang', $ruang);
         return $this->db->get('pendadaran')->result_array();
     }
 
     public function getPendadaranReport($statement) {
-        $query = " SELECT * FROM pendadaran WHERE " . $statement;
+        $query = " SELECT * FROM pendadaran WHERE " . $statement . " ORDER BY tanggal ASC ";
 
         return $this->db->query($query)->result_array();
     }

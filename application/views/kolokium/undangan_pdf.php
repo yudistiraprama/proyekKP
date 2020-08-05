@@ -100,7 +100,7 @@
             Atas perhatian dan kerjasama Bapak/Ibu saya ucapkan terima kasih.
         </p>
         <br><br><br>
-        <p style="text-align: right">
+        <p style="margin-right: 30px; text-align: right">
             Yogyakarta, <?= $tanggal; ?>
             <br><br><br>
             (Wakaprodi)<br>
@@ -173,7 +173,7 @@
             Atas perhatian dan kerjasama Bapak/Ibu saya ucapkan terima kasih.
         </p>
         <br><br><br>
-        <p style="text-align: right">
+        <p style="margin-right: 30px; text-align: right">
             Yogyakarta, <?= $tanggal; ?>
             <br><br><br>
             (Wakaprodi)<br>

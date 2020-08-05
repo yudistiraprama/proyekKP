@@ -336,7 +336,7 @@ class Kolokium extends CI_Controller {
         $data['ruang'] = $this->db->get('ruangan')->result_array();
         $data['dosen'] = $this->Dosen_model->getAllDosen();
         $data['kolokium'] = $this->Kolokium_model->getKolokiumByID($id);
-        $data['kolokium']['tanggal'] = format_back($data['kolokium']['tanggal']);
+        $data['kolokium']['tanggal'] = $data['kolokium']['tanggal'];
 
         $this->form_validation->set_rules('nama', 'Nama Mahasiswa', 'required');
         $this->form_validation->set_rules('nim', 'NIM Mahasiswa', 'required|numeric');
@@ -773,6 +773,14 @@ class Kolokium extends CI_Controller {
             $this->load->view('kolokium/report', $data);
             $this->load->view('templates/footer');
         }
+    }
+
+    public function refreshReport() {
+        $data['kolokium'] = NULL;
+        $data['jumlahData'] = 0;
+        $k = array('awal', 'akhir', 'dosen1', 'dosen2', 'reviewer', 'ketuaPenguji', 'sekretarisPenguji', 'jam', 'ruang');
+        $this->session->unset_userdata($k);
+        redirect('kolokium/report');
     }
 
     public function excel() {
