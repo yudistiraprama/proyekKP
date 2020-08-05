@@ -1,4 +1,3 @@
-<?php var_dump($this->session->userdata()); ?>
 <div class="container">
     <?php if ($this->session->flashdata('reportKolokium')): ?>
         <div class="row mt-3">
