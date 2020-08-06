@@ -131,6 +131,10 @@
                             </select>
                         </div>
                         <div class="form-group">
+                            <label for="nilai">Nilai</label>
+                            <input type="text" name="nilai" class="form-control" id="nilai" value="-" readonly>
+                        </div>
+                        <div class="form-group">
                             <label for="keterangan">Keterangan</label>
                             <textarea class="form-control" name="keterangan" id="keterangan" rows="3"></textarea>
                         </div>

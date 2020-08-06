@@ -34,7 +34,7 @@
                 </div>
             </div>
         </div> 
-     <?php elseif ($this->session->flashdata('gagal')): ?>
+    <?php elseif ($this->session->flashdata('gagal')): ?>
         <div class="row mt-3">
             <div class="col-md-10">
                 <div class="alert alert-danger alert-dismissible fade show" role="alert">
@@ -57,8 +57,8 @@
                     <i class="fas fa-history"></i> History
                 </button>
                 <div class="dropdown-menu">
-                    <a href="#" class="dropdown-item"><i class="fas fa-table"></i> Data Pindahan</a>
-                    <a href="#" class="dropdown-item"><i class="fas fa-table"></i> Data Hapus</a>
+                    <a href="<?= base_url(); ?>pendadaran/pindahPendadaran" class="dropdown-item"><i class="fas fa-table"></i> Data Pindahan</a>
+                    <a href="<?= base_url(); ?>pendadaran/hapusPendadaran" class="dropdown-item"><i class="fas fa-table"></i> Data Hapus</a>
                 </div>
             </div>
             <a href="<?= base_url(); ?>pendadaran/report" class="btn btn-success"><i class="fas fa-file-alt"></i> Report</a>
@@ -91,7 +91,7 @@
                         <th scope="col">Tanggal</th>
                         <th scope="col">Jam</th>
                         <th scope="col">Ruangan</th>
-                        <th scope="col">Nilai</th>
+                        <th scope="col" colspan="2">Nilai</th>
                         <th scope="col">Opsi</th>
                     </tr>
                 </thead>
@@ -110,17 +110,20 @@
                         <tr style="text-align:center">
                             <th style="vertical-align: middle"><?= ++$start; ?></th>
                             <td style="vertical-align: middle"><?= $pen['nim']; ?></td>
-                            <td style="text-align:left; width: 280px"><?= $pen['nama']; ?></td>
+                            <td style="text-align:left; width: 250px; vertical-align: middle"><?= $pen['nama']; ?></td>
                             <td style="vertical-align: middle"><?= format_indo($pen['tanggal']); ?></td>
                             <td style="vertical-align: middle"><?= $pen['durasi']; ?></td>
                             <td style="vertical-align: middle"><?= $pen['ruang']; ?></td>
                             <td style="vertical-align: middle"><?= $pen['nilai']; ?></td>
                             <td style="vertical-align: middle">
-                                <a href="<?= base_url(); ?>pendadaran/detail/<?= $pen['id']; ?>" class="badge badge-primary" >Detail</a> 
-                                <a href="<?= base_url(); ?>pendadaran/edit/<?= $pen['id']; ?>" class="badge badge-success" >Edit</a>
-                                <a href="<?= base_url(); ?>pendadaran/nilai/<?= $pen['id']; ?>" class="badge badge-secondary" >Nilai</a>
-                                <a href="<?= base_url(); ?>pendadaran/pindah/<?= $pen['id']; ?>" class="badge badge-warning" >Pindah</a>
-                                <a href="<?= base_url(); ?>pendadaran/hapus/<?= $pen['id']; ?>" class="badge badge-danger" onclick="return confirm('Apakah anda yakin menghapus data ini?');">Hapus</a>                
+                                <a href="<?= base_url(); ?>pendadaran/nilai/<?= $pen['id']; ?>" class="badge badge-secondary" ><i class="fas fa-edit"></i> Nilai</a>
+                            </td>
+                            <td style="vertical-align: middle">
+                                <a href="<?= base_url(); ?>pendadaran/detail/<?= $pen['id']; ?>" class="badge badge-primary" style="width: 50px">Detail</a> 
+                                <a href="<?= base_url(); ?>pendadaran/edit/<?= $pen['id']; ?>" class="badge badge-success" style="width: 50px">Edit</a>
+                                <br>
+                                <a href="<?= base_url(); ?>pendadaran/pindah/<?= $pen['id']; ?>" class="badge badge-warning" style="width: 50px" onclick="return confirm('Apakah anda yakin memindahkan data ini?');">Pindah</a>
+                                <a href="<?= base_url(); ?>pendadaran/hapus/<?= $pen['id']; ?>" class="badge badge-danger" style="width: 50px" onclick="return confirm('Apakah anda yakin menghapus data ini?');">Hapus</a>                
                             </td>
                         </tr>
                     <?php endforeach; ?>

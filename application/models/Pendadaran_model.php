@@ -34,15 +34,25 @@ class Pendadaran_model extends CI_model {
         $this->db->where('id', $id);
         $this->db->delete('pendadaran');
     }
+    
+    public function hapusJadwalPendadaranHapus($id) {
+        $this->db->where('id', $id);
+        $this->db->delete('hapuspendadaran');
+    }
+    
+    public function hapusJadwalPendadaranPindah($id) {
+        $this->db->where('id', $id);
+        $this->db->delete('pindahpendadaran');
+    }
 
     public function historyHapusPendadaran($id) {
         $data = $this->getPendadaranByID($id);
-        $this->db->insert('hapusPendadaran', $data);
+        $this->db->insert('hapuspendadaran', $data);
     }
     
     public function pindahJadwalPendadaran($id){
         $data=$this->getPendadaranByID($id);
-        $this->db->insert('pindahPendaaran',$data);
+        $this->db->insert('pindahpendadaran',$data);
         $this->db->where('id', $id);
         $this->db->delete('pendadaran');
     }
@@ -53,6 +63,14 @@ class Pendadaran_model extends CI_model {
 
     public function getPendadaranByID($id) {
         return $this->db->get_where('pendadaran', ['id' => $id])->row_array();
+    }
+    
+    public function getHapusPendadaranByID($id) {
+        return $this->db->get_where('hapuspendadaran', ['id' => $id])->row_array();
+    }
+    
+    public function getPindahPendadaranByID($id) {
+        return $this->db->get_where('pindahpendadaran', ['id' => $id])->row_array();
     }
 
     public function editJadwalPendadaran() {
@@ -92,6 +110,24 @@ class Pendadaran_model extends CI_model {
         }
         $this->db->order_by('id', 'DESC');
         return $this->db->get('pendadaran', $limit, $start)->result_array();
+    }
+    
+    public function getHistoryHapusPendadaran($limit, $start, $keyword = null) {
+        if ($keyword) {
+            $this->db->like('nama', $keyword);
+            $this->db->or_like('nim', $keyword);
+        }
+        $this->db->order_by('id', 'DESC');
+        return $this->db->get('hapuspendadaran', $limit, $start)->result_array();
+    }
+    
+    public function getHistoryPindahPendadaran($limit, $start, $keyword = null) {
+        if ($keyword) {
+            $this->db->like('nama', $keyword);
+            $this->db->or_like('nim', $keyword);
+        }
+        $this->db->order_by('id', 'DESC');
+        return $this->db->get('pindahpendadaran', $limit, $start)->result_array();
     }
 
     public function countAllPendadaran() {

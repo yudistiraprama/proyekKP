@@ -32,6 +32,16 @@ class Kolokium_model extends CI_model {
         $this->db->where('id', $id);
         $this->db->delete('kolokium');
     }
+    
+    public function hapusJadwalKolokiumHapus($id) {
+        $this->db->where('id', $id);
+        $this->db->delete('hapuskolokium');
+    }
+    
+    public function hapusJadwalKolokiumPindah($id) {
+        $this->db->where('id', $id);
+        $this->db->delete('pindahkolokium');
+    }
 
     public function historyHapusKolokium($id) {
         $data = $this->getKolokiumByID($id);
@@ -47,6 +57,14 @@ class Kolokium_model extends CI_model {
 
     public function getKolokiumByID($id) {
         return $this->db->get_where('kolokium', ['id' => $id])->row_array();
+    }
+    
+    public function getHapusKolokiumByID($id) {
+        return $this->db->get_where('hapuskolokium', ['id' => $id])->row_array();
+    }
+    
+    public function getPindahKolokiumByID($id) {
+        return $this->db->get_where('pindahkolokium', ['id' => $id])->row_array();
     }
 
     public function getKolokiumByNIM($nim) {
@@ -87,6 +105,24 @@ class Kolokium_model extends CI_model {
         }
         $this->db->order_by('id', 'DESC');
         return $this->db->get('kolokium', $limit, $start)->result_array();
+    }
+    
+    public function getHistoryHapusKolokium($limit, $start, $keyword = null) {
+        if ($keyword) {
+            $this->db->like('nama', $keyword);
+            $this->db->or_like('nim', $keyword);
+        }
+        $this->db->order_by('id', 'DESC');
+        return $this->db->get('hapuskolokium', $limit, $start)->result_array();
+    }
+    
+    public function getHistoryPindahKolokium($limit, $start, $keyword = null) {
+        if ($keyword) {
+            $this->db->like('nama', $keyword);
+            $this->db->or_like('nim', $keyword);
+        }
+        $this->db->order_by('id', 'DESC');
+        return $this->db->get('pindahkolokium', $limit, $start)->result_array();
     }
 
     public function countAllKolokium() {

@@ -13,7 +13,11 @@
                             <select class="form-control" id="nilai" name="nilai">
                                 <option value="-">-</option>
                                 <?php foreach ($nilai as $n): ?>
-                                    <option value="<?= $n; ?>"><?= $n; ?></option>                                  
+                                    <?php if ($n == $pendadaran['nilai']): ?>
+                                        <option value="<?= $n; ?>"selected><?= $n; ?></option>
+                                    <?php else: ?>
+                                        <option value="<?= $n; ?>"><?= $n; ?></option>   
+                                    <?php endif; ?>
                                 <?php endforeach; ?>
                             </select>
                         </div>

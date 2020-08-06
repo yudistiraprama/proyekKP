@@ -320,16 +320,15 @@ class Kolokium extends CI_Controller {
         }
         redirect('kolokium');
     }
-    
-      public function pindah($id){
-         $data['kolokium'] = $this->Kolokium_model->getKolokiumByID($id);
-         if ($data['kolokium']['nilai'] != '-') {
-             $this->Kolokium_model->pindahJadwalKolokium($id);
+
+    public function pindah($id) {
+        $data['kolokium'] = $this->Kolokium_model->getKolokiumByID($id);
+        if ($data['kolokium']['nilai'] != '-') {
+            $this->Kolokium_model->pindahJadwalKolokium($id);
             $this->session->set_flashdata('flash', 'Dipindah');
         } else {
             $this->session->set_flashdata('gagal', 'Mahasiswa belum mendapatkan nilai Pendadaran');
-            
-        }        
+        }
         redirect('kolokium');
     }
 
@@ -1113,6 +1112,102 @@ class Kolokium extends CI_Controller {
 
         $writer = PHPExcel_IOFactory::createwriter($object, 'Excel2007');
         $writer->save('php://output');
+    }
+
+    public function hapusKolokium() {
+        $data['judul'] = "History Hapus Jadwal Kolokium";
+
+        $this->load->model('Kolokium_model', 'kolokium');
+
+        $this->load->library('pagination');
+
+        if ($this->input->post('submit')) {
+            $data['keyword'] = $this->input->post('keyword');
+            $this->session->set_userdata('keyword', $data['keyword']);
+        } else {
+            $data['keyword'] = $this->session->userdata('keyword');
+        }
+
+        $this->db->like('nama', $data['keyword']);
+        $this->db->or_like('nim', $data['keyword']);
+        $this->db->from('hapuskolokium');
+
+        $config['base_url'] = 'http://localhost/proyekKP/kolokium/hapusKolokium';
+        $config['total_rows'] = $this->db->count_all_results();
+        $data['total_rows'] = $config['total_rows'];
+        $config['per_page'] = 10;
+
+        $this->pagination->initialize($config);
+
+        $data['start'] = $this->uri->segment(3);
+        $data['kolokium'] = $this->kolokium->getHistoryHapusKolokium($config['per_page'], $data['start'], $data['keyword']);
+
+        $this->load->view('templates/header', $data);
+        $this->load->view('kolokium/hapusKolokium', $data);
+        $this->load->view('templates/footer');
+    }
+
+    public function detailHapus($id) {
+        $data['judul'] = 'Detail Hapus Jadwal Kolokium';
+        $data['kolokium'] = $this->Kolokium_model->getHapusKolokiumByID($id);
+        $this->load->view('templates/header', $data);
+        $this->load->view('kolokium/detailHapus', $data);
+        $this->load->view('templates/footer');
+    }
+
+    public function hapusHistoryHapus($id) {
+        $data['kolokium'] = $this->Kolokium_model->getHapusKolokiumByID($id);
+        $this->Kolokium_model->hapusJadwalKolokiumHapus($id);
+        $this->session->set_flashdata('flash', 'Dihapus');
+        redirect('kolokium/hapusKolokium');
+    }
+
+    public function pindahKolokium() {
+        $data['judul'] = "History Pindah Jadwal Kolokium";
+
+        $this->load->model('Kolokium_model', 'kolokium');
+
+        $this->load->library('pagination');
+
+        if ($this->input->post('submit')) {
+            $data['keyword'] = $this->input->post('keyword');
+            $this->session->set_userdata('keyword', $data['keyword']);
+        } else {
+            $data['keyword'] = $this->session->userdata('keyword');
+        }
+
+        $this->db->like('nama', $data['keyword']);
+        $this->db->or_like('nim', $data['keyword']);
+        $this->db->from('pindahkolokium');
+
+        $config['base_url'] = 'http://localhost/proyekKP/kolokium/pindahKolokium';
+        $config['total_rows'] = $this->db->count_all_results();
+        $data['total_rows'] = $config['total_rows'];
+        $config['per_page'] = 10;
+
+        $this->pagination->initialize($config);
+
+        $data['start'] = $this->uri->segment(3);
+        $data['kolokium'] = $this->kolokium->getHistoryPindahKolokium($config['per_page'], $data['start'], $data['keyword']);
+
+        $this->load->view('templates/header', $data);
+        $this->load->view('kolokium/pindahKolokium', $data);
+        $this->load->view('templates/footer');
+    }
+
+    public function detailPindah($id) {
+        $data['judul'] = 'Detail Pindah Jadwal Kolokium';
+        $data['kolokium'] = $this->Kolokium_model->getPindahKolokiumByID($id);
+        $this->load->view('templates/header', $data);
+        $this->load->view('kolokium/detailPindah', $data);
+        $this->load->view('templates/footer');
+    }
+
+    public function hapusHistoryPindah($id) {
+        $data['kolokium'] = $this->Kolokium_model->getPindahKolokiumByID($id);
+        $this->Kolokium_model->hapusJadwalKolokiumPindah($id);
+        $this->session->set_flashdata('flash', 'Dihapus');
+        redirect('kolokium/pindahKolokium');
     }
 
 }

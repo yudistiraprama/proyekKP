@@ -13,10 +13,15 @@
                             <select class="form-control" id="nilai" name="nilai">
                                 <option value="-">-</option>
                                 <?php foreach ($nilai as $n): ?>
-                                    <option value="<?= $n; ?>"><?= $n; ?></option>                                  
+                                    <?php if ($n == $kolokium['nilai']): ?>
+                                        <option value="<?= $n; ?>"selected><?= $n; ?></option>
+                                    <?php else: ?>
+                                        <option value="<?= $n; ?>"><?= $n; ?></option>   
+                                    <?php endif; ?>
                                 <?php endforeach; ?>
                             </select>
                         </div>
+
                         <a href="<?= base_url() ?>kolokium" class="btn btn-danger " role="button" ><i class="fas fa-arrow-left"></i> Kembali</a>
                         <button type="submit" name="tambah" class="btn btn-success float-right"><i class="fas fa-edit"></i>Ubah Nilai</button>
                     </form>

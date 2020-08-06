@@ -531,25 +531,24 @@ class Pendadaran extends CI_Controller {
     }
 
     public function hapus($id) {
-        $data['pendadaran']=$this->Pendadaran_model->getPendadaranByID($id);
-         if ($data['pendadaran']['nilai'] != '-') {
+        $data['pendadaran'] = $this->Pendadaran_model->getPendadaranByID($id);
+        if ($data['pendadaran']['nilai'] != '-') {
             $this->session->set_flashdata('gagal', 'Mahasiswa telah mendapatkan nilai Pendadaran');
         } else {
             $this->Pendadaran_model->hapusJadwalPendadaran($id);
             $this->session->set_flashdata('flash', 'Dihapus');
-        }        
+        }
         redirect('pendadaran');
     }
-    
-    public function pindah($id){
-         $data['pendadaran']=$this->Pendadaran_model->getPendadaranByID($id);
-         if ($data['pendadaran']['nilai'] != '-') {
-             $this->Pendadaran_model->pindahJadwalPendadaran($id);
+
+    public function pindah($id) {
+        $data['pendadaran'] = $this->Pendadaran_model->getPendadaranByID($id);
+        if ($data['pendadaran']['nilai'] != '-') {
+            $this->Pendadaran_model->pindahJadwalPendadaran($id);
             $this->session->set_flashdata('flash', 'Dipindah');
         } else {
             $this->session->set_flashdata('gagal', 'Mahasiswa belum mendapatkan nilai Pendadaran');
-            
-        }        
+        }
         redirect('pendadaran');
     }
 
@@ -1129,7 +1128,7 @@ class Pendadaran extends CI_Controller {
         $data['nilai'] = ['A', 'B', 'C', 'D', 'E'];
         $data['pendadaran'] = $this->Pendadaran_model->getPendadaranByID($id);
         $this->form_validation->set_rules('nilai', 'Nilai', 'required');
-        
+
         if ($this->form_validation->run() == FALSE) {
             $this->load->view('templates/header', $data);
             $this->load->view('pendadaran/nilai', $data);
@@ -1638,6 +1637,102 @@ class Pendadaran extends CI_Controller {
 
         $writer = PHPExcel_IOFactory::createwriter($object, 'Excel2007');
         $writer->save('php://output');
+    }
+
+    public function hapusPendadaran() {
+        $data['judul'] = "History Hapus Jadwal Pendadaran";
+
+        $this->load->model('Pendadaran_model', 'pendadaran');
+
+        $this->load->library('pagination');
+
+        if ($this->input->post('submit')) {
+            $data['keyword'] = $this->input->post('keyword');
+            $this->session->set_userdata('keyword', $data['keyword']);
+        } else {
+            $data['keyword'] = $this->session->userdata('keyword');
+        }
+
+        $this->db->like('nama', $data['keyword']);
+        $this->db->or_like('nim', $data['keyword']);
+        $this->db->from('hapuspendadaran');
+
+        $config['base_url'] = 'http://localhost/proyekKP/pendadaran/hapusPendadaran';
+        $config['total_rows'] = $this->db->count_all_results();
+        $data['total_rows'] = $config['total_rows'];
+        $config['per_page'] = 10;
+
+        $this->pagination->initialize($config);
+
+        $data['start'] = $this->uri->segment(3);
+        $data['pendadaran'] = $this->pendadaran->getHistoryHapusPendadaran($config['per_page'], $data['start'], $data['keyword']);
+
+        $this->load->view('templates/header', $data);
+        $this->load->view('pendadaran/hapusPendadaran', $data);
+        $this->load->view('templates/footer');
+    }
+
+    public function detailHapus($id) {
+        $data['judul'] = 'Detail Hapus Jadwal Pendadaran';
+        $data['pendadaran'] = $this->Pendadaran_model->getHapusPendadaranByID($id);
+        $this->load->view('templates/header', $data);
+        $this->load->view('pendadaran/detailHapus', $data);
+        $this->load->view('templates/footer');
+    }
+
+    public function hapusHistoryHapus($id) {
+        $data['pendadaran'] = $this->Pendadaran_model->getHapusPendadaranByID($id);
+        $this->Pendadaran_model->hapusJadwalPendadaranHapus($id);
+        $this->session->set_flashdata('flash', 'Dihapus');
+        redirect('pendadaran/hapusPendadaran');
+    }
+
+    public function pindahPendadaran() {
+        $data['judul'] = "History Pindah Jadwal Pendadaran";
+
+        $this->load->model('Pendadaran_model', 'pendadaran');
+
+        $this->load->library('pagination');
+
+        if ($this->input->post('submit')) {
+            $data['keyword'] = $this->input->post('keyword');
+            $this->session->set_userdata('keyword', $data['keyword']);
+        } else {
+            $data['keyword'] = $this->session->userdata('keyword');
+        }
+
+        $this->db->like('nama', $data['keyword']);
+        $this->db->or_like('nim', $data['keyword']);
+        $this->db->from('pindahpendadaran');
+
+        $config['base_url'] = 'http://localhost/proyekKP/pendadaran/pindahPendadaran';
+        $config['total_rows'] = $this->db->count_all_results();
+        $data['total_rows'] = $config['total_rows'];
+        $config['per_page'] = 10;
+
+        $this->pagination->initialize($config);
+
+        $data['start'] = $this->uri->segment(3);
+        $data['pendadaran'] = $this->pendadaran->getHistoryPindahPendadaran($config['per_page'], $data['start'], $data['keyword']);
+
+        $this->load->view('templates/header', $data);
+        $this->load->view('pendadaran/pindahPendadaran', $data);
+        $this->load->view('templates/footer');
+    }
+
+    public function detailPindah($id) {
+        $data['judul'] = 'Detail Pindah Jadwal Pendadaran';
+        $data['pendadaran'] = $this->Pendadaran_model->getPindahPendadaranByID($id);
+        $this->load->view('templates/header', $data);
+        $this->load->view('pendadaran/detailPindah', $data);
+        $this->load->view('templates/footer');
+    }
+
+    public function hapusHistoryPindah($id) {
+        $data['pendadaran'] = $this->Pendadaran_model->getPindahPendadaranByID($id);
+        $this->Pendadaran_model->hapusJadwalPendadaranPindah($id);
+        $this->session->set_flashdata('flash', 'Dihapus');
+        redirect('pendadaran/pindahPendadaran');
     }
 
 }
