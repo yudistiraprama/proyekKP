@@ -531,8 +531,13 @@ class Pendadaran extends CI_Controller {
     }
 
     public function hapus($id) {
-        $this->Pendadaran_model->hapusJadwalPendadaran($id);
-        $this->session->set_flashdata('flash', 'Dihapus');
+        $data['pendadaran']=$this->Pendadaran_model->getPendadaranByID($id);
+         if ($data['pendadaran']['nilai'] != '-') {
+            $this->session->set_flashdata('gagal', 'Mahasiswa telah mendapatkan nilai Pendadaran');
+        } else {
+            $this->Pendadaran_model->hapusJadwalPendadaran($id);
+            $this->session->set_flashdata('flash', 'Dihapus');
+        }        
         redirect('pendadaran');
     }
 
@@ -549,6 +554,7 @@ class Pendadaran extends CI_Controller {
     public function edit($id) {
         $data['judul'] = "Edit Jadwal Pendadaran";
         $data['jam'] = ['07.00-09.00', '08.00-10.00', '09.00-11.00', '10.00-12.00', '11.00-13.00', '12.00-14.00', '13.00-15.00', '14.00-16.00 ', '15.00-17.00'];
+        $data['nilai'] = ['A', 'B', 'C', 'D', 'E'];
         $data['ruang'] = $this->db->get('ruangan')->result_array();
         $data['pendadaran'] = $this->Pendadaran_model->getPendadaranByID($id);
         $data['dosen'] = $this->Dosen_model->getAllDosen();
@@ -557,13 +563,15 @@ class Pendadaran extends CI_Controller {
         $this->form_validation->set_rules('nama', 'Nama Mahasiswa', 'required');
         $this->form_validation->set_rules('nim', 'NIM Mahasiswa', 'required|numeric');
         $this->form_validation->set_rules('dosen1', 'Dosen Pembimbing 1', 'required');
-        $this->form_validation->set_rules('dosen2', 'osen Pembimbing 1');
+        $this->form_validation->set_rules('dosen2', 'Dosen Pembimbing 2');
         $this->form_validation->set_rules('judul', 'Judul Tugas Akhir', 'required');
         $this->form_validation->set_rules('reviewer', 'Reviewer', 'required');
         $this->form_validation->set_rules('ketuaPenguji', 'Ketua Penguji', 'required');
         $this->form_validation->set_rules('sekretarisPenguji', 'Sekretaris Penguji', 'required');
         $this->form_validation->set_rules('anggotaPenguji', 'Anggota Penguji');
         $this->form_validation->set_rules('tanggal', 'Tanggal', 'required');
+        $this->form_validation->set_rules('keterangan', 'Keterangan');
+        $this->form_validation->set_rules('nilai', 'Nilai');
 
 
         if ($this->form_validation->run() == FALSE) {
@@ -1102,6 +1110,23 @@ class Pendadaran extends CI_Controller {
             }
         }
         return $detail;
+    }
+
+    public function nilai($id) {
+        $data['judul'] = 'Edit Nilai';
+        $data['nilai'] = ['A', 'B', 'C', 'D', 'E'];
+        $data['pendadaran'] = $this->Pendadaran_model->getPendadaranByID($id);
+        $this->form_validation->set_rules('nilai', 'Nilai', 'required');
+        
+        if ($this->form_validation->run() == FALSE) {
+            $this->load->view('templates/header', $data);
+            $this->load->view('pendadaran/nilai', $data);
+            $this->load->view('templates/footer');
+        } else {
+            $this->Pendadaran_model->editNilaiPendadaran();
+            $this->session->set_flashdata('flash', 'Diubah');
+            redirect('pendadaran');
+        }
     }
 
     public function pdf($id) {

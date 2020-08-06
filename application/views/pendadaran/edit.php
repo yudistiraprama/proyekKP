@@ -192,7 +192,7 @@
                             <label for="keterangan">Keterangan</label>
                             <textarea class="form-control" name="keterangan" id="keterangan" rows="3"><?= $pendadaran['keterangan']; ?></textarea>
                         </div>
-
+                        
                         <a href="<?= base_url() ?>pendadaran" class="btn btn-danger " role="button" ><i class="fas fa-arrow-left"></i> Kembali</a>
                         <button type="submit" name="tambah" class="btn btn-success float-right"><i class="fas fa-edit"></i> Edit Data</button>
 

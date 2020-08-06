@@ -312,9 +312,8 @@ class Kolokium extends CI_Controller {
 
     public function hapus($id) {
         $data['kolokium'] = $this->Kolokium_model->getKolokiumByID($id);
-        $pendadaran = $this->Pendadaran_model->getPendadaranByNIM($data['kolokium']['nim']);
-        if ($pendadaran != null) {
-            $this->session->set_flashdata('gagal', 'Mahasiswa telah terdaftar untuk pendadaran');
+        if ($data['kolokium']['nilai'] != '-') {
+            $this->session->set_flashdata('gagal', 'Mahasiswa telah mendapatkan nilai Kolokium');
         } else {
             $this->Kolokium_model->hapusJadwalKolokium($id);
             $this->session->set_flashdata('flash', 'Dihapus');
@@ -333,6 +332,7 @@ class Kolokium extends CI_Controller {
     public function edit($id) {
         $data['judul'] = "Edit Jadwal Kolokium";
         $data['jam'] = ['07.00-08.00', '08.00-09.00', '09.00-10.00', '10.00-11.00', '11.00-12.00', '12.00-13.00', '13.00-14.00', '14.00-15.00', '15.00-16.00', '16.00-17.00'];
+
         $data['ruang'] = $this->db->get('ruangan')->result_array();
         $data['dosen'] = $this->Dosen_model->getAllDosen();
         $data['kolokium'] = $this->Kolokium_model->getKolokiumByID($id);
@@ -345,6 +345,9 @@ class Kolokium extends CI_Controller {
         $this->form_validation->set_rules('judul', 'Judul Tugas Akhir', 'required');
         $this->form_validation->set_rules('reviewer', 'Reviewer', 'required');
         $this->form_validation->set_rules('tanggal', 'Tanggal', 'required');
+        $this->form_validation->set_rules('keterangan', 'Keterangan');
+
+
 
         if ($this->form_validation->run() == FALSE) {
             $this->load->view('templates/header', $data);
@@ -359,6 +362,7 @@ class Kolokium extends CI_Controller {
             $ruang = $postData['ruang'];
             $tanggal = $postData['tanggal'];
             $durasi = $postData['durasi'];
+
             $cekDosen = $this->cekInputKolokium($dosen1, $dosen2, $reviewer);
             switch ($cekDosen) {
                 case 0:
@@ -618,6 +622,22 @@ class Kolokium extends CI_Controller {
             }
         }
         return $detail;
+    }
+
+    public function nilai($id) {
+        $data['judul'] = 'Edit Nilai';
+        $data['nilai'] = ['A', 'B', 'C', 'D', 'E'];
+        $data['kolokium'] = $this->Kolokium_model->getKolokiumByID($id);
+        $this->form_validation->set_rules('nilai', 'Nilai', 'required');
+        if ($this->form_validation->run() == FALSE) {
+            $this->load->view('templates/header', $data);
+            $this->load->view('kolokium/nilai', $data);
+            $this->load->view('templates/footer');
+        } else {
+            $this->Kolokium_model->editNilaiKolokium();
+            $this->session->set_flashdata('flash', 'Diubah');
+            redirect('kolokium');
+        }
     }
 
     public function pdf($id) {

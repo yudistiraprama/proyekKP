@@ -20,15 +20,22 @@ class Kolokium_model extends CI_model {
             'tanggal' => $this->input->post('tanggal', true),
             'durasi' => $this->input->post('durasi', true),
             'ruang' => $this->input->post('ruang', true),
-            'keterangan' => $this->input->post('keterangan', true)
+            'keterangan' => $this->input->post('keterangan', true),
+            'nilai'=>$this->input->post('nilai',true)
         );
 
         $this->db->insert('kolokium', $data);
     }
 
     public function hapusJadwalKolokium($id) {
+        $this->historyHapusKolokium($id);
         $this->db->where('id', $id);
         $this->db->delete('kolokium');
+    }
+    
+    public function historyHapusKolokium($id){
+        $data=$this->getKolokiumByID($id);
+        $this->db->insert('hapusKolokium',$data);
     }
 
     public function getKolokiumByID($id) {
@@ -53,11 +60,17 @@ class Kolokium_model extends CI_model {
             'tanggal' => $this->input->post('tanggal', true),
             'durasi' => $this->input->post('durasi', true),
             'ruang' => $this->input->post('ruang', true),
-            'keterangan' => $this->input->post('keterangan', true)
+            'keterangan' => $this->input->post('keterangan', true),
+            
         );
 
         $this->db->where('id', $this->input->post('id'));
         $this->db->update('kolokium', $data);
+    }
+    public function editNilaiKolokium(){
+        $data=array('nilai'=>$this->input->post('nilai',true));
+        $this->db->where('id',$this->input->post('id'));
+        $this->db->update('kolokium',$data);
     }
 
     public function getKolokium($limit, $start, $keyword = null) {

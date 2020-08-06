@@ -84,6 +84,14 @@
                                     <p class="card-text"><?= $kolokium['keterangan']; ?></p>
                                 </td>
                             </tr>
+                            <tr>
+                                <td>
+                                    <p class="card-text">Nilai:</p>
+                                </td>
+                                <td>
+                                    <p class="card-text"><?=$kolokium['nilai'];?></p>
+                                </td>
+                            </tr>
                         </tbody>
                     </table>
                     <br>

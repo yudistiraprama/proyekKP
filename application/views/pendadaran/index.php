@@ -34,6 +34,17 @@
                 </div>
             </div>
         </div> 
+     <?php elseif ($this->session->flashdata('gagal')): ?>
+        <div class="row mt-3">
+            <div class="col-md-10">
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <?= $this->session->flashdata('gagal'); ?>.
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            </div>
+        </div> 
     <?php endif; ?>
 
     <h3 class="mt-3">Jadwal Pendadaran</h3>
@@ -107,6 +118,7 @@
                             <td style="vertical-align: middle">
                                 <a href="<?= base_url(); ?>pendadaran/detail/<?= $pen['id']; ?>" class="badge badge-primary" >Detail</a> 
                                 <a href="<?= base_url(); ?>pendadaran/edit/<?= $pen['id']; ?>" class="badge badge-success" >Edit</a>
+                                <a href="<?= base_url(); ?>pendadaran/nilai/<?= $pen['id']; ?>" class="badge badge-secondary" >Nilai</a>
                                 <a href="#" class="badge badge-warning" >Pindah</a>
                                 <a href="<?= base_url(); ?>pendadaran/hapus/<?= $pen['id']; ?>" class="badge badge-danger" onclick="return confirm('Apakah anda yakin menghapus data ini?');">Hapus</a>                
                             </td>

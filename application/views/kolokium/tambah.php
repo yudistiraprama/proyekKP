@@ -134,6 +134,7 @@
                             <label for="keterangan">Keterangan</label>
                             <textarea class="form-control" name="keterangan" id="keterangan" rows="3"></textarea>
                         </div>
+                        <input type="hidden" name="nilai" id="nilai" value="-">
                         <a href="<?= base_url() ?>kolokium" class="btn btn-danger " role="button" ><i class="fas fa-arrow-left"></i> Kembali</a>
                         <button type="submit" name="tambah" class="btn btn-primary float-right"><i class="fas fa-plus"></i> Tambah Data</button>
                     </form>

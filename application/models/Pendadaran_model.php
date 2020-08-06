@@ -30,8 +30,14 @@ class Pendadaran_model extends CI_model {
     }
 
     public function hapusJadwalPendadaran($id) {
+        $this->historyHapusPendadaran($id);
         $this->db->where('id', $id);
         $this->db->delete('pendadaran');
+    }
+
+    public function historyHapusPendadaran($id) {
+        $data = $this->getPendadaranByID($id);
+        $this->db->insert('hapusPendadaran', $data);
     }
 
     public function getPendadaranByNIM($nim) {
@@ -59,9 +65,15 @@ class Pendadaran_model extends CI_model {
             'tanggal' => $this->input->post('tanggal', true),
             'durasi' => $this->input->post('durasi', true),
             'ruang' => $this->input->post('ruang', true),
-            'keterangan' => $this->input->post('keterangan', true)
+            'keterangan' => $this->input->post('keterangan', true),
         );
 
+        $this->db->where('id', $this->input->post('id'));
+        $this->db->update('pendadaran', $data);
+    }
+
+    public function editNilaiPendadaran() {
+        $data = array('nilai' => $this->input->post('nilai', true));
         $this->db->where('id', $this->input->post('id'));
         $this->db->update('pendadaran', $data);
     }
