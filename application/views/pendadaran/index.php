@@ -119,7 +119,7 @@
                                 <a href="<?= base_url(); ?>pendadaran/detail/<?= $pen['id']; ?>" class="badge badge-primary" >Detail</a> 
                                 <a href="<?= base_url(); ?>pendadaran/edit/<?= $pen['id']; ?>" class="badge badge-success" >Edit</a>
                                 <a href="<?= base_url(); ?>pendadaran/nilai/<?= $pen['id']; ?>" class="badge badge-secondary" >Nilai</a>
-                                <a href="#" class="badge badge-warning" >Pindah</a>
+                                <a href="<?= base_url(); ?>pendadaran/pindah/<?= $pen['id']; ?>" class="badge badge-warning" >Pindah</a>
                                 <a href="<?= base_url(); ?>pendadaran/hapus/<?= $pen['id']; ?>" class="badge badge-danger" onclick="return confirm('Apakah anda yakin menghapus data ini?');">Hapus</a>                
                             </td>
                         </tr>

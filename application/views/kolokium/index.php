@@ -1,7 +1,42 @@
 <div class="container">
     <?php $k = array('awal', 'akhir', 'dosen1', 'dosen2', 'reviewer', 'jam', 'ruang'); ?>
     <?php $this->session->unset_userdata($k); ?>
-    <h3 class="mt-3">History Jadwal Kolokium Yang di Hapus</h3>
+    <?php if ($this->session->flashdata('flash')): ?>
+        <div class="row mt-3">
+            <div class="col-md-10">
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    Data Jadwal Kolokium <strong>berhasil</strong> <?= $this->session->flashdata('flash'); ?>.
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    <?php elseif ($this->session->flashdata('terdaftar')): ?>
+        <div class="row mt-3">
+            <div class="col-md-10">
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <?= $this->session->flashdata('terdaftar'); ?>.
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    <?php elseif ($this->session->flashdata('gagal')): ?>
+        <div class="row mt-3">
+            <div class="col-md-10">
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <?= $this->session->flashdata('gagal'); ?>.
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    <?php endif; ?>
+
+    <h3 class="mt-3">Jadwal Kolokium</h3>
 
     <div class="row mt-3">
         <div class="col-md-10">
@@ -73,7 +108,7 @@
                                 <a href="<?= base_url(); ?>kolokium/detail/<?= $kol['id']; ?>" class="badge badge-primary" >Detail</a> 
                                 <a href="<?= base_url(); ?>kolokium/edit/<?= $kol['id']; ?>" class="badge badge-success" >Edit</a>
                                 <a href="<?= base_url(); ?>kolokium/nilai/<?= $kol['id']; ?>" class="badge badge-secondary" >Nilai</a>
-                                <a href="#" class="badge badge-warning" >Pindah</a>
+                                <a href="<?= base_url(); ?>kolokium/pindah/<?= $kol['id']; ?>" class="badge badge-warning" >Pindah</a>
                                 <a href="<?= base_url(); ?>kolokium/hapus/<?= $kol['id']; ?>" class="badge badge-danger" onclick="return confirm('Apakah anda yakin menghapus data ini?');">Hapus</a>                                       
                             </td>
                         </tr>

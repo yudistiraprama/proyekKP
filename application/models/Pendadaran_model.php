@@ -39,6 +39,13 @@ class Pendadaran_model extends CI_model {
         $data = $this->getPendadaranByID($id);
         $this->db->insert('hapusPendadaran', $data);
     }
+    
+    public function pindahJadwalPendadaran($id){
+        $data=$this->getPendadaranByID($id);
+        $this->db->insert('pindahPendaaran',$data);
+        $this->db->where('id', $id);
+        $this->db->delete('pendadaran');
+    }
 
     public function getPendadaranByNIM($nim) {
         return $this->db->get_where('pendadaran', ['nim' => $nim])->row_array();

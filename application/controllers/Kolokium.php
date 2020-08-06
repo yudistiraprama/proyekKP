@@ -320,6 +320,18 @@ class Kolokium extends CI_Controller {
         }
         redirect('kolokium');
     }
+    
+      public function pindah($id){
+         $data['kolokium'] = $this->Kolokium_model->getKolokiumByID($id);
+         if ($data['kolokium']['nilai'] != '-') {
+             $this->Kolokium_model->pindahJadwalKolokium($id);
+            $this->session->set_flashdata('flash', 'Dipindah');
+        } else {
+            $this->session->set_flashdata('gagal', 'Mahasiswa belum mendapatkan nilai Pendadaran');
+            
+        }        
+        redirect('kolokium');
+    }
 
     public function detail($id) {
         $data['judul'] = 'Detail  Jadwal Kolokium';

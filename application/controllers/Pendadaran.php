@@ -540,6 +540,18 @@ class Pendadaran extends CI_Controller {
         }        
         redirect('pendadaran');
     }
+    
+    public function pindah($id){
+         $data['pendadaran']=$this->Pendadaran_model->getPendadaranByID($id);
+         if ($data['pendadaran']['nilai'] != '-') {
+             $this->Pendadaran_model->pindahJadwalPendadaran($id);
+            $this->session->set_flashdata('flash', 'Dipindah');
+        } else {
+            $this->session->set_flashdata('gagal', 'Mahasiswa belum mendapatkan nilai Pendadaran');
+            
+        }        
+        redirect('pendadaran');
+    }
 
     public function detail($id) {
         $data['judul'] = 'Detail Jadwal Pendadaran';
