@@ -54,6 +54,20 @@ class Kolokium_model extends CI_model {
         $this->db->where('id', $id);
         $this->db->delete('kolokium');
     }
+    
+    public function restorePindahKolokium($id){
+        $data=$this->getPindahKolokiumByID($id);
+        $this->db->insert('kolokium',$data);
+        $this->db->where('id',$id);
+        $this->db->delete('pindahkolokium');
+    }
+    
+    public function restoreHapusKolokium($id){
+        $data=$this->getHapusKolokiumByID($id);
+        $this->db->insert('kolokium',$data);
+        $this->db->where('id',$id);
+        $this->db->delete('hapuskolokium');
+    }
 
     public function getKolokiumByID($id) {
         return $this->db->get_where('kolokium', ['id' => $id])->row_array();

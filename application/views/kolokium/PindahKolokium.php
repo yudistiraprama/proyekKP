@@ -66,6 +66,7 @@
                             <td style="vertical-align: middle"><?= $kol['nilai']; ?></td>
                             <td style="vertical-align: middle">
                                 <a href="<?= base_url(); ?>kolokium/detailPindah/<?= $kol['id']; ?>" class="badge badge-primary" style="width: 50px" >Detail</a> 
+                                <a href="<?= base_url(); ?>kolokium/restorePindah/<?= $kol['id']; ?>" class="badge badge-success" onclick="return confirm('Apakah anda yakin mengembalikan data ini?');"  style="width: 50px" >Restore</a>
                                 <a href="<?= base_url(); ?>kolokium/hapusHistoryPindah/<?= $kol['id']; ?>" class="badge badge-danger" onclick="return confirm('Apakah anda yakin menghapus data ini?');" style="width: 50px">Hapus</a>                                       
                             </td>
                         </tr>

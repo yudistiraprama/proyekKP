@@ -64,7 +64,8 @@
                             <td style="vertical-align: middle"><?= $pen['ruang']; ?></td>
                             <td style="vertical-align: middle"><?= $pen['nilai']; ?></td>
                             <td style="vertical-align: middle">
-                                <a href="<?= base_url(); ?>pendadaran/detailPindah/<?= $pen['id']; ?>" class="badge badge-primary" style="width: 50px">Detail</a> 
+                                <a href="<?= base_url(); ?>pendadaran/detailPindah/<?= $pen['id']; ?>" class="badge badge-primary" style="width: 50px">Detail</a>
+                                <a href="<?= base_url(); ?>pendadaran/restorePindah/<?= $pen['id']; ?>" class="badge badge-success" style="width: 50px" onclick="return confirm('Apakah anda yakin mengembalikan data ini?');" >Restore</a> 
                                 <a href="<?= base_url(); ?>pendadaran/hapusHistoryPindah/<?= $pen['id']; ?>" class="badge badge-danger" style="width: 50px" onclick="return confirm('Apakah anda yakin menghapus data ini?');">Hapus</a>                
                             </td>
                         </tr>

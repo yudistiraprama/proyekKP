@@ -1210,4 +1210,15 @@ class Kolokium extends CI_Controller {
         redirect('kolokium/pindahKolokium');
     }
 
+     public function restorePindah($id){
+        $this->Kolokium_model->restorePindahKolokium($id);
+        $this->session->set_flashdata('flash', 'Direstore');
+        redirect('kolokium/pindahKolokium');
+    }
+    
+    public function restoreHapus($id){
+        $this->Kolokium_model->restoreHapusKolokium($id);
+        $this->session->set_flashdata('flash','Direstore');
+        redirect('kolokium/hapusKolokium');
+    }
 }

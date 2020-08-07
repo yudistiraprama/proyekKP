@@ -1734,5 +1734,17 @@ class Pendadaran extends CI_Controller {
         $this->session->set_flashdata('flash', 'Dihapus');
         redirect('pendadaran/pindahPendadaran');
     }
+    
+    public function restorePindah($id){
+        $this->Pendadaran_model->restorerPindahPendadaran($id);
+        $this->session->set_flashdata('flash', 'Direstore');
+        redirect('pendadaran/pindahPendadaran');
+    }
+    
+    public function restoreHapus($id){
+        $this->Pendadaran_model->restoreHapusPendadaran($id);
+        $this->session->set_flashdata('flash','Direstore');
+        redirect('pendadaran/hapusPendadaran');
+    }
 
 }

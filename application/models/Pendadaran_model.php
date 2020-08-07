@@ -56,6 +56,19 @@ class Pendadaran_model extends CI_model {
         $this->db->where('id', $id);
         $this->db->delete('pendadaran');
     }
+    public function restorePindahPendadaran($id){
+        $data=$this->getPindahPendadaranByID($id);
+        $this->db->insert('pendadaran',$data);
+        $this->db->where('id',$id);
+        $this->db->delete('pindahpendadaran');
+    }
+    
+    public function restoreHapusPendadaran($id){
+        $data=$this->getHapusPendadaranByID($id);
+        $this->db->insert('pendadaran',$data);
+        $this->db->where('id',$id);
+        $this->db->delete('hapuspendadaran');
+    }
 
     public function getPendadaranByNIM($nim) {
         return $this->db->get_where('pendadaran', ['nim' => $nim])->row_array();
