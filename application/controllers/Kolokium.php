@@ -1,5 +1,8 @@
 <?php
 
+use PhpOffice\PhpWord\PhpWord;
+use PhpOffice\PhpWord\Writer\Word2007;
+
 class Kolokium extends CI_Controller {
 
     public function __construct() {
@@ -719,6 +722,76 @@ class Kolokium extends CI_Controller {
         $data['undangan'] = $this->load->view('kolokium/undangan_txt', $data);
     }
 
+    public function undanganWord($id) {
+        $data['kolokium'] = $this->Kolokium_model->getKolokiumByID($id);
+        $dosen = $this->Dosen_model->getAllDosen();
+        foreach ($dosen as $d) {
+            if (strtoupper($d['status']) == 'WAKAPRODI') {
+                $idD = $d['id'];
+                $data['dosen'] = $this->Dosen_model->getDosenById($idD);
+            }
+        }
+        $data['tanggal'] = format_indo(date("Y-m-d"));
+        $mahasiswa = $data['kolokium']['nim'];
+
+        if ($data['kolokium']['dosen2'] == NULL) {
+            $template = new PhpOffice\PhpWord\TemplateProcessor('template/kolokium1.docx');
+
+            $template->setValue('dosen1', $data['kolokium']['dosen1']);
+            $template->setValue('reviewer', $data['kolokium']['reviewer']);
+            $template->setValue('nim', $data['kolokium']['nim']);
+            $template->setValue('nama', $data['kolokium']['nama']);
+            $template->setValue('judul', $data['kolokium']['judul']);
+            $template->setValue('tanggal', format_indo($data['kolokium']['tanggal']));
+            $template->setValue('jam', $data['kolokium']['durasi']);
+            $template->setValue('date', $data['tanggal']);
+            $template->setValue('wakaprodi', $data['dosen']['nama']);
+
+            $temp_filename = 'Undangan_Kolokium_' . $mahasiswa . '.docx';
+            $template->saveAs($temp_filename);
+
+            header('Content-Description: File Transfer');
+            header('Content-Type: application/octet-stream');
+            header('Content-Disposition: attachment; filename=' . $temp_filename);
+            header('Content-Transfer-Encoding: binary');
+            header('Expires: 0');
+            header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
+            header('Pragma: public');
+            header('Content-Length: ' . filesize($temp_filename));
+            flush();
+            readfile($temp_filename);
+            unlink($temp_filename);
+        } else {
+            $template = new PhpOffice\PhpWord\TemplateProcessor('template/kolokium2.docx');
+
+            $template->setValue('dosen1', $data['kolokium']['dosen1']);
+            $template->setValue('dosen2', $data['kolokium']['dosen2']);
+            $template->setValue('reviewer', $data['kolokium']['reviewer']);
+            $template->setValue('nim', $data['kolokium']['nim']);
+            $template->setValue('nama', $data['kolokium']['nama']);
+            $template->setValue('judul', $data['kolokium']['judul']);
+            $template->setValue('tanggal', format_indo($data['kolokium']['tanggal']));
+            $template->setValue('jam', $data['kolokium']['durasi']);
+            $template->setValue('date', $data['tanggal']);
+            $template->setValue('wakaprodi', $data['dosen']['nama']);
+
+            $temp_filename = 'Undangan_Kolokium_' . $mahasiswa . '.docx';
+            $template->saveAs($temp_filename);
+
+            header('Content-Description: File Transfer');
+            header('Content-Type: application/octet-stream');
+            header('Content-Disposition: attachment; filename=' . $temp_filename);
+            header('Content-Transfer-Encoding: binary');
+            header('Expires: 0');
+            header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
+            header('Pragma: public');
+            header('Content-Length: ' . filesize($temp_filename));
+            flush();
+            readfile($temp_filename);
+            unlink($temp_filename);
+        }
+    }
+
     public function report() {
         if ($this->input->post() == NULL) {
             $data['judul'] = 'Report Jadwal Kolokium';
@@ -1210,15 +1283,16 @@ class Kolokium extends CI_Controller {
         redirect('kolokium/pindahKolokium');
     }
 
-     public function restorePindah($id){
+    public function restorePindah($id) {
         $this->Kolokium_model->restorePindahKolokium($id);
         $this->session->set_flashdata('flash', 'Direstore');
         redirect('kolokium/pindahKolokium');
     }
-    
-    public function restoreHapus($id){
+
+    public function restoreHapus($id) {
         $this->Kolokium_model->restoreHapusKolokium($id);
-        $this->session->set_flashdata('flash','Direstore');
+        $this->session->set_flashdata('flash', 'Direstore');
         redirect('kolokium/hapusKolokium');
     }
+
 }

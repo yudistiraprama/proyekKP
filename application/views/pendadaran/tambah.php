@@ -118,7 +118,7 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="judul">Anggota Penguji</label>
+                            <label for="anggotaPenguji">Anggota Penguji</label>
                             <select class="form-control" id="anggotaPenguji" name="anggotaPenguji">
                                 <option value="">-</option>
                                 <?php foreach ($dosen as $ds): ?>
@@ -157,7 +157,8 @@
                             <textarea class="form-control" name="keterangan" id="keterangan" rows="3" value="<?= $mahasiswa['keterangan']; ?>"><?= $mahasiswa['keterangan']; ?></textarea>
                         </div>
                         <input type="hidden" name="nilai" id="nilai" value="-">
-                        <button type="submit" name="tambah" class="btn btn-primary float-right">Tambah Data</button>
+                        <a href="<?= base_url() ?>pendadaran" class="btn btn-danger " role="button" ><i class="fas fa-arrow-left"></i> Kembali</a>
+                        <button type="submit" name="tambah" class="btn btn-primary float-right"><i class="fas fa-plus"></i> Tambah Data</button>
                     </form>
                 </div>   
             </div>

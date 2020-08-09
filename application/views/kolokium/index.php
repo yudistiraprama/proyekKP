@@ -87,7 +87,7 @@
                 <tbody>
                     <?php if (empty($kolokium)) : ?>
                         <tr>
-                            <td colspan="4">
+                            <td colspan="8">
                                 <div class="alert alert-danger" role="alert">
                                     Data tidak ditemukan!
                                 </div>

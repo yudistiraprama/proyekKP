@@ -1,5 +1,8 @@
 <?php
 
+use PhpOffice\PhpWord\PhpWord;
+use PhpOffice\PhpWord\Writer\Word2007;
+
 class Pendadaran extends CI_Controller {
 
     public function __construct() {
@@ -1205,6 +1208,80 @@ class Pendadaran extends CI_Controller {
         $data['undangan'] = $this->load->view('pendadaran/undangan_txt', $data);
     }
 
+    public function undanganWord($id) {
+        $data['pendadaran'] = $this->Pendadaran_model->getPendadaranByID($id);
+        $dosen = $this->Dosen_model->getAllDosen();
+        foreach ($dosen as $d) {
+            if (strtoupper($d['status']) == 'WAKAPRODI') {
+                $idD = $d['id'];
+                $data['dosen'] = $this->Dosen_model->getDosenById($idD);
+            }
+        }
+        $data['tanggal'] = format_indo(date("Y-m-d"));
+        $mahasiswa = $data['pendadaran']['nim'];
+
+        if ($data['pendadaran']['dosen2'] == NULL) {
+            $template = new PhpOffice\PhpWord\TemplateProcessor('template/pendadaran1.docx');
+
+            $template->setValue('dosen1', $data['pendadaran']['dosen1']);
+            $template->setValue('ketuaPenguji', $data['pendadaran']['ketuaPenguji']);
+            $template->setValue('sekretarisPenguji', $data['pendadaran']['sekretarisPenguji']);
+            $template->setValue('anggotaPenguji', $data['pendadaran']['anggotaPenguji']);
+            $template->setValue('nim', $data['pendadaran']['nim']);
+            $template->setValue('nama', $data['pendadaran']['nama']);
+            $template->setValue('judul', $data['pendadaran']['judul']);
+            $template->setValue('tanggal', format_indo($data['pendadaran']['tanggal']));
+            $template->setValue('jam', $data['pendadaran']['durasi']);
+            $template->setValue('date', $data['tanggal']);
+            $template->setValue('wakaprodi', $data['dosen']['nama']);
+
+            $temp_filename = 'Undangan_Pendadaran_' . $mahasiswa . '.docx';
+            $template->saveAs($temp_filename);
+
+            header('Content-Description: File Transfer');
+            header('Content-Type: application/octet-stream');
+            header('Content-Disposition: attachment; filename=' . $temp_filename);
+            header('Content-Transfer-Encoding: binary');
+            header('Expires: 0');
+            header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
+            header('Pragma: public');
+            header('Content-Length: ' . filesize($temp_filename));
+            flush();
+            readfile($temp_filename);
+            unlink($temp_filename);
+        } else {
+            $template = new PhpOffice\PhpWord\TemplateProcessor('template/pendadaran2.docx');
+
+            $template->setValue('dosen1', $data['pendadaran']['dosen1']);
+            $template->setValue('dosen2', $data['pendadaran']['dosen2']);
+            $template->setValue('ketuaPenguji', $data['pendadaran']['ketuaPenguji']);
+            $template->setValue('sekretarisPenguji', $data['pendadaran']['sekretarisPenguji']);
+            $template->setValue('anggotaPenguji', $data['pendadaran']['anggotaPenguji']);
+            $template->setValue('nim', $data['pendadaran']['nim']);
+            $template->setValue('nama', $data['pendadaran']['nama']);
+            $template->setValue('judul', $data['pendadaran']['judul']);
+            $template->setValue('tanggal', format_indo($data['pendadaran']['tanggal']));
+            $template->setValue('jam', $data['pendadaran']['durasi']);
+            $template->setValue('date', $data['tanggal']);
+            $template->setValue('wakaprodi', $data['dosen']['nama']);
+
+            $temp_filename = 'Undangan_Pendadaran_' . $mahasiswa . '.docx';
+            $template->saveAs($temp_filename);
+
+            header('Content-Description: File Transfer');
+            header('Content-Type: application/octet-stream');
+            header('Content-Disposition: attachment; filename=' . $temp_filename);
+            header('Content-Transfer-Encoding: binary');
+            header('Expires: 0');
+            header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
+            header('Pragma: public');
+            header('Content-Length: ' . filesize($temp_filename));
+            flush();
+            readfile($temp_filename);
+            unlink($temp_filename);
+        }
+    }
+
     public function report() {
         if ($this->input->post() == NULL) {
             $data['judul'] = 'Report Jadwal Pendadaran';
@@ -1734,16 +1811,16 @@ class Pendadaran extends CI_Controller {
         $this->session->set_flashdata('flash', 'Dihapus');
         redirect('pendadaran/pindahPendadaran');
     }
-    
-    public function restorePindah($id){
-        $this->Pendadaran_model->restorerPindahPendadaran($id);
+
+    public function restorePindah($id) {
+        $this->Pendadaran_model->restorePindahPendadaran($id);
         $this->session->set_flashdata('flash', 'Direstore');
         redirect('pendadaran/pindahPendadaran');
     }
-    
-    public function restoreHapus($id){
+
+    public function restoreHapus($id) {
         $this->Pendadaran_model->restoreHapusPendadaran($id);
-        $this->session->set_flashdata('flash','Direstore');
+        $this->session->set_flashdata('flash', 'Direstore');
         redirect('pendadaran/hapusPendadaran');
     }
 

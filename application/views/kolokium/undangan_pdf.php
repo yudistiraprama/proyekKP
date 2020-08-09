@@ -51,13 +51,13 @@
                 <td></td>
                 <td>Nama</td>
                 <td>:</td>
-                <td><?= $kolokium['judul']; ?></td>
+                <td><?= $kolokium['nama']; ?></td>
             </tr>
             <tr>
                 <td></td>
                 <td>Judul</td>
                 <td>:</td>
-                <td><?= $kolokium['nim']; ?></td>
+                <td><?= $kolokium['judul']; ?></td>
             </tr>
         </table>
         <br><br>
@@ -130,13 +130,13 @@
                 <td></td>
                 <td>Nama</td>
                 <td>:</td>
-                <td><?= $kolokium['judul']; ?></td>
+                <td><?= $kolokium['nama']; ?></td>
             </tr>
             <tr>
                 <td></td>
                 <td>Judul</td>
                 <td>:</td>
-                <td><?= $kolokium['nim']; ?></td>
+                <td><?= $kolokium['judul']; ?></td>
             </tr>
         </table>
         <br><br>

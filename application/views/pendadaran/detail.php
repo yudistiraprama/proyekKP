@@ -129,6 +129,7 @@
                         <div class="dropdown-menu">
                             <a href="<?= base_url() ?>pendadaran/undangan/<?= $pendadaran['id']; ?>" class="dropdown-item"><i class="fas fa-file-pdf"></i> Undangan PDF</a>
                             <a href="<?= base_url() ?>pendadaran/undangantxt/<?= $pendadaran['id']; ?>" class="dropdown-item"><i class="fas fa-file-alt"></i> Undangan TXT</a>
+                            <a href="<?= base_url() ?>pendadaran/undanganWord/<?= $pendadaran['id']; ?>" class="dropdown-item"><i class="fas fa-file-word"></i> Undangan WORD</a>
                         </div>
                     </div>
                 </div>
