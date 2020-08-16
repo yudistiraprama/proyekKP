@@ -1625,7 +1625,13 @@ class Pendadaran extends CI_Controller {
         $object->getActiveSheet()->setCellValue('C3', 'Informatika');
         $object->getActiveSheet()->setCellValue('A4', 'Periode');
         $object->getActiveSheet()->setCellValue('B4', ':');
-        $object->getActiveSheet()->setCellValue('C4', format_indo($this->session->userdata('awal')) . ' - ' . format_indo($this->session->userdata('akhir')));
+        if ($this->session->userdata('awal') != NULL && $this->session->userdata('akhir') == NULL) {
+            $object->getActiveSheet()->setCellValue('C4', 'Dari ' . format_indo($this->session->userdata('awal')) . ' hingga akhir');
+        } elseif ($this->session->userdata('awal') == NULL && $this->session->userdata('akhir') != NULL) {
+            $object->getActiveSheet()->setCellValue('C4', 'Dari awal hingga ' . format_indo($this->session->userdata('akhir')));
+        } else {
+            $object->getActiveSheet()->setCellValue('C4', format_indo($this->session->userdata('awal')) . ' - ' . format_indo($this->session->userdata('akhir')));
+        }
 
         $object->getActiveSheet()->setCellValue('A6', 'NO');
         $object->getActiveSheet()->mergeCells('A6:A8');

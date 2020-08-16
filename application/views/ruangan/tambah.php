@@ -17,7 +17,7 @@
                 <div class="card-header">
                     Form Tambah Data Ruangan
                 </div>
-                <?php if ($this->session->userdata() == NULL): ?>
+                <?php if ($this->session->userdata() == 1): ?>
                     <div class="card-body">
                         <form action="" method="post">
                             <div class="form-group">
@@ -29,7 +29,7 @@
                             <button type="submit" name="tambah" class="btn btn-primary float-right"><i class="fas fa-plus"></i> Tambah Data</button>
                         </form>
                     </div>   
-                <?php elseif ($this->session->userdata() != NULL): ?>
+                <?php elseif ($this->session->userdata() != 1): ?>
                     <div class="card-body">
                         <form action="" method="post">
                             <div class="form-group">

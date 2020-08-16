@@ -32,6 +32,8 @@
                                 <br>175314083
                             </td>
                     </table>
+                    <br>
+                    <a href="" class="btn btn-success"><i class="fas fa-download"></i> Download Buku Panduan</a>
                 </center>
             </div>
         </div>
