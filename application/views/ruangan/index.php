@@ -1,4 +1,5 @@
 <div class="container">
+    <?php $this->session->sess_destroy(); ?>
     <?php if ($this->session->flashdata('flash')): ?>
         <div class="row mt-3">
             <div class="col-md-6">
@@ -16,7 +17,7 @@
 
     <div class="row mt-3">
         <div class="col-md-6">
-            <a href="<?= base_url(); ?>ruangan/tambah" class="btn btn-primary">Tambah Data Ruangan</a>
+            <a href="<?= base_url(); ?>ruangan/tambah" class="btn btn-primary"><i class="fas fa-plus"></i> Tambah Data Ruangan</a>
         </div>
     </div>
 

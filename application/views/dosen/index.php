@@ -1,4 +1,5 @@
 <div class="container">
+    <?php $this->session->sess_destroy(); ?>
     <?php if ($this->session->flashdata('flash')): ?>
         <div class="row mt-3">
             <div class="col-md-6">

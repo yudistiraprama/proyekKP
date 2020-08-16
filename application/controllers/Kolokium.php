@@ -69,6 +69,19 @@ class Kolokium extends CI_Controller {
                 $this->load->view('templates/footer');
             } else {
                 $postData = $this->input->post();
+                
+                $arraydata = array(
+                    'dosen1' => $postData['dosen1'],
+                    'dosen2' => $postData['dosen2'],
+                    'judul' => $postData['judul'],
+                    'reviewer' => $postData['reviewer'],
+                    'tanggal' => $postData['tanggal'],
+                    'durasi' => $postData['durasi'],
+                    'ruang' => $postData['ruang'],
+                    'keterangan' => $postData['keterangan']
+                );
+                $this->session->set_userdata($arraydata);
+
                 $dosen1 = $postData['dosen1'];
                 $dosen2 = $postData['dosen2'];
                 $reviewer = $postData['reviewer'];

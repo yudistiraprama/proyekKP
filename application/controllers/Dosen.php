@@ -54,13 +54,18 @@ class Dosen extends CI_Controller {
             $this->load->view('templates/footer');
         } else {
             $postData = $this->input->post();
+            
+            $arraydata = array(
+                'nama' => $postData['nama'],
+                'npp' => $postData['npp'],
+                'status' => $postData['status']
+            );
+            $this->session->set_userdata($arraydata);
+
             $dosen = $this->Dosen_model->getAllDosen();
             foreach ($dosen as $d) {
                 if ($d['nama'] == $postData['nama']) {
                     $this->session->set_flashdata('flash', 'Dosen dengan nama ' . $postData['nama'] . ' sudah ada');
-                    redirect('dosen/tambah');
-                } elseif ($d['npp'] == $postData['npp']) {
-                    $this->session->set_flashdata('flash', 'Dosen dengan NPP ' . $postData['npp'] . ' sudah ada');
                     redirect('dosen/tambah');
                 }
             }

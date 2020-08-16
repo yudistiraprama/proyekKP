@@ -25,8 +25,8 @@
                             <input type="text" name="nama" class="form-control" id="nama" value="<?= $ruangan['nama']; ?>">
                             <small class="form-text text-danger"><?= form_error('nama'); ?></small>
                         </div>
-                        <a href="<?= base_url() ?>ruangan" class="btn btn-danger " role="button" >Kembali</a>
-                        <button type="submit" name="tambah" class="btn btn-primary">Edit Data</button>    
+                        <a href="<?= base_url() ?>ruangan" class="btn btn-danger " role="button" ><i class="fas fa-arrow-left"></i> Kembali</a>
+                        <button type="submit" name="tambah" class="btn btn-primary float-right"><i class="fas fa-edit"></i> Edit Data</button>    
                     </form>
                 </div>   
             </div>

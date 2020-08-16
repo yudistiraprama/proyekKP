@@ -51,6 +51,10 @@ class Ruangan extends CI_Controller {
             $this->load->view('templates/footer');
         } else {
             $postData = $this->input->post();
+            $arraydata = array(
+                'nama' => $postData['nama']
+            );
+            $this->session->set_userdata($arraydata);
             $ruangan = $this->Ruangan_model->getAllRuangan();
             foreach ($ruangan as $r) {
                 if ($r['nama'] == $postData['nama']) {
@@ -82,6 +86,10 @@ class Ruangan extends CI_Controller {
             $this->load->view('templates/footer');
         } else {
             $postData = $this->input->post();
+            $arraydata = array(
+                'nama' => $postData['nama']
+            );
+            $this->session->set_userdata($arraydata);
             $ruangan = $this->Ruangan_model->getAllRuangan();
             $data['ruangan'] = $this->Ruangan_model->getRuanganByID($id);
             foreach ($ruangan as $r) {

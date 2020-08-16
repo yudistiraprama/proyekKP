@@ -7,9 +7,6 @@ class Pendadaran_model extends CI_model {
     }
 
     public function tambahJadwalPendadaran() {
-//        $tanggal = $this->input->post('tanggal', true);
-//        $tgl = format_indo($tanggal);
-
         $data = array(
             'nim' => $this->input->post('nim', true),
             'nama' => $this->input->post('nama', true),
@@ -34,12 +31,12 @@ class Pendadaran_model extends CI_model {
         $this->db->where('id', $id);
         $this->db->delete('pendadaran');
     }
-    
+
     public function hapusJadwalPendadaranHapus($id) {
         $this->db->where('id', $id);
         $this->db->delete('hapuspendadaran');
     }
-    
+
     public function hapusJadwalPendadaranPindah($id) {
         $this->db->where('id', $id);
         $this->db->delete('pindahpendadaran');
@@ -49,24 +46,25 @@ class Pendadaran_model extends CI_model {
         $data = $this->getPendadaranByID($id);
         $this->db->insert('hapuspendadaran', $data);
     }
-    
-    public function pindahJadwalPendadaran($id){
-        $data=$this->getPendadaranByID($id);
-        $this->db->insert('pindahpendadaran',$data);
+
+    public function pindahJadwalPendadaran($id) {
+        $data = $this->getPendadaranByID($id);
+        $this->db->insert('pindahpendadaran', $data);
         $this->db->where('id', $id);
         $this->db->delete('pendadaran');
     }
-    public function restorePindahPendadaran($id){
-        $data=$this->getPindahPendadaranByID($id);
-        $this->db->insert('pendadaran',$data);
-        $this->db->where('id',$id);
+
+    public function restorePindahPendadaran($id) {
+        $data = $this->getPindahPendadaranByID($id);
+        $this->db->insert('pendadaran', $data);
+        $this->db->where('id', $id);
         $this->db->delete('pindahpendadaran');
     }
-    
-    public function restoreHapusPendadaran($id){
-        $data=$this->getHapusPendadaranByID($id);
-        $this->db->insert('pendadaran',$data);
-        $this->db->where('id',$id);
+
+    public function restoreHapusPendadaran($id) {
+        $data = $this->getHapusPendadaranByID($id);
+        $this->db->insert('pendadaran', $data);
+        $this->db->where('id', $id);
         $this->db->delete('hapuspendadaran');
     }
 
@@ -77,19 +75,16 @@ class Pendadaran_model extends CI_model {
     public function getPendadaranByID($id) {
         return $this->db->get_where('pendadaran', ['id' => $id])->row_array();
     }
-    
+
     public function getHapusPendadaranByID($id) {
         return $this->db->get_where('hapuspendadaran', ['id' => $id])->row_array();
     }
-    
+
     public function getPindahPendadaranByID($id) {
         return $this->db->get_where('pindahpendadaran', ['id' => $id])->row_array();
     }
 
     public function editJadwalPendadaran() {
-//        $tanggal = $this->input->post('tanggal', true);
-//        $tgl = format_indo($tanggal);
-
         $data = array(
             'nim' => $this->input->post('nim', true),
             'nama' => $this->input->post('nama', true),
@@ -124,7 +119,7 @@ class Pendadaran_model extends CI_model {
         $this->db->order_by('id', 'DESC');
         return $this->db->get('pendadaran', $limit, $start)->result_array();
     }
-    
+
     public function getHistoryHapusPendadaran($limit, $start, $keyword = null) {
         if ($keyword) {
             $this->db->like('nama', $keyword);
@@ -133,7 +128,7 @@ class Pendadaran_model extends CI_model {
         $this->db->order_by('id', 'DESC');
         return $this->db->get('hapuspendadaran', $limit, $start)->result_array();
     }
-    
+
     public function getHistoryPindahPendadaran($limit, $start, $keyword = null) {
         if ($keyword) {
             $this->db->like('nama', $keyword);

@@ -1,6 +1,5 @@
 <div class="container">
-    <?php $k = array('awal', 'akhir', 'dosen1', 'dosen2', 'reviewer', 'jam', 'ruang'); ?>
-    <?php $this->session->unset_userdata($k); ?>
+    <?php $this->session->sess_destroy(); ?>
     <?php if ($this->session->flashdata('flash')): ?>
         <div class="row mt-3">
             <div class="col-md-10">
